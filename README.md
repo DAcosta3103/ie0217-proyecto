@@ -68,3 +68,6 @@ Para la integridad de los datos finacieros de los clientes se propone lo siguien
 ### Generación de reportes de préstamos
 Para generar reportes bancarios es necesario poder implementar el código en este caso en C++ y que este se conecte de manera adecuada a la base de datos, donde estan almacenados los registros.
 El código recolecta por parte del usuario en la interfaz el número de ID del prestamo del cual se quiere generar el reporte. Una vez corroborado de que el ID del prestamo es existente, por medio de consultas SQL recolecta información de la base de datos, por medio de funciones se calculan las cuotas pagadas, el aporta al capital y los intereses pagados, por medio de extensiones o librerías como csv.h o libharu.h es posible presentar estos datos en formato CSV o PDF, por último se pueden almacenar estos reportes en directorios específicos.
+
+### Automatización de pruebas
+Para esto se pueden utilizar librerías como google test gtest/gtest.h pero automatizar procesos de pruebas dentro del código c++,....
