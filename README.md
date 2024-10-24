@@ -15,8 +15,53 @@ SQLite también es compatible con extensiones que permiten seguridad para la int
 Se proponen 5 tablas, Clientes, Cuentas, Préstamos, CDP y transacciones.
 
 * Clientes: Almacena la información básica de cada cliente
-  * IdCliete
-  * Cédula
-  * Nombre
+  * IdCliente (PK) INT AUTO_AUTOINCREMENT,
+  * Cédula VARCHAR() UNIQUE NOT NULL,
+  * Nombre  VARCHAR() NOT NULL,
+  * Dirección TEXT, 
+  * Teléfono INT, 
+  * email  VARCHAR() UNIQUE,
 
+* Cuentas: Cuentas bancarias asociadas a los clientes
+  * IdCuenta (PK) INT AUTO_AUTOINCREMENT,
+  * IdCliente (FK) INT NOT NULL, 
+  * Tipo ENUM (colones, dólares) NOT NULL, .
+  * Saldo DECIMAL() DEFAULT 0.00,
+
+* Cuentas: Almacena información de las cuentas bancarias asociadas a los clientes
+  * IdCuenta (PK) INT AUTO_AUTOINCREMENT,
+
+* Créditos: Almacena información de los créditos asociados a los clientes
+  * IdPréstamo (PK) INT AUTO_AUTOINCREMENT, 
+  * IdCliente (FK) INT NOT NULL,
+  * Monto DECIMAL() NOT NULL, 
+  * Interés DECIMAL() NOT NULL, (pocentaje)
+  * Plazo INT NOT NULL, (en meses)
+  * CuotaMensual DECIMAL() NOT NULL, 
+  * Tipo ENUM (Hipotecario, Personal, Prendario) NOT NULL, 
+
+* CDP: Almacena Información de los certificados de deposito a plazo de los clientes
+  * IdCDP (PK) INT AUTO_INCREMENNT,
+  * IdCliente (FK) INT NOT NULL, 
+  * Monto DECIMAL() NOT NULL, 
+  * TazaInterés DECIMAL() NOT NULL, (pocentaje)
+  * Plazo INT NOT NULL, (en meses)
+  * FechaInicio DATE NOT NULL,
+
+* Transacciones: Funciona como registro de las transacciones realiadas a las cuentas.
+  * IdTransacción (PK) INT AUTO_INCREMENT,
+  * IdCliente (FK) INT NOT NULL,
+  * Tipo ENUM (Deposito, Retiro, Transferencia, Abono) NOT NULL, 
+  * Fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+### Seguridad de la Base de Datos
+Para la integridad de los datos finacieros de los clientes se propone lo siguiente
+
+ * Cifrado de la base de datos, es posible con extensiones a SQLite como SQLCypher, el cual con algoritos de cifrado, garantiza que la información no va ser legible cin las claves correspondientes.
+
+ * Controles de acceso robustos, con permisos estrictos a los directorios, limitando el poder de escribir, leer o ejectur solo para usuarios autotizados.
+
+ * Utilización de archivos journal, implementados en SQLite, los cuales son archivos temporales, los cuales funcionan como respalda en el caso de que una transacción no se complete adecuadamente, permitiendo revertir los datos si se corrompen o debido a cualquier eventualidad.
+
+ * Protección contra inyecciones SQL, haciendo un código SQL robusto con sentencias preparadas para evitar inyecciones SQL, evitando que las lineas ingresadas por personas malintenciondas se puedan interpretar como código SQL
 
