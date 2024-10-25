@@ -107,8 +107,69 @@ Para la integridad de los datos finacieros de los clientes se propone lo siguien
  * Protección contra inyecciones SQL, haciendo un código SQL robusto con sentencias preparadas para evitar inyecciones SQL, evitando que las lineas ingresadas por personas malintenciondas se puedan interpretar como código SQL
 
 ### Generación de reportes de préstamos
-Para generar reportes bancarios es necesario poder implementar el código en este caso en C++ y que este se conecte de manera adecuada a la base de datos, donde estan almacenados los registros.
+Para generar reportes bancarios es necesario poder implementar el código, para el cual se utilizará el lenguaje C++, de manera que este se conecte de manera adecuada a la base de datos, donde estan almacenados los registros.
 El código recolecta por parte del usuario en la interfaz el número de ID del prestamo del cual se quiere generar el reporte. Una vez corroborado de que el ID del prestamo es existente, por medio de consultas SQL recolecta información de la base de datos, por medio de funciones se calculan las cuotas pagadas, el aporta al capital y los intereses pagados, por medio de extensiones o librerías como csv.h o libharu.h es posible presentar estos datos en formato CSV o PDF, por último se pueden almacenar estos reportes en directorios específicos.
 
 ### Automatización de pruebas
-Para esto se pueden utilizar librerías como google test gtest/gtest.h pero automatizar procesos de pruebas dentro del código c++,....
+Para esto se pueden utilizar librerías como el framework de pruebas Google Test (gtest/gtest.h) en C++ para desarrollar pruebas automatizadas que validan las distintas funciones del sistema.
+Entonces, luego de esta implementación, es necesario hacer di stintas pruebas a las funciones del sistema para verificar su correcto funcionamiento. A continuación se tiene un ejemplo de cómo se vería una prueba para la función de depositar utilizando el framework de Google Test:\
+
+```cpp
+#include 1gtest/gtest.h1
+#include 1mi_sistema_bancario.h1
+
+// Prueba para la función de depósito
+TEST(SistemaBancarioTest, DepositoIncrementaSaldo) {
+    Cuenta cuenta;
+    cuenta.depositar(100); // Depositar 100
+    EXPECT_EQ(cuenta.getSaldo(), 100); // Verificar que el saldo sea 100
+}
+```
+
+A continuación se listan los tipos de pruebas que serán necesarios:
+
+**Pruebas de Integración con la Base de Datos:** 
+- **Validación de Consultas SQL:** Verificar que las consultas SQL devuelvan resultados correctos para operaciones de préstamo. 
+- **Pruebas de Conexión y Desconexión:** Confirmar que el sistema se conecte y desconecte de SQLite correctamente.
+
+**Pruebas de Funcionalidades Clave:**  
+- **Pruebas de Transacciones:** Validar depósitos, retiros, transferencias y pagos de servicios, asegurando que se registren en la base de datos. 
+- **Pruebas de Seguridad y Autenticación:** Asegurar que solo usuarios autorizados puedan acceder mediante usuario y contraseña.
+
+**Pruebas de Rendimiento:** 
+- **Simulación de múltiples usuarios y transacciones simultáneas:** Asegurar que el sistema gestione cargas sin errores. 
+- **Evaluación de respuesta ante grandes volúmenes de datos:** Identificar posibles cuellos de botella en la base de datos.
+
+**Pruebas de Generación de Reportes:** 
+- **Verificación de la Exactitud del Reporte:** Asegurar que los reportes generen la información correcta, con desglose de pagos en formato tabular.
+- **Confirmación de Almacenamiento y Descarga:** Verificar que los reportes se almacenen correctamente y se puedan descargar en los formatos especificados.
+
+**Pruebas de Frontera:** 
+- **Saldo justo y operaciones límite:** Verifica el comportamiento del sistema al realizar transacciones con el saldo exacto o en el límite permitido. 
+- **Máximos y mínimos de transacciones:** Asegura que el sistema maneje correctamente montos extremos dentro de los límites definidos.
+
+**Pruebas de Error de Entrada:**  
+- **ID de préstamo no existente:** Valida que el sistema maneje adecuadamente intentos de acceso a préstamos que no existen. 
+- **Montos negativos y caracteres no válidos:** Prueba el sistema con datos no válidos en campos numéricos y verifica el manejo de errores.
+
+**Pruebas de Manejo de Errores de Conexión:** 
+- **Desconexión inesperada:** Simula la pérdida de conexión durante una transacción para asegurar que el sistema mantenga la integridad de los datos. 
+- **Reintentos de conexión y consistencia:** Verifica que el sistema reintente la conexión sin corrupción de datos tras una reconexión exitosa.
+
+**Pruebas de Seguridad Adicionales:**  
+- **Acceso no autorizado:** Asegura que las cuentas y funciones no se accedan sin la autenticación adecuada. 
+- **Cierre seguro de sesiones:** Verifica que al cerrar la sesión, no quede información residual accesible para futuros usuarios.
+
+**Pruebas de Persistencia de Datos:** 
+- **Validación de datos tras reinicio:** Asegura que los datos ingresados se mantengan intactos en la base de datos luego de reiniciar el sistema. 
+- **Verificación de integridad tras operaciones sucesivas:** Confirma que transacciones consecutivas se reflejen correctamente en la base de datos.
+
+**Pruebas de Concurrencia:** 
+- **Operaciones simultáneas en múltiples cuentas:** Prueba la base de datos con varias transacciones en paralelo para verificar la gestión de concurrencia. 
+- **Prevención de condiciones de carrera:** Asegura que no haya conflictos al acceder a datos compartidos por varias operaciones.
+
+**Pruebas de Funcionalidad de Reportes para Distintas Condiciones:** 
+- **Reporte sin transacciones:** Verifica que el sistema genere un reporte adecuado aun cuando no haya transacciones registradas. 
+- **Reporte con cuotas pagadas y parciales:** Asegura que el desglose de cuotas en el reporte refleje correctamente los pagos realizados, pendientes y acumulados.
+
+Al realizar todas estas pruebas se podrá validar el correcto funcionamiento del sistema.
