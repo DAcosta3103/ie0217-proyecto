@@ -183,6 +183,8 @@ Para facilidad del uso del sistema, se implementarán 3 menús: uno principal pa
 
 ![Menú de gestión de préstamos](imagenes/ProyectoMenuPrestamos.png)
 
+La información referente a cada opción del menú corresponde a la discutida en la sección de requisitos funcionales del sistema. Estos tres menús deberían cumplir con todas las características requeridas para el correcto funcionamiento del sistema, de manera que el usuario podrá elegir entre las opciones correspondientes para cada menú, o bien usar una opción de salir para volver al menú principal. 
+
 # Cronograma de Proyecto
 
 ## Fechas Importantes
