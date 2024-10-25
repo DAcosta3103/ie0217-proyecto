@@ -174,6 +174,14 @@ A continuación se listan los tipos de pruebas que serán necesarios:
 
 Al realizar todas estas pruebas se podrá validar el correcto funcionamiento del sistema. Sin embargo, cabe destacar que no todas las pruebas son fácilmente automatizables, como la prueba de frontera o error de entrada, pero se intentará automatizar todas las que sean posibles.
 
+# Diseño de los menús a implementar
+Para facilidad del uso del sistema, se implementarán 3 menús: uno principal para elegir el módulo (atención a cliente o gestión de préstamos), y luego un menú correspondiente para cada módulo.
+
+![Menú principal](imagenes/ProyectoMenuPrincipal.png)
+
+![Menú de atención al cliente](imagenes/ProyectoMenuAtencionCliente.png)
+
+![Menú de gestión de préstamos](imagenes/ProyectoMenuPrestamos.png)
 
 # Cronograma de Proyecto
 
@@ -188,11 +196,10 @@ Al realizar todas estas pruebas se podrá validar el correcto funcionamiento del
 |-------------|------------------------|-------------------------------------|----------------------------------|
 | Periodo 1   | 26 - 27 Oct            | [  Investigación sobre base de datos, la conexión de este con el código implementado en C++, temas de seguridad con respecto a esta base de datos y la estructura que debe tener. Investigación sobre la generación de reportes y automatización de pruebas]                                 | [ Investigación sobre la experiencia del usuario y sobre el funcionamiento de los opciones que ofrece este sistema bancario para la personalización de cuotas, tasas montos etc. También parte de la investigación sobre la automatización de pruebas]                              |
 | **Entrega** | <span style="color:green">25 Oct</span> | [ ] Revisión y Entrega              | [ ] Revisión y Entrega            |
-| Periodo 2   | 28 Oct - 3 Nov         | [ ]                                 | [ ]                              |
-| Periodo 3   | 4 - 7 Nov              | [ ]                                 | [ ]                              |
+| Periodo 2   | 28 Oct - 3 Nov         | [ Implementación de la base de datos en SQLite]                                 | [ Implementación de las funciones del sistema]                              |
+| Periodo 3   | 4 - 7 Nov              | [ Seguir con el trabajo asignado ]                                 | [ Seguir con el trabajo asignado ]                              |
 | **Entrega** | <span style="color:green">8 Nov</span> | [ ] Revisión y Entrega              | [ ] Revisión y Entrega            |
-| Periodo 4   | 9 - 10 Nov             | [ ]                                 | [ ]                              |
-| Periodo 5   | 11 - 17 Nov            | [ ]                                 | [ ]                              |
-| Periodo 6   | 18 - 24 Nov            | [ ]                                 | [ ]                              |
-| Periodo 7   | 25 Nov                 | [ ]                                 | [ ]                              |
+| Periodo 4   | 9 - 10 Nov             | [ Implementación del código de C++ a la base de datos ]                                 | [ Implementación de pruebas automáticas ]                              |
+| Periodo 5   | 11 - 17 Nov            | [ Seguir con el trabajo asignado ]                                 | [ Seguir con el trabajo asignado ]                              |
+| Periodo 6   | 18 - 24 Nov            | [ Verificar el correcto funcionamiento del sistema con todas las implementaciones ]                                 | [ Verificar el funcionamiento del sistema con todas las implementaciones ]                              |                       |
 | **Entrega** | <span style="color:green">26 Nov</span> | [ ] Revisión y Entrega              | [ ] Revisión y Entrega            |
