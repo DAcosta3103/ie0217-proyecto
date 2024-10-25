@@ -156,10 +156,6 @@ A continuación se listan los tipos de pruebas que serán necesarios:
 - **Desconexión inesperada:** Simula la pérdida de conexión durante una transacción para asegurar que el sistema mantenga la integridad de los datos. 
 - **Reintentos de conexión y consistencia:** Verifica que el sistema reintente la conexión sin corrupción de datos tras una reconexión exitosa.
 
-**Pruebas de Seguridad Adicionales:**  
-- **Acceso no autorizado:** Asegura que las cuentas y funciones no se accedan sin la autenticación adecuada. 
-- **Cierre seguro de sesiones:** Verifica que al cerrar la sesión, no quede información residual accesible para futuros usuarios.
-
 **Pruebas de Persistencia de Datos:** 
 - **Validación de datos tras reinicio:** Asegura que los datos ingresados se mantengan intactos en la base de datos luego de reiniciar el sistema. 
 - **Verificación de integridad tras operaciones sucesivas:** Confirma que transacciones consecutivas se reflejen correctamente en la base de datos.
