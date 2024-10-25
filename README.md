@@ -186,8 +186,7 @@ Al realizar todas estas pruebas se podrá validar el correcto funcionamiento del
 
 | **Periodo** | **Fecha**              | **Propósito**         | **Christian Tareas**                | **Diego Tareas**                 |Comprender el funcionamiento de 
 |-------------|------------------------|-----------------------|-------------------------------------|----------------------------------|
-| Periodo 1   | 26 - 27 Oct            |                       | [ Investigación sobre base de datos, la conexión de este con el código implementado en C++, temas de seguridad con respecto a esta base de datos y la estructura que debe tener.
-Investigación sobre la generación de reportes y automatización de pruebas]                                 | [ ]                              |
+| Periodo 1   | 26 - 27 Oct            |                       | []                                 | [ ]                              |
 | **Entrega** | <span style="color:green">25 Oct</span> | **Propuesta**         | [ ] Revisión y Entrega              | [ ] Revisión y Entrega            |
 | Periodo 2   | 28 Oct - 3 Nov         |                       | [ ]                                 | [ ]                              |
 | Periodo 3   | 4 - 7 Nov              |                       | [ ]                                 | [ ]                              |
