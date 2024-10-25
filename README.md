@@ -8,16 +8,16 @@ El cliente será capaz de crear hasta dos cuentas de ahorro, donde cada una pued
 - **Depósitos a la cuenta del cliente:** El cliente será capaz de abonar dinero a su(s) cuenta(s).
 - **retiros de la cuenta del cliente:** El cliente será capaz de retirar dinero desde una o ambas de sus cuentas.
 - **Transferencia entre cuentas:** Un cliente será capaz de transferir dinero a la cuenta de otro cliente distinto.
-- **Pago de servicios:** El cliente será capz de realizar un pago para servicios básicos, como agua, luz o internet, cuyos montos estarán predefinidos.
+- **Pago de servicios:** El cliente será capaz de realizar un pago para servicios básicos, como agua, luz o internet, cuyos montos estarán predefinidos.
 - **Compra de CDP:** Cada cliente será capaz de realizar la compra de un Certificado de Depósito a Plazo (CDP), donde será capaz de elegir el plazo de tiempo en meses. También el cliente será informado de la tasa de interés correspondiente.
 - **Tipo de cambio:** El cliente será capaz de revisar el tipo de cambio entre dólares y colones, el cual será un valor predefinido.
 - **Bloqueo y desbloqueo de cuentas:** Cada cliente será capaz de bloquear su cuenta en caso de que sospeche fraude o robo, de manera que no se permitirán depósitos o retiros de la cuenta hasta que el cliente la desbloquee.
-- **Ver registro de transacciones:** Cada cliente será capaz de revisar el registro de las transsacciones realizadas desde su cuenta, como pagos, depósitos, retiros, etc.
+- **Ver registro de transacciones:** Cada cliente será capaz de revisar el registro de las transacciones realizadas desde su cuenta, como pagos, depósitos, retiros, etc.
 
 ### Gestión de Préstamos
 Ahora bien, a continuación se describen las funciones del módulo referente a todo lo que tiene que ver con los préstamos bancarios:
 **Tipos de Préstamos:** El sistema debe ofrecer opciones de préstamos, incluyendo:
-- **Préstamos Peronales:** Para uso general, con tasas de interés fijas.
+- **Préstamos Personales:** Para uso general, con tasas de interés fijas.
 - **Préstamos Hipotecarios:** A largo plazo, destinado a la compra de propiedades, con opciones de pago a plazos largos y tasas fijas.
 - **Préstamos Prendarios:** Producto de financiación para la adquisición de bienes muebles registrables. Tiene una tasa de interés fija.
 
@@ -31,25 +31,25 @@ También hay que definir el **Pago y Cálculo de Intereses**, lo cual es informa
 - **Método de Pago:** Ya que el cobro del préstamo será mensual, el cliente será capaz de abonar una cantidad a su elección, de manera que puede pagar varios meses en una sola transacción, si así lo desea. Tras cada pago, el sistema actualizará el monto debido por el cliente.
 
 Otras opciones importantes para la gestión de préstamos se detallan a continuación:
-- **Ver tabla sobre información del préstamo:** Opción para que el cliente pueda revisar linformación referente al préstamo que tenga, donde la información será desplegada en formato tabular. Esta opción va de la mano con la opción de **cuotas y desglose**. El cliente podrá ver los pagos restantes del préstamo, el interés que posee dicho préstamo, las cuotas restantes y las cuotas pagadas.
-- **Préstamos en dólares o colonres:** Esta opción permitirá al cliente realizar préstamos en el tipo de moneda deseado entre dólares y colones. Asimismo, el cliente podrá ver la tasa de interés, el plazo en meses y cuota mensual referente a su préstamo, lo cuál se manejará en la opción de **ver tabla sobre infromación del préstamo**.
+- **Ver tabla sobre información del préstamo:** Opción para que el cliente pueda revisar la información referente al préstamo que tenga, donde la información será desplegada en formato tabular. Esta opción va de la mano con la opción de **cuotas y desglose**. El cliente podrá ver los pagos restantes del préstamo, el interés que posee dicho préstamo, las cuotas restantes y las cuotas pagadas.
+- **Préstamos en dólares o colones:** Esta opción permitirá al cliente realizar préstamos en el tipo de moneda deseado entre dólares y colones. Asimismo, el cliente podrá ver la tasa de interés, el plazo en meses y cuota mensual referente a su préstamo, lo cuál se manejará en la opción de **ver tabla sobre información del préstamo**.
  
 
 ### Identificación y Seguridad del Cliente
 Ya que estamos trabajando con un sistema bancario, es necesario tomar en cuenta la importancia de la seguridad de los datos del cliente. Para esto, se definen el siguiente **método de autenticación** 
-- **Nombre de Usuario y Contraseña:** Esquema básico para el manejo personal de una cuenta por cliente, el cual puede incluir requisitos de complejidad para la contraseña, como el uso de mayúsculas o carácteres numéricos. Es un método sencillo pero robusto, utilizado por los bancos estatales costarricenses, y apto par ala inclusión en el código sin necesidad de utilizar aplicaciones terceras. Para mayor seguridad, la contraseña se guardará como un hash, y cada cliente será asignado un número del 0 al 999,999,999; donde dicho número para representar a los clientes se manejará internamente en el programa. Se utilizará la función hash _SHA-256_.
+- **Nombre de Usuario y Contraseña:** Esquema básico para el manejo personal de una cuenta por cliente, el cual puede incluir requisitos de complejidad para la contraseña, como el uso de mayúsculas o carácteres numéricos. Es un método sencillo pero robusto, utilizado por los bancos estatales costarricenses, y apto para la inclusión en el código sin necesidad de utilizar aplicaciones terceras. Para mayor seguridad, la contraseña se guardará como un hash, y cada cliente será asignado un número del 0 al 999,999,999; donde dicho número para representar a los clientes se manejará internamente en el programa. Se utilizará la función hash _SHA-256_.
 
 
 
 ## Base de datos
-### Razones para utilizar SQLte
-Para la implementación de la base de datos de este sistema bancario se va utilizar el motor SQLite, esto debido a su ligereza y ágilidad en operaciones de lectura y escritura, lo que lo hace una adecuada opción para contextos donde se necesite un movimiento de datos instantáneo como es el caso de un sistema bancario.
+### Razones para utilizar SQLite
+Para la implementación de la base de datos de este sistema bancario se va utilizar el motor SQLite, esto debido a su ligereza y agilidad en operaciones de lectura y escritura, lo que lo hace una adecuada opción para contextos donde se necesite un movimiento de datos instantáneo como es el caso de un sistema bancario.
 
-Además de esto, es un motor ofrece las características que se le conocen como ACID (atomicity, consistency, isolation, durability), lo que significa que este motor asegura que todas o ninguna operación dentro de una transacción se va realizar (no deja una transacción a medias), ademas de que cada transacción va ser independiente de las demás, por lo que no van a afectar a otras operaciones; y por ultimo, que las operaciones realizadas no podrán deshacerse, evitando de esta forma errores o estados incompletos.
+Además de esto, es un motor ofrece las características que se le conocen como ACID (atomicity, consistency, isolation, durability), lo que significa que este motor asegura que todas o ninguna operación dentro de una transacción se va realizar (no deja una transacción a medias), además de que cada transacción va a ser independiente de las demás, por lo que no van a afectar a otras operaciones; y por ultimo, que las operaciones realizadas no podrán deshacerse, evitando de esta forma errores o estados incompletos.
 
-Por otro lado, SQLite ofrece compatibiliad con múltiples plataformas y distintos lenguanges de programación, lo que hace posible poder integrarlo a entornos diferentes y a distintas tecnologías como lo puede ser aplicaciones móviles, web etc. Esta flexibilidad lo hace excelente para temas de un código escalable, ya que garantiza una fácil adaptación para futuras mejoras, actualizaciones, mantenimiento etc. 
+Por otro lado, SQLite ofrece compatibilidad con múltiples plataformas y distintos lenguages de programación, lo que hace posible poder integrarlo a entornos diferentes y a distintas tecnologías como lo puede ser aplicaciones móviles, web etc. Esta flexibilidad lo hace excelente para temas de un código escalable, ya que garantiza una fácil adaptación para futuras mejoras, actualizaciones, mantenimiento etc. 
 
-SQLite también es compatible con extensiones que permiten seguridad para la integridad de la base datos como cifradores o gestores de claves, ademas de poder ofrecer mecanismos de control de acceso. Extensiones como SQLCypher son compatibles con SQLite el cual proporciona cifrados avanzados a la base de datos bajo algoritmos, lo que asegura que los datos permanezcan seguros frente a accesos no autorizados.
+SQLite también es compatible con extensiones que permiten seguridad para la integridad de la base datos como cifradores o gestores de claves, además de poder ofrecer mecanismos de control de acceso. Extensiones como SQLCypher son compatibles con SQLite el cual proporciona cifrados avanzados a la base de datos bajo algoritmos, lo que asegura que los datos permanezcan seguros frente a accesos no autorizados.
 
 
 ### Estructura de la Base de datos.
@@ -100,19 +100,19 @@ Para la integridad de los datos finacieros de los clientes se propone lo siguien
 
  * Cifrado de la base de datos, es posible con extensiones a SQLite como SQLCypher, el cual con algoritos de cifrado, garantiza que la información no va ser legible cin las claves correspondientes.
 
- * Controles de acceso robustos, con permisos estrictos a los directorios, limitando el poder de escribir, leer o ejectur solo para usuarios autotizados.
+ * Controles de acceso robustos, con permisos estrictos a los directorios, limitando el poder de escribir, leer o ejectur solo para usuarios autorizados.
 
- * Utilización de archivos journal, implementados en SQLite, los cuales son archivos temporales, los cuales funcionan como respalda en el caso de que una transacción no se complete adecuadamente, permitiendo revertir los datos si se corrompen o debido a cualquier eventualidad.
+ * Utilización de archivos journal, implementados en SQLite, los cuales son archivos temporales, los cuales funcionan como respaldo en el caso de que una transacción no se complete adecuadamente, permitiendo revertir los datos si se corrompen o debido a cualquier eventualidad.
 
- * Protección contra inyecciones SQL, haciendo un código SQL robusto con sentencias preparadas para evitar inyecciones SQL, evitando que las lineas ingresadas por personas malintenciondas se puedan interpretar como código SQL
+ * Protección contra inyecciones SQL, haciendo un código SQL robusto con sentencias preparadas para evitar inyecciones SQL, evitando que las lineas ingresadas por personas malintencionadas se puedan interpretar como código SQL
 
 ### Generación de reportes de préstamos
-Para generar reportes bancarios es necesario poder implementar el código, para el cual se utilizará el lenguaje C++, de manera que este se conecte de manera adecuada a la base de datos, donde estan almacenados los registros.
-El código recolecta por parte del usuario en la interfaz el número de ID del prestamo del cual se quiere generar el reporte. Una vez corroborado de que el ID del prestamo es existente, por medio de consultas SQL recolecta información de la base de datos, por medio de funciones se calculan las cuotas pagadas, el aporta al capital y los intereses pagados, por medio de extensiones o librerías como csv.h o libharu.h es posible presentar estos datos en formato CSV o PDF, por último se pueden almacenar estos reportes en directorios específicos.
+Para generar reportes bancarios es necesario poder implementar el código, para el cual se utilizará el lenguaje C++, de manera que este se conecte de manera adecuada a la base de datos, donde están almacenados los registros.
+El código recolecta por parte del usuario en la interfaz el número de ID del préstamo del cual se quiere generar el reporte. Una vez corroborado de que el ID del préstamo es existente, por medio de consultas SQL recolecta información de la base de datos, por medio de funciones se calculan las cuotas pagadas, el aporta al capital y los intereses pagados, por medio de extensiones o librerías como csv.h o libharu.h es posible presentar estos datos en formato CSV o PDF, por último se pueden almacenar estos reportes en directorios específicos.
 
 ### Automatización de pruebas
 Para esto se pueden utilizar librerías como el framework de pruebas Google Test (gtest/gtest.h) en C++ para desarrollar pruebas automatizadas que validan las distintas funciones del sistema.
-Entonces, luego de esta implementación, es necesario hacer di stintas pruebas a las funciones del sistema para verificar su correcto funcionamiento. A continuación se tiene un ejemplo de cómo se vería una prueba para la función de depositar utilizando el framework de Google Test:\
+Entonces, luego de esta implementación, es necesario hacer distintas pruebas a las funciones del sistema para verificar su correcto funcionamiento. A continuación se tiene un ejemplo de cómo se vería una prueba para la función de depositar utilizando el framework de Google Test:\
 
 ```cpp
 #include 1gtest/gtest.h1
