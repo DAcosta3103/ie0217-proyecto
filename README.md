@@ -1,7 +1,7 @@
 # ie0217-proyecto
 
 ## Requisitos funcionales de la base de datos
-Ya que el cliente debe elegir entre las modalidades de atención al cliente o información sobre préstamos, hay que definir qué funciones tiene cada modalidad. A continuación se especifican los tipos de cuentas bancarias que los clientes pueden tener, así como la gestión de infromación sobre préstamos.
+Ya que el cliente debe elegir entre las modalidades de atención al cliente o información sobre préstamos, hay que definir qué funciones tiene cada modalidad. A continuación se especifican los tipos de cuentas bancarias que los clientes pueden tener, así como la gestión de información sobre préstamos.
 ### Definición de operaciones bancarias para atención al cliente
 
 El cliente será capaz de crear hasta dos cuentas de ahorro, donde cada una puede ser en dólares o colones. Las operaciones para esta modalidad son las siguientes:
@@ -172,4 +172,4 @@ A continuación se listan los tipos de pruebas que serán necesarios:
 - **Reporte sin transacciones:** Verifica que el sistema genere un reporte adecuado aun cuando no haya transacciones registradas. 
 - **Reporte con cuotas pagadas y parciales:** Asegura que el desglose de cuotas en el reporte refleje correctamente los pagos realizados, pendientes y acumulados.
 
-Al realizar todas estas pruebas se podrá validar el correcto funcionamiento del sistema.
+Al realizar todas estas pruebas se podrá validar el correcto funcionamiento del sistema. Sin embargo, cabe destacar que no todas las pruebas son fácilmente automatizables, como la prueba de frontera o error de entrada, pero se intentará automatizar todas las que sean posibles.
