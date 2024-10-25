@@ -1,18 +1,59 @@
 # ie0217-proyecto
 
+## Requisitos funcionales de la base de datos
+Ya que el cliente debe elegir entre las modalidades de atención al cliente o información sobre préstamos, hay que definir qué funciones tiene cada modalidad. A continuación se especifican los tipos de cuentas bancarias que los clientes pueden tener, así como la gestión de infromación sobre préstamos.
+### Definición de operaciones bancarias para atención al cliente
+
+El cliente será capaz de crear hasta dos cuentas de ahorro, donde cada una puede ser en dólares o colones. Las operaciones para esta modalidad son las siguientes:
+- **Depósitos a la cuenta del cliente:** El cliente será capaz de abonar dinero a su(s) cuenta(s).
+- **retiros de la cuenta del cliente:** El cliente será capaz de retirar dinero desde una o ambas de sus cuentas.
+- **Transferencia entre cuentas:** Un cliente será capaz de transferir dinero a la cuenta de otro cliente distinto.
+- **Pago de servicios:** El cliente será capz de realizar un pago para servicios básicos, como agua, luz o internet, cuyos montos estarán predefinidos.
+- **Compra de CDP:** Cada cliente será capaz de realizar la compra de un Certificado de Depósito a Plazo (CDP), donde será capaz de elegir el plazo de tiempo en meses. También el cliente será informado de la tasa de interés correspondiente.
+- **Tipo de cambio:** El cliente será capaz de revisar el tipo de cambio entre dólares y colones, el cual será un valor predefinido.
+- **Bloqueo y desbloqueo de cuentas:** Cada cliente será capaz de bloquear su cuenta en caso de que sospeche fraude o robo, de manera que no se permitirán depósitos o retiros de la cuenta hasta que el cliente la desbloquee.
+- **Ver registro de transacciones:** Cada cliente será capaz de revisar el registro de las transsacciones realizadas desde su cuenta, como pagos, depósitos, retiros, etc.
+
+### Gestión de Préstamos
+Ahora bien, a continuación se describen las funciones del módulo referente a todo lo que tiene que ver con los préstamos bancarios:
+**Tipos de Préstamos:** El sistema debe ofrecer opciones de préstamos, incluyendo:
+- **Préstamos Peronales:** Para uso general, con tasas de interés fijas.
+- **Préstamos Hipotecarios:** A largo plazo, destinado a la compra de propiedades, con opciones de pago a plazos largos y tasas fijas.
+- **Préstamos Prendarios:** Producto de financiación para la adquisición de bienes muebles registrables. Tiene una tasa de interés fija.
+
+Ahora bien, para pagar los préstamos deben haber distintas **opciones de pago** para los clientes. A continuación se documentan configuraciones posibles para ver que el cliente se informe y poder pagar su préstamo: 
+- **Frecuencia de Pago:** Opciones de pago mensual, trimestral, o anual, dependiendo de cuántos meses quiere pagar el cliente.
+- **Cuotas y Desglose:** Cada cuota debe desglosarse en capital e interés para que el cliente vea cuánto se destina a la deuda principal y a intereses. Esta información se le desplegará al cliente en formato tabular.
+- **Actualización del Saldo de Préstamo:** Cada pago debe reflejarse en el saldo del préstamo, actualizándose de acuerdo con el monto pagado.
+
+También hay que definir el **Pago y Cálculo de Intereses**, lo cual es información importante para el cliente que consulta: 
+- **Cálculo de Intereses:** Basado en el saldo pendiente, tasa de interés y período de tiempo restante. Con esta opción el cliente será capaz de ver cuánto deberá pagar en intereses.
+- **Método de Pago:** Ya que el cobro del préstamo será mensual, el cliente será capaz de abonar una cantidad a su elección, de manera que puede pagar varios meses en una sola transacción, si así lo desea. Tras cada pago, el sistema actualizará el monto debido por el cliente.
+
+Otras opciones importantes para la gestión de préstamos se detallan a continuación:
+- **Ver tabla sobre información del préstamo:** Opción para que el cliente pueda revisar linformación referente al préstamo que tenga, donde la información será desplegada en formato tabular. Esta opción va de la mano con la opción de **cuotas y desglose**. El cliente podrá ver los pagos restantes del préstamo, el interés que posee dicho préstamo, las cuotas restantes y las cuotas pagadas.
+- **Préstamos en dólares o colonres:** Esta opción permitirá al cliente realizar préstamos en el tipo de moneda deseado entre dólares y colones. Asimismo, el cliente podrá ver la tasa de interés, el plazo en meses y cuota mensual referente a su préstamo, lo cuál se manejará en la opción de **ver tabla sobre infromación del préstamo**.
+ 
+
+### Identificación y Seguridad del Cliente
+Ya que estamos trabajando con un sistema bancario, es necesario tomar en cuenta la importancia de la seguridad de los datos del cliente. Para esto, se definen el siguiente **método de autenticación** 
+- **Nombre de Usuario y Contraseña:** Esquema básico para el manejo personal de una cuenta por cliente, el cual puede incluir requisitos de complejidad para la contraseña, como el uso de mayúsculas o carácteres numéricos. Es un método sencillo pero robusto, utilizado por los bancos estatales costarricenses, y apto par ala inclusión en el código sin necesidad de utilizar aplicaciones terceras. Para mayor seguridad, la contraseña se guardará como un hash, y cada cliente será asignado un número del 0 al 999,999,999; donde dicho número para representar a los clientes se manejará internamente en el programa. Se utilizará la función hash _SHA-256_.
+
+
 
 ## Base de datos
 ### Razones para utilizar SQLte
 Para la implementación de la base de datos de este sistema bancario se va utilizar el motor SQLite, esto debido a su ligereza y ágilidad en operaciones de lectura y escritura, lo que lo hace una adecuada opción para contextos donde se necesite un movimiento de datos instantáneo como es el caso de un sistema bancario.
 
-Además de esto es un motor ofrece las características que se le conocen como ACID (atomicity, consistency, isolation, durability), lo que significa que este motor asegura que todas o ninguna operación dentro de una transacción se va realizar (no deja una transacción a medias), ademas de que cada transacción va ser independiente de las demás, por lo que no van a afectar a otras operaciones y por ultimo que las operaciones realizadas no podrán deshacerse, evitando de esta forma errores o estados incompletos.
+Además de esto, es un motor ofrece las características que se le conocen como ACID (atomicity, consistency, isolation, durability), lo que significa que este motor asegura que todas o ninguna operación dentro de una transacción se va realizar (no deja una transacción a medias), ademas de que cada transacción va ser independiente de las demás, por lo que no van a afectar a otras operaciones; y por ultimo, que las operaciones realizadas no podrán deshacerse, evitando de esta forma errores o estados incompletos.
 
-Por otro lado SQLite ofrece compatibiliad con múltiples plataformas y distintos lenguanges de programación, lo que hace posible poder integrarlo a entornos diferentes y a distintas tecnologías como lo puede ser aplicaciones móviles, web etc. Esta flexibilidad lo hace excelente para temas de un código escalable, ya que garantiza una fácil adaptación para futuras mejoras, actualizaciones, mantenimiento etc.
+Por otro lado, SQLite ofrece compatibiliad con múltiples plataformas y distintos lenguanges de programación, lo que hace posible poder integrarlo a entornos diferentes y a distintas tecnologías como lo puede ser aplicaciones móviles, web etc. Esta flexibilidad lo hace excelente para temas de un código escalable, ya que garantiza una fácil adaptación para futuras mejoras, actualizaciones, mantenimiento etc. 
 
 SQLite también es compatible con extensiones que permiten seguridad para la integridad de la base datos como cifradores o gestores de claves, ademas de poder ofrecer mecanismos de control de acceso. Extensiones como SQLCypher son compatibles con SQLite el cual proporciona cifrados avanzados a la base de datos bajo algoritmos, lo que asegura que los datos permanezcan seguros frente a accesos no autorizados.
 
+
 ### Estructura de la Base de datos.
-Se proponen 5 tablas, Clientes, Cuentas, Préstamos, CDP y transacciones.
+Para la estructura de la base de datos a realizar, se proponen 5 tablas: Clientes, Cuentas, Préstamos, CDP y transacciones.
 
 * Clientes: Almacena la información básica de cada cliente
   * IdCliente (PK) INT AUTO_AUTOINCREMENT,
@@ -35,20 +76,20 @@ Se proponen 5 tablas, Clientes, Cuentas, Préstamos, CDP y transacciones.
   * IdPréstamo (PK) INT AUTO_AUTOINCREMENT, 
   * IdCliente (FK) INT NOT NULL,
   * Monto DECIMAL() NOT NULL, 
-  * Interés DECIMAL() NOT NULL, (pocentaje)
+  * Interés DECIMAL() NOT NULL, (porcentaje)
   * Plazo INT NOT NULL, (en meses)
   * CuotaMensual DECIMAL() NOT NULL, 
   * Tipo ENUM (Hipotecario, Personal, Prendario) NOT NULL, 
 
-* CDP: Almacena Información de los certificados de deposito a plazo de los clientes
+* CDP: Almacena Información de los certificados de depósito a plazo de los clientes
   * IdCDP (PK) INT AUTO_INCREMENNT,
   * IdCliente (FK) INT NOT NULL, 
   * Monto DECIMAL() NOT NULL, 
-  * TazaInterés DECIMAL() NOT NULL, (pocentaje)
+  * TazaInterés DECIMAL() NOT NULL, (porcentaje)
   * Plazo INT NOT NULL, (en meses)
   * FechaInicio DATE NOT NULL,
 
-* Transacciones: Funciona como registro de las transacciones realiadas a las cuentas.
+* Transacciones: Funciona como registro de las transacciones realizadas a las cuentas.
   * IdTransacción (PK) INT AUTO_INCREMENT,
   * IdCliente (FK) INT NOT NULL,
   * Tipo ENUM (Deposito, Retiro, Transferencia, Abono) NOT NULL, 
