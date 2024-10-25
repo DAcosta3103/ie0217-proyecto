@@ -173,3 +173,26 @@ A continuación se listan los tipos de pruebas que serán necesarios:
 - **Reporte con cuotas pagadas y parciales:** Asegura que el desglose de cuotas en el reporte refleje correctamente los pagos realizados, pendientes y acumulados.
 
 Al realizar todas estas pruebas se podrá validar el correcto funcionamiento del sistema. Sin embargo, cabe destacar que no todas las pruebas son fácilmente automatizables, como la prueba de frontera o error de entrada, pero se intentará automatizar todas las que sean posibles.
+
+
+# Cronograma de Proyecto
+
+## Fechas Importantes
+- **Propuesta**: <span style="color:green">25 October 2024</span>
+- **Avance**: <span style="color:green">8 November 2024</span>
+- **Final**: <span style="color:green">26 November 2024</span>
+
+## Actividades
+
+| **Periodo** | **Fecha**              | **Propósito**         | **Christian Tareas**                | **Diego Tareas**                 |
+|-------------|------------------------|-----------------------|-------------------------------------|----------------------------------|
+| Periodo 1   | 26 - 27 Oct            |                       | [ ]                                 | [ ]                              |
+| **Entrega** | <span style="color:green">25 Oct</span> | **Propuesta**         | [ ] Revisión y Entrega              | [ ] Revisión y Entrega            |
+| Periodo 2   | 28 Oct - 3 Nov         |                       | [ ]                                 | [ ]                              |
+| Periodo 3   | 4 - 7 Nov              |                       | [ ]                                 | [ ]                              |
+| **Entrega** | <span style="color:green">8 Nov</span> | **Avance**            | [ ] Revisión y Entrega              | [ ] Revisión y Entrega            |
+| Periodo 4   | 9 - 10 Nov             |                       | [ ]                                 | [ ]                              |
+| Periodo 5   | 11 - 17 Nov            |                       | [ ]                                 | [ ]                              |
+| Periodo 6   | 18 - 24 Nov            |                       | [ ]                                 | [ ]                              |
+| Periodo 7   | 25 Nov                 |                       | [ ]                                 | [ ]                              |
+| **Entrega** | <span style="color:green">26 Nov</span> | **Final**             | [ ] Revisión y Entrega              | [ ] Revisión y Entrega            |
