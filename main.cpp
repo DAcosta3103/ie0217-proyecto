@@ -3,6 +3,7 @@
 using namespace std;
 void MenuAtencionAlCliente();
 void MenuGestionPrestamos();
+void SubMenuTipoPrestamos();
 
 int main() {
     int opcion;
@@ -22,10 +23,10 @@ int main() {
                 MenuGestionPrestamos();
                 break;
             case 3:
-                cout << "Saliendo del programa..." << endl;
+                cout << "Saliendo del programa" << endl;
                 break;
             default:
-                cout << "Opción no válida. Intente de nuevo." << endl;
+                cout << "Opción no válida. Intente de nuevo" << endl;
         }
 
     } while (opcion != 3);
@@ -74,9 +75,33 @@ void MenuGestionPrestamos() {
         cin >> subOpcion;
 
         switch (subOpcion) {
+            case 1:
+            SubMenuTipoPrestamos();
+            break;
+
             case 9:
                 cout << "Regresando al menú de módulos" << endl;
                 break;            
         }
     } while (subOpcion != 9);
+}
+
+void SubMenuTipoPrestamos(){
+    int subOpcion;
+
+    do {
+        cout << "\nElija una opción de préstamo" << endl;
+        cout << "1. Préstamo personal" << endl;
+        cout << "2. Préstamo prendario" << endl;
+        cout << "3. Préstamo hipotecario" << endl;
+        cout << "4. Regresar al menú de gestión de préstamos";
+        cout << "\nSeleccione una opción: ";
+        cin >> subOpcion;
+
+        switch (subOpcion){}
+
+
+
+
+    } while (subOpcion =! 4);
 }
