@@ -8,12 +8,19 @@ void SubMenuTipoPrestamos();
 int main() {
     int opcion;
     do {
-        cout << "\n Seleccione un módulo " << endl;
+        cout << "\nSeleccione un módulo " << endl;
         cout << "1. Atencion al cliente" << endl;
         cout << "2. Gestión de préstamos" << endl;
         cout << "3. Salir" << endl;
         cout << "Seleccione una opción: ";
         cin >> opcion;
+
+        if (cin.fail()) {
+            cin.clear(); 
+            cin.ignore(1000, '\n'); 
+            cout << "Entrada no válida. Por favor, ingrese un número" << endl;
+            continue; 
+        }
 
         switch (opcion) {
             case 1:
@@ -50,6 +57,13 @@ void MenuAtencionAlCliente() {
         cout << "Seleccione una opción: ";
         cin >> subOpcion;
 
+        if (cin.fail()) {
+            cin.clear(); 
+            cin.ignore(1000, '\n'); 
+            cout << "Entrada no válida. Por favor, ingrese un número" << endl;
+            continue; 
+        }
+
         switch (subOpcion) {
             case 9:
                 cout << "Regresando al menú de módulos" << endl;
@@ -73,6 +87,13 @@ void MenuGestionPrestamos() {
         cout << "9. Regresar al menú principal" << endl;
         cout << "Seleccione una opción: ";
         cin >> subOpcion;
+
+        if (cin.fail()) {
+            cin.clear(); 
+            cin.ignore(1000, '\n'); 
+            cout << "Entrada no válida. Por favor, ingrese un número" << endl;
+            continue; 
+        }
 
         switch (subOpcion) {
             case 1:
@@ -98,6 +119,13 @@ void SubMenuTipoPrestamos(){
         cout << "\nSeleccione una opción: ";
         cin >> subOpcion;
 
+        if (cin.fail()) {
+            cin.clear(); 
+            cin.ignore(1000, '\n'); 
+            cout << "Entrada no válida. Por favor, ingrese un número" << endl;
+            continue; 
+        }
+        
         switch (subOpcion){}
 
 
