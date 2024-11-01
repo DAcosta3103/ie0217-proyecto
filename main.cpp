@@ -15,11 +15,12 @@ int main() {
         cout << "Seleccione una opción: ";
         cin >> opcion;
 
+        //bucle para evaluar si la entra es válida
         if (cin.fail()) {
             cin.clear(); 
             cin.ignore(1000, '\n'); 
             cout << "Entrada no válida. Por favor, ingrese un número" << endl;
-            continue; 
+            continue;
         }
 
         switch (opcion) {
