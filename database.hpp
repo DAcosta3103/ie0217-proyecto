@@ -10,7 +10,7 @@ class Database {
 
 private:
     sqlite3* db;
-    void conectarDB(const string& nombreDB);
+    bool conectarDB(const string& nombreDB);
     void cerrarDB();
 
 public:
@@ -36,5 +36,5 @@ public:
     void mostrarMetodosPago();
     void verInformacionPrestamo(int prestamoId);
 
-};
+};  
 #endif // DATABASE_HPP

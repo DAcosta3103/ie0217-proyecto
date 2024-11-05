@@ -23,10 +23,10 @@ int main() {
 
         switch (opcion) {
             case 1:
-                MenuAtencionAlCliente();
+               // MenuAtencionAlCliente();
                 break;
             case 2:
-                MenuGestionPrestamos();
+               // MenuGestionPrestamos();
                 break;
             case 3:
                 cout << "Saliendo del programa" << endl;
