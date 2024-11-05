@@ -6,12 +6,30 @@ using namespace std;
 
 
 bool Database::conectarDB(const string& nombreDB) {
-    if (sqlite3_open(nombreDB.c_str(), &db) == SQLITE_OK) {
-        return true;
-    } else {
-        cerr << "Error al abrir la base de datos: " << sqlite3_errmsg(db) << endl;
+if (sqlite3_open("banco.db", &db) == SQLITE_OK) {
+    cout << "Conectado a la base de datos correctamente." << endl;
+} else {
+    cerr << "Error al abrir la base de datos: " << sqlite3_errmsg(db) << endl;
+    return false;
+}
+}
+
+Database::~Database() {
+    if (db) {
+        sqlite3_close(db);  // Cerrar la base de datos
+        cout << "Base de datos cerrada correctamente." << endl;
+    }
+}
+
+bool Database::ejecutarSQL(const char* sql) {
+    char* errorMessage = nullptr;
+    int result = sqlite3_exec(db, sql, nullptr, nullptr, &errorMessage);
+    if (result != SQLITE_OK) {
+        cerr << "Error al ejecutar SQL: " << errorMessage << endl;
+        sqlite3_free(errorMessage);  
         return false;
     }
+    return true;
 }
 
 Database::Database(){
@@ -27,5 +45,11 @@ Database::Database(){
         bloqueada INTEGER DEFAULT 0
     );
 )";
+    if (ejecutarSQL(sqlCreateTables)) {
+        cout << "Tabla 'cuentas' creada o ya existe." << endl;
+    } else {
+        cerr << "Error al crear la tabla 'cuentas'." << endl;
+    }
 
 }
+

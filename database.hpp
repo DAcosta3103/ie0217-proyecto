@@ -16,7 +16,8 @@ private:
 public:
     Database();
     ~Database();
-
+    
+    bool ejecutarSQL(const char *sql);
     void realizarDeposito(double monto);
     void realizarRetiro(double monto);
     void realizarTransferencia(double monto);

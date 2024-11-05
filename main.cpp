@@ -1,9 +1,12 @@
-// para correrlo en windows g++ -o main main.cpp  y ./main
+//  para correrlo en linux g++ -o banco main.cpp menu.cpp database.cpp -sqlite3
 #include <iostream>
 #include "menu.hpp"
+#include "database.hpp"
 using namespace std;
 
 int main() {
+    Database db;
+
     int opcion;
     do {
         cout << "\nSeleccione un módulo " << endl;
@@ -23,10 +26,10 @@ int main() {
 
         switch (opcion) {
             case 1:
-               // MenuAtencionAlCliente();
+               MenuAtencionAlCliente();
                 break;
             case 2:
-               // MenuGestionPrestamos();
+               MenuGestionPrestamos();
                 break;
             case 3:
                 cout << "Saliendo del programa" << endl;
