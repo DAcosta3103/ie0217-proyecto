@@ -5,9 +5,13 @@
 using namespace std;
 
 
+//funcion para ejecutar las sentencias
 bool Database::ejecutarSQL(const char* sql) {
+     //varible para mensaje de error, el cual es generado por sqlite3_exec
     char* errorMessage = nullptr;
     int result = sqlite3_exec(db, sql, nullptr, nullptr, &errorMessage);
+    
+    //manejo de error
     if (result != SQLITE_OK) {
         cerr << "Error al ejecutar SQL: " << errorMessage << endl;
         sqlite3_free(errorMessage);  
@@ -22,7 +26,7 @@ Database::Database() {
         return;
     }
 
-    // SQL para crear la tabla Clientes
+    //puntero que almacena la sentencia de caracteres SQl para crear la tabla si no existe
     const char* sqlCreateClientes = R"(
     CREATE TABLE IF NOT EXISTS Clientes (
         IdCliente INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -78,7 +82,7 @@ Database::Database() {
     );
     )";
 
-
+    //pasa el puntero con la sentencia SQL a sqlite3_exec para ejecutarlo y asi crear la tabla 
     if (!ejecutarSQL(sqlCreateClientes)) {
         cerr << "Error al crear la tabla Clientes" << endl;
     }

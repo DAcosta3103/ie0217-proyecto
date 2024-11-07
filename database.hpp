@@ -6,9 +6,11 @@
 #include <iostream>
 using namespace std;
 
+//definicion de la clae database y sus metodos para manipular la base de datos
 class Database {
 
 private:
+//puntero que representa la base de datos y metodos privados para conectar y desconectar
     sqlite3* db;
     bool conectarDB(const string& nombreDB);
     void cerrarDB();

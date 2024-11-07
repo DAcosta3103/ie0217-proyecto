@@ -5,9 +5,12 @@
 using namespace std;
 
 int main() {
+    //intanciacion de objeto para poder manipular la clase
     Database db;
 
     int opcion;
+
+    //blucle do while para el menu de modulos
     do {
         cout << "\nSeleccione un módulo " << endl;
         cout << "1. Atencion al cliente" << endl;
@@ -16,7 +19,8 @@ int main() {
         cout << "Seleccione una opción: ";
         cin >> opcion;
 
-        //bucle para evaluar si la entra es válida
+        //bucle para evaluar si la entra es válida, solo acepta interos ya que cin >> opcion;
+        //continue ingora el resto del codigo para volver a iterar el bucle
         if (cin.fail()) {
             cin.clear(); 
             cin.ignore(1000, '\n'); 
