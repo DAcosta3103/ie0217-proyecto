@@ -1,8 +1,10 @@
 #include <iostream>
 #include "menu.hpp"
+#include "database.hpp"
 using namespace std;
 
 void MenuAtencionAlCliente() {
+    Database db;
     int subOpcion;
     do {
         cout << "\n Menú para atención al cliente, elija una opción" << endl;
@@ -26,6 +28,26 @@ void MenuAtencionAlCliente() {
         }
 
         switch (subOpcion) {
+            case 1:
+            int IdCuenta;
+            double monto;
+            cout << "Ingrese el numero de identificion de la cuenta a la que quiere hacer el deposito: "<< endl;
+            cin >> IdCuenta;
+            cout << "Ingrese el monto a depositar: "<< endl;
+            cin >> monto;
+
+            db.realizarDeposito(IdCuenta, monto);
+            break;
+
+            case 2:
+            cout << "Ingrese el numero de identificion de la cuenta a la que quiere hacer el retiro: "<< endl;
+            cin >> IdCuenta;
+            cout << "Ingrese el monto a retirar: "<< endl;
+            cin >> monto;
+
+            db.realizarRetiro(IdCuenta, monto);
+            break;
+            
             case 9:
                 cout << "Regresando al menú de módulos" << endl;
                 break;            

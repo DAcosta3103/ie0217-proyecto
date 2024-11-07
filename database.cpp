@@ -5,23 +5,6 @@
 using namespace std;
 
 
-bool Database::conectarDB(const string& nombreDB) {
-if (sqlite3_open("banco.db", &db) == SQLITE_OK) {
-    cout << "Conectado a la base de datos correctamente" << endl;
-    return true;
-} else {
-    cerr << "Error al abrir la base de datos: " << sqlite3_errmsg(db) << endl;
-    return false;
-}
-}
-
-Database::~Database() {
-    if (db) {
-        sqlite3_close(db);  // Cerrar la base de datos
-        cout << "Base de datos cerrada correctamente" << endl;
-    }
-}
-
 bool Database::ejecutarSQL(const char* sql) {
     char* errorMessage = nullptr;
     int result = sqlite3_exec(db, sql, nullptr, nullptr, &errorMessage);
@@ -96,34 +79,23 @@ Database::Database() {
     )";
 
 
-    if (ejecutarSQL(sqlCreateClientes)) {
-        cout << "Tabla Clientes creada o ya existe" << endl;
-    } else {
+    if (!ejecutarSQL(sqlCreateClientes)) {
         cerr << "Error al crear la tabla Clientes" << endl;
     }
 
-
-    if (ejecutarSQL(sqlCreateCuentas)) {
-        cout << "Tabla Cuentas creada o ya existe" << endl;
-    } else {
+    if (!ejecutarSQL(sqlCreateCuentas)) {
         cerr << "Error al crear la tabla Cuentas" << endl;
-    }
+        }
 
-    if (ejecutarSQL(sqlCreateCDP)) {
-        cout << "Tabla CDP creada o ya existe" << endl;
-    } else {
+    if (!ejecutarSQL(sqlCreateCDP)) {
         cerr << "Error al crear la tabla CDP" << endl;
     }
 
-    if (ejecutarSQL(sqlCreateCreditos)) {
-        cout << "Tabla Creditos creada o ya existe" << endl;
-    } else {
+    if (!ejecutarSQL(sqlCreateCreditos)) {
         cerr << "Error al crear la tabla Creditos" << endl;
     }
 
-        if (ejecutarSQL(sqlCreateTransacciones)) {
-        cout << "Tabla Transacciones creada o ya existe" << endl;
-    } else {
+    if (!ejecutarSQL(sqlCreateTransacciones)) {
         cerr << "Error al crear la tabla Transacciones" << endl;
     }
 

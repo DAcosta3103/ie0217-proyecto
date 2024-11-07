@@ -18,8 +18,8 @@ public:
     ~Database();
     
     bool ejecutarSQL(const char *sql);
-    void realizarDeposito(double monto);
-    void realizarRetiro(double monto);
+    void realizarDeposito(int IdCuenta,double monto);
+    void realizarRetiro(int IdCuenta,double monto);
     void realizarTransferencia(double monto);
     void realizarPagoServicios(double monto);
     void comprarCDP(double monto);
