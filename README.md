@@ -226,7 +226,7 @@ Para la base datos , como ya se determinó se está utilizando Sqlite, para mane
 #### Declaración de la clase Database
 ![alt text](imagenes/DeclaraciónClaseBD.png)
 
-Como se ve, se definen el objeto db que es un puntero para establecer conexión con la base de datos más adelante, conectarDB() y cer#### Tablas creadas
+Como se ve, se definen el objeto db que es un puntero para establecer conexión con la base de datos más adelante, conectarDB() y cerrarDB() Tablas creadas
 ![alt text](image.png)rarDB() métodos para conectarse y cerrar la BD, estos 3 como miembros privados.
 
 Como públicos se tienen todos los métodos necesarios para realizar las operaciones de los menús de antencion al cliente y gestión de préstamos.
