@@ -22,10 +22,9 @@ public:
     bool ejecutarSQL(const char *sql);
     void realizarDeposito(int IdCuenta,double monto);
     void realizarRetiro(int IdCuenta,double monto);
-    void realizarTransferencia(double monto);
-    void realizarPagoServicios(double monto);
-    void comprarCDP(double monto);
-    void consultarTipoCambio();
+    void realizarTransferencia(int idCuentaOrigen, int idCuentaDestino, double monto);
+    void realizarPagoServicios(int idCuentaCliente, double monto);
+    void comprarCDP(int idCliente, double monto);
     void bloquearCuenta(int cuentaId);
     void desbloquearCuenta(int cuentaId);
     void verRegistroTransacciones();
@@ -40,4 +39,6 @@ public:
     void verInformacionPrestamo(int prestamoId);
 
 };  
+
+void consultarTipoCambio();
 #endif // DATABASE_HPP

@@ -6,6 +6,12 @@ using namespace std;
 void MenuAtencionAlCliente() {
     Database db;
     int subOpcion;
+    int opcionSubmenu;
+    int IdCuenta;
+    int idCuentaDestino;
+    int idCuentaOrigen;
+    int idCuentaCliente;
+    double monto;
     do {
         cout << "\n Menú para atención al cliente, elija una opción" << endl;
         cout << "1. Depósitos a la cuenta" << endl;
@@ -29,8 +35,6 @@ void MenuAtencionAlCliente() {
 
         switch (subOpcion) {
             case 1:
-            int IdCuenta;
-            double monto;
             cout << "Ingrese el numero de identificion de la cuenta a la que quiere hacer el deposito: ";
             cin >> IdCuenta;
             cout << "Ingrese el monto a depositar: ";
@@ -48,6 +52,80 @@ void MenuAtencionAlCliente() {
             db.realizarRetiro(IdCuenta, monto);
             break;
 
+            case 3:
+            cout << "Ingrese el numero de identificion de la cuenta de origen de los fondos: ";
+            cin >> idCuentaOrigen;
+            cout << "Ingrese el numero de identificion de la cuenta destino para la tranferencia: ";
+            cin >> idCuentaDestino;
+            cout << "Ingrese el monto a transferir: ";
+            cin >> monto;
+
+            db.realizarTransferencia(idCuentaOrigen, idCuentaDestino,monto);
+            break;
+            case 4:
+            do {
+                    cout << "\nCentro de pago de servicios:\n";
+                    cout << "1. Agua y luz\n";
+                    cout << "2. Marchamo\n";
+                    cout << "3. Internet\n";
+                    cout << "4. Impuesto municipal\n";
+                    cout << "Seleccione una opción del submenú: ";
+                    cin >> opcionSubmenu;
+
+                    switch (opcionSubmenu) {
+                        case 1:
+
+                        cout << "Ingrese el numero de identificion de la cuenta de origen de los fondos: ";
+                        cin >> idCuentaCliente;  
+                        cout << "Ingrese el monto a cancelar: ";
+                        cin >> monto;
+                        db.realizarPagoServicios(idCuentaCliente,monto);
+                            break;
+                           
+                        case 2:
+                        cout << "Ingrese el numero de identificion de la cuenta de origen de los fondos: ";
+                        cin >> idCuentaCliente;  
+                        cout << "Ingrese el monto a cancelar: ";
+                        cin >> monto;
+                        db.realizarPagoServicios(idCuentaCliente,monto);
+                            break;
+
+                        case 3:
+                        cout << "Ingrese el numero de identificion de la cuenta de origen de los fondos: ";
+                        cin >> idCuentaCliente;  
+                        cout << "Ingrese el monto a cancelar: ";
+                        cin >> monto;
+                        db.realizarPagoServicios(idCuentaCliente,monto);
+                            break;
+                        case 4:
+                        cout << "Ingrese el numero de identificion de la cuenta de origen de los fondos: ";
+                        cin >> idCuentaCliente;  
+                        cout << "Ingrese el monto a cancelar: ";
+                        cin >> monto;
+                        db.realizarPagoServicios(idCuentaCliente,monto);
+                            break;
+
+                        default:
+                            cout << "Ingrese una opcion valida para el pago de servicios" << endl;
+                    }
+                } while (opcionSubmenu != 4);
+                break;
+            break;
+            case 5:
+            //falta implementar
+            break;
+            case 6:
+            consultarTipoCambio();
+            break;
+
+            case 7:
+            //falta implementar
+            break;
+
+            case 8:
+            db.verRegistroTransacciones();
+            break;
+            
             case 9:
                 cout << "Regresando al menú de módulos" << endl;
                 break;            
