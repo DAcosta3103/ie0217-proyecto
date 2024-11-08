@@ -49,6 +49,7 @@ Database::Database() {
         IdCliente INT NOT NULL,
         Tipo TEXT CHECK(Tipo IN ('colones', 'dolares')) NOT NULL,
         Saldo DECIMAL(10, 2) DEFAULT 0.00,
+        Bloqueada INT DEFAULT 0,  -- Para indicar si la cuenta está bloqueada
         FOREIGN KEY(IdCliente) REFERENCES Clientes(IdCliente)
     );
     )";
@@ -173,7 +174,46 @@ Database::Database() {
     }
 
 
+    void bloquearCuenta(int cuentaId) {
+        
+        const char* sqlUpdate = "UPDATE Cuentas SET Bloqueada = 1 WHERE IdCuenta = ?;"; // Se pone en 1 el indicador en la tabla SQL sobre el estado de bloqueo de la cuenta
+        sqlite3_stmt* stmt;
+        if (sqlite3_prepare_v2(db, sqlUpdate, -1, &stmt, nullptr) != SQLITE_OK) {
+            cerr << "Error al preparar la sentencia SQL para bloquear cuenta: " << sqlite3_errmsg(db) << endl;
+            return;
+        }
 
+        sqlite3_bind_int(stmt, 1, cuentaId);
+
+        // Se maneja la lógica del bloqueo de la cuenta
+        if (sqlite3_step(stmt) != SQLITE_DONE) {
+            cerr << "Error al bloquear la cuenta " << cuentaId << ": " << sqlite3_errmsg(db) << endl;
+        } else {
+            cout << "Cuenta " << cuentaId << " bloqueada exitosamente." << endl;
+        }
+        sqlite3_finalize(stmt);
+    }
+
+    void desbloquearCuenta(int cuentaId) {
+        
+        const char* sqlUpdate = "UPDATE Cuentas SET Bloqueada = 0 WHERE IdCuenta = ?;"; // Se pone en 0 el indicador en la tabla SQL sobre el estado de bloqueo de la cuenta
+
+        sqlite3_stmt* stmt;
+        if (sqlite3_prepare_v2(db, sqlUpdate, -1, &stmt, nullptr) != SQLITE_OK) {
+            cerr << "Error al preparar la sentencia SQL para desbloquear cuenta: " << sqlite3_errmsg(db) << endl;
+            return;
+        }
+
+        sqlite3_bind_int(stmt, 1, cuentaId);
+
+        // Se manejan los casos de éxito y error
+        if (sqlite3_step(stmt) != SQLITE_DONE) {
+            cerr << "Error al desbloquear la cuenta " << cuentaId << ": " << sqlite3_errmsg(db) << endl;
+        } else {
+            cout << "Cuenta " << cuentaId << " desbloqueada exitosamente" << endl;
+        }
+        sqlite3_finalize(stmt);
+        }
 }
     // Fin de la clase Database
 
