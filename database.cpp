@@ -9,6 +9,10 @@ using namespace std;
 bool Database::ejecutarSQL(const char* sql) {
      //varible para mensaje de error, el cual es generado por sqlite3_exec
     char* errorMessage = nullptr;
+
+    //nullptr para funciones callback aqui no son necesarias
+    // sql es la cadena de texto pasado por 
+    //errorMessafge es generado por sqlite3_exec
     int result = sqlite3_exec(db, sql, nullptr, nullptr, &errorMessage);
     
     //manejo de error
@@ -83,6 +87,7 @@ Database::Database() {
     )";
 
     //pasa el puntero con la sentencia SQL a sqlite3_exec para ejecutarlo y asi crear la tabla 
+    //ejecuta la funcion y verifica si fue exitosa
     if (!ejecutarSQL(sqlCreateClientes)) {
         cerr << "Error al crear la tabla Clientes" << endl;
     }

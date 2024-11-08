@@ -29,7 +29,9 @@ void Database::realizarDeposito(int IdCuenta, double monto) {
             SET Saldo = Saldo + ?
             WHERE IdCuenta = ?;
         )";
-
+        //stmt (statement) puntero donde se va almacenar la sentencia SQL, db es la variable que abre la base de datos
+        //sqlUpdate la sencuencia, -1 indica la longitud de la cadena SQL, &stmt es el punteero
+        //que almacena la sentencia preparada, el nullptr indica que no se le van a pasar sentencias adicionales
         sqlite3_stmt* stmt;
         if (sqlite3_prepare_v2(db, sqlUpdate, -1, &stmt, nullptr) != SQLITE_OK) {
             cerr << "Error al preparar la sentencia SQL: " << sqlite3_errmsg(db) << endl;
@@ -40,15 +42,19 @@ void Database::realizarDeposito(int IdCuenta, double monto) {
         sqlite3_bind_double(stmt, 1, monto); 
         sqlite3_bind_int(stmt, 2, IdCuenta);
 
+        //esta funcion ejecuta la sentencia, en este caso actualiza la cuenta con el deposito
         if (sqlite3_step(stmt) != SQLITE_DONE) {
             cerr << "Error al ejecutar la sentencia SQL: " << sqlite3_errmsg(db) << endl;
         } else {
             cout << "Depósito de " << monto << " realizado exitosamente en la cuenta " << IdCuenta << "!" << endl;
         }
 
+        //libera los recursos del statement, liberando memoria
         sqlite3_finalize(stmt);  
     }
 
+// exactamente la misma logica del realizar deposito, solo qjue en el saldo de la sentencia
+//se le resta al saldo en lugar de sumar
 void Database::realizarRetiro(int IdCuenta, double monto) {
         const char* sqlUpdate = R"(
             UPDATE Cuentas
