@@ -60,7 +60,7 @@ Database::Database() {
         Monto DECIMAL (10,2) NOT NULL,
         Plazo INT NOT NULL,
         CuotaMensual DECIMAL (10,2) NOT NULL,
-        Tipo EXT CHECK(Tipo IN ('Hipotecario', 'Personal', 'Prendario')) NOT NULL,
+        Tipo TEXT CHECK(Tipo IN ('Hipotecario', 'Personal', 'Prendario')) NOT NULL,
         FOREIGN KEY(IdCliente) REFERENCES Clientes(IdCliente)
     );
     )";
@@ -85,6 +85,67 @@ Database::Database() {
         FOREIGN KEY(IdCliente) REFERENCES Clientes(IdCliente)
     );
     )";
+
+
+    // Métodos para atención al cliente
+
+
+    void realizarTransferencia(int idCuentaOrigen, int idCuentaDestino, double monto) {
+        
+        // Verifica el saldo suficiente en la cuenta origen
+        const char* sqlSelect = "SELECT Saldo FROM Cuentas WHERE IdCuenta = ?";
+        sqlite3_stmt* stmtSelect;
+        if (sqlite3_prepare_v2(db, sqlSelect, -1, &stmtSelect, nullptr) != SQLITE_OK) {
+            cerr << "Error al preparar la consulta de saldo: " << sqlite3_errmsg(db) << endl;   
+            return;
+        }
+
+        sqlite3_bind_int(stmtSelect, 1, idCuentaOrigen);
+        double saldoOrigen = 0;
+
+        if (sqlite3_step(stmtSelect) == SQLITE_ROW) {
+            saldoOrigen = sqlite3_column_double(stmtSelect, 0);
+        } else {
+            cerr << "Error al obtener el saldo de la cuenta origen " << idCuentaOrigen << endl;
+            sqlite3_finalize(stmtSelect);
+            return;
+        }
+        sqlite3_finalize(stmtSelect);
+
+        // Verifica si hay saldo suficiente
+        if (saldoOrigen < monto) {
+            cerr << "Saldo insuficiente en la cuenta de origen " << idCuentaOrigen << endl;
+            return;
+        }
+
+        // Inicia la transferencia si el saldo es suficiente
+        realizarRetiro(idCuentaOrigen, monto);
+        realizarDeposito(idCuentaDestino, monto);
+        cout << "Transferencia de " << monto << " realizada de cuenta " << idCuentaOrigen << " a cuenta " << idCuentaDestino << endl;
+    }   
+
+    void realizarPagoServicios(int idCuentaCliente, double monto){
+
+        // El monto se carga a una cuenta de servicios, propiedad del banco
+        const int idCuentaServicios = 999; // ID ficticio de la cuenta de servicios
+
+        // Se realiza un retiro de la cuenta
+        realizarTransferencia(idCuentaCliente, idCuentaServicios, monto);
+
+        cout << "Pago de servicios por " << monto << " realizado desde la cuenta del cliente " << idCuentaCliente << " hacia la cuenta de servicios " << idCuentaServicios << endl;
+    }
+
+    void consultarTipoCambio(){
+
+        // Se manejará un tipo de cambio fijo, el cual para recordar buenas épocas, será $1 = 500 CRC (sujeto a cambios)
+        cout << "El tipo de cambio actual es de 500 CRC por 1 USD." << endl;
+    }
+
+    }
+    // Fin de la clase Database
+
+
+
 
     //pasa el puntero con la sentencia SQL a sqlite3_exec para ejecutarlo y asi crear la tabla 
     //ejecuta la funcion y verifica si fue exitosa
