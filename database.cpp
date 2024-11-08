@@ -174,7 +174,7 @@ Database::Database() {
     }
 
 
-    void bloquearCuenta(int cuentaId) {
+    void bloquearCuenta(int idCuenta) {
         
         const char* sqlUpdate = "UPDATE Cuentas SET Bloqueada = 1 WHERE IdCuenta = ?;"; // Se pone en 1 el indicador en la tabla SQL sobre el estado de bloqueo de la cuenta
         sqlite3_stmt* stmt;
@@ -183,18 +183,18 @@ Database::Database() {
             return;
         }
 
-        sqlite3_bind_int(stmt, 1, cuentaId);
+        sqlite3_bind_int(stmt, 1, idCuenta);
 
         // Se maneja la lógica del bloqueo de la cuenta
         if (sqlite3_step(stmt) != SQLITE_DONE) {
-            cerr << "Error al bloquear la cuenta " << cuentaId << ": " << sqlite3_errmsg(db) << endl;
+            cerr << "Error al bloquear la cuenta " << idCuenta << ": " << sqlite3_errmsg(db) << endl;
         } else {
-            cout << "Cuenta " << cuentaId << " bloqueada exitosamente." << endl;
+            cout << "Cuenta " << idCuenta << " bloqueada exitosamente." << endl;
         }
         sqlite3_finalize(stmt);
     }
 
-    void desbloquearCuenta(int cuentaId) {
+    void desbloquearCuenta(int idCuenta) {
         
         const char* sqlUpdate = "UPDATE Cuentas SET Bloqueada = 0 WHERE IdCuenta = ?;"; // Se pone en 0 el indicador en la tabla SQL sobre el estado de bloqueo de la cuenta
 
@@ -204,16 +204,47 @@ Database::Database() {
             return;
         }
 
-        sqlite3_bind_int(stmt, 1, cuentaId);
+        sqlite3_bind_int(stmt, 1, idCuenta);
 
         // Se manejan los casos de éxito y error
         if (sqlite3_step(stmt) != SQLITE_DONE) {
-            cerr << "Error al desbloquear la cuenta " << cuentaId << ": " << sqlite3_errmsg(db) << endl;
+            cerr << "Error al desbloquear la cuenta " << idCuenta << ": " << sqlite3_errmsg(db) << endl;
         } else {
-            cout << "Cuenta " << cuentaId << " desbloqueada exitosamente" << endl;
+            cout << "Cuenta " << idCuenta << " desbloqueada exitosamente" << endl;
         }
         sqlite3_finalize(stmt);
         }
+
+    void verRegistroTransacciones(){
+
+        // Se seleccionan todos los campos de la tabla Transacciones
+        const char* sqlSelect = "SELECT * FROM Transacciones;";
+
+        sqlite3_stmt* stmt;
+        if (sqlite3_prepare_v2(db, sqlSelect, -1, &stmt, nullptr) != SQLITE_OK) {
+            cerr << "Error al preparar la consulta para ver el registro de transacciones: " << sqlite3_errmsg(db) << endl;
+            return;
+        }
+
+
+        cout << "Registro de Transacciones:" << endl;
+        cout << "----------------------------------------" << endl; // Línea para facilitar la revisión de la tabla en terminal
+        // En este bucle, cada columna de la fila actual será extraída, esto para cada fila encontrada
+        while (sqlite3_step(stmt) == SQLITE_ROW) {
+            int idTransaccion = sqlite3_column_int(stmt, 0);
+            int idCliente = sqlite3_column_int(stmt, 1);
+            const unsigned char* tipo = sqlite3_column_text(stmt, 2);
+            double monto = sqlite3_column_double(stmt, 3);
+            const unsigned char* fecha = sqlite3_column_text(stmt, 4);
+
+            cout << "ID Transacción: " << idTransaccion << " | Cliente: " << idCliente
+                 << " | Tipo: " << tipo << " | Monto: " << monto << " | Fecha: " << fecha << endl;
+        }
+        cout << "----------------------------------------" << endl; // Línea para facilitar la revisión de la tabla en terminal
+
+        sqlite3_finalize(stmt);
+
+    }
 }
     // Fin de la clase Database
 
