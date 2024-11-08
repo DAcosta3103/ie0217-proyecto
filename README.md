@@ -232,9 +232,11 @@ Como se ve, se definen el objeto db que es un puntero para establecer conexión 
 Como públicos se tienen todos los métodos necesarios para realizar las operaciones de los menús de antencion al cliente y gestión de préstamos.
 
 
-* En Database.cpp
- ** Se hace la implementanción de funcion ejecutarSQL() la cual con ayuda de funciones importadas de la biblioteca SQLite usa las sentencias SQL y las ejecutas sobre la base de datos, en este caso se usa para crear las tablas, en otros fracmentos del código sqlite3_exec no va ser útil porque se van útilizar sentencias preparadas, en este caso la sentencias para las tablas son fijas.
- ** Se establecen punteros que almacenan las sentencias SQL para crear las 5 tablas necesarias en este proyecto, estos mismos luego se pasan a la función para crear las tablas.
+* En Database.cpp:
+
+ Se hace la implementanción de funcion ejecutarSQL() la cual con ayuda de funciones importadas de la biblioteca SQLite usa las sentencias SQL y las ejecutas sobre la base de datos, en este caso se usa para crear las tablas, en otros fracmentos del código sqlite3_exec no va ser útil porque se van útilizar sentencias preparadas, en este caso la sentencias para las tablas son fijas.
+
+ Se establecen punteros que almacenan las sentencias SQL para crear las 5 tablas necesarias en este proyecto, estos mismos luego se pasan a la función para crear las tablas.
  
  #### Sentencia SQL para crear la tabla clientes, para las otras tablas es la misma lógica, este puntero se le pasa a la función ejecutarSQL() para crearla
  ![alt text](imagenes/SentenciaTablas.png)
