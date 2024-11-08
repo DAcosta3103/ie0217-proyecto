@@ -4,6 +4,7 @@
 #include <iostream>
 using namespace std;
 
+
 bool Database::conectarDB(const string& nombreDB) {
 if (sqlite3_open("banco.db", &db) == SQLITE_OK) {
     cout << "Conectado a la base de datos correctamente" << endl;
@@ -22,6 +23,7 @@ Database::~Database() {
 }
 
 void Database::realizarDeposito(int IdCuenta, double monto) {
+        //sentencia SQL para actualizar el saldo
         const char* sqlUpdate = R"(
             UPDATE Cuentas
             SET Saldo = Saldo + ?
@@ -34,6 +36,7 @@ void Database::realizarDeposito(int IdCuenta, double monto) {
             return;
         }
 
+        // se vinculan los valores para los parametros ? de de la sentencia
         sqlite3_bind_double(stmt, 1, monto); 
         sqlite3_bind_int(stmt, 2, IdCuenta);
 
