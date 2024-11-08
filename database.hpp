@@ -5,10 +5,8 @@
 #include <string>
 #include <iostream>
 using namespace std;
-
 //definicion de la clae database y sus metodos para manipular la base de datos
 class Database {
-
 private:
 //puntero que representa la base de datos y metodos privados para conectar y desconectar
     sqlite3* db;
@@ -37,8 +35,8 @@ public:
     void calcularIntereses(double montoPrestamo);
     void mostrarMetodosPago();
     void verInformacionPrestamo(int prestamoId);
-
 };  
 
+//uníca funcion que queda por fuera de la clase database
 void consultarTipoCambio();
 #endif // DATABASE_HPP

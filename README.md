@@ -205,7 +205,7 @@ La información referente a cada opción del menú corresponde a la discutida en
 
 ## Avance
 
-* Para este avance se tienen listos los 3 menús principales, el menú de módulos y los 2 submenús de atención al cliente y de gestión de préstamos.
+* Para este avance se tienen listos por completo los 3 menús principales, el menú de módulos y los 2 submenús de atención al cliente y de gestión de préstamos, el menú de módulos se maneja en el main.cpp y los submenús al ser más extensos se manejan por aparte por con los archivos menu.hpp y menu.cpp, de tal forma se tiene un código más ordenado y modulado.
 
 #### Menú de módulos
 ![alt text](imagenes/MenuModulos.png)
@@ -218,5 +218,27 @@ La información referente a cada opción del menú corresponde a la discutida en
 
 Estos menús funcionan con un bucle do-while, por lo que si no se se ingresa un numero de las opciones el menú se vuelve a ejecutar, para manerar entradas inválidas, se agrego el siguiente bucle para asegurarse que el menú solo pueda recibir números enteros.
 
+#### Manejo de entradas inválidas para los menús
 ![alt text](imagenes/ManejoExcepcionesMenu.png)
+
+Para la base datos , como ya se determinó se está utilizando Sqlite, para manejar la conexión con la base de datos, se implementó una clase llamada Database, por medio de esta con sus objetos, atributos y métodos se van a realizar casi todas las operaciones del programa, por medio de lectura y modificiones sobre estos datos.
+
+#### Declaración de la clase Database
+![alt text](imagenes/DeclaraciónClaseBD.png)
+
+Como se ve, se definen el objeto db que es un puntero para establecer conexión con la base de datos más adelante, conectarDB() y cer#### Tablas creadas
+![alt text](image.png)rarDB() métodos para conectarse y cerrar la BD, estos 3 como miembros privados.
+
+Como públicos se tienen todos los métodos necesarios para realizar las operaciones de los menús de antencion al cliente y gestión de préstamos.
+
+
+* En Database.cpp
+ * Se hace la implementanción de funcion ejecutarSQL() la cual con ayuda de funciones importadas de la biblioteca SQLite usa las sentencias SQL y las ejecutas sobre la base de datos, en este caso se usa para crear las tablas, en otros fracmentos del código sqlite3_exec no va ser útil porque se van útilizar sentencias preparadas, en este caso la sentencias para las tablas son fijas.
+ * Se establecen punteros que almacenan las sentencias SQL para crear las 5 tablas necesarias en este proyecto, estos mismos luego se pasan a la función para crear las tablas.
+ 
+ #### Sentencia SQL para crear la tabla clientes, para las otras tablas es la misma lógica, este puntero se le pasa a la función ejecutarSQL() para crearla
+ ![alt text](imagenes/SentenciaTablas.png)
+
+ #### Tablas creadas
+ ![alt text](imagenes/TablasCreadas.png)
 

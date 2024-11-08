@@ -23,13 +23,6 @@ bool Database::ejecutarSQL(const char* sql) {
     }
     return true;
 }
-
-Database::Database() {
-    if (!conectarDB("banco.db")) {
-        cerr << "Error al conectar a la base de datos" << endl;
-        return;
-    }
-
     //puntero que almacena la sentencia de caracteres SQl para crear la tabla si no existe
     const char* sqlCreateClientes = R"(
     CREATE TABLE IF NOT EXISTS Clientes (
@@ -89,6 +82,12 @@ Database::Database() {
 
 
 
+Database::Database() {
+    if (!conectarDB("banco.db")) {
+        cerr << "Error al conectar a la base de datos" << endl;
+        return;
+    }
+
 
     //pasa el puntero con la sentencia SQL a sqlite3_exec para ejecutarlo y asi crear la tabla 
     //ejecuta la funcion y verifica si fue exitosa
@@ -111,5 +110,10 @@ Database::Database() {
     if (!ejecutarSQL(sqlCreateTransacciones)) {
         cerr << "Error al crear la tabla Transacciones" << endl;
     }
-
+}
+void Database::cerrarDB() {
+    if (db) {
+        sqlite3_close(db);  
+        db = nullptr;  
+}
 }
