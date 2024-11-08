@@ -74,7 +74,7 @@ void Database::realizarRetiro(int IdCuenta, double monto) {
         if (sqlite3_step(stmt) != SQLITE_DONE) {
             cerr << "Error al ejecutar la sentencia SQL: " << sqlite3_errmsg(db) << endl;
         } else {
-            cout << "Depósito de " << monto << " realizado exitosamente en la cuenta " << IdCuenta << "!" << endl;
+            cout << "Retiro de " << monto << " realizado exitosamente desde la cuenta " << IdCuenta << "!" << endl;
         }
 
         sqlite3_finalize(stmt);  
