@@ -201,3 +201,22 @@ La información referente a cada opción del menú corresponde a la discutida en
 | Periodo 5   | 11 - 17 Nov            | [ Seguir con el trabajo asignado ]                                 | [ Seguir con el trabajo asignado ]                              |
 | Periodo 6   | 18 - 24 Nov            | [ Verificar el correcto funcionamiento del sistema con todas las implementaciones ]                                 | [ Verificar el funcionamiento del sistema con todas las implementaciones ]                              |                       |
 | **Entrega** | <span style="color:green">26 Nov</span> | [ ] Revisión y Entrega              | [ ] Revisión y Entrega            |
+
+
+## Avance
+
+* Para este avance se tienen listos los 3 menús principales, el menú de módulos y los 2 submenús de atención al cliente y de gestión de préstamos.
+
+#### Menú de módulos
+![alt text](imagenes/MenuModulos.png)
+
+#### Menú de Atención al cliente
+![alt text](imagenes/MenuAtencionCliente.png)
+
+#### Menú de gestión de préstamos
+![alt text](imagenes/MenuGestionPrestamos.png)
+
+Estos menús funcionan con un bucle do-while, por lo que si no se se ingresa un numero de las opciones el menú se vuelve a ejecutar, para manerar entradas inválidas, se agrego el siguiente bucle para asegurarse que el menú solo pueda recibir números enteros.
+
+![alt text](imagenes/ManejoExcepcionesMenu.png)
+
