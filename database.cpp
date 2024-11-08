@@ -141,7 +141,40 @@ Database::Database() {
         cout << "El tipo de cambio actual es de 500 CRC por 1 USD." << endl;
     }
 
+
+    void comprarCDP(int idCliente, double monto) {
+
+        // Se setean valores predeterminados para el CDP
+        const char* sqlInsertCDP = R"(
+            INSERT INTO CDP (IdCliente, Monto, TazaInteres, Plazo, FechaInicio)
+            VALUES (?, ?, 5.0, 12, date('now'));
+        )";
+
+        sqlite3_stmt* stmt;
+        if (sqlite3_prepare_v2(db, sqlInsertCDP, -1, &stmt, nullptr) != SQLITE_OK) {
+            cerr << "Error al preparar la sentencia SQL para comprar CDP: " << sqlite3_errmsg(db) << endl;
+            return;
+        }
+
+        // Enlace de parámetros
+        sqlite3_bind_int(stmt, 1, idCliente);
+        sqlite3_bind_double(stmt, 2, monto);
+
+        // Se maneja la lógica de compra
+        /*
+        Por implementar: Verificación de si el cliente tiene suficiente dinero en su cuenta
+        */
+        if (sqlite3_step(stmt) != SQLITE_DONE) {
+            cerr << "Error al ejecutar la compra de CDP: " << sqlite3_errmsg(db) << endl;
+        } else {
+            cout << "CDP comprado con éxito para el cliente " << idCliente << " por el monto de " << monto << endl;
+        }
+        sqlite3_finalize(stmt);
     }
+
+
+
+}
     // Fin de la clase Database
 
 
