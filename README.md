@@ -203,7 +203,7 @@ La información referente a cada opción del menú corresponde a la discutida en
 | **Entrega** | <span style="color:green">26 Nov</span> | [ ] Revisión y Entrega              | [ ] Revisión y Entrega            |
 
 
-## Avance
+## Bitáora del primer avance
 
 * Para este avance se tienen listos por completo los 3 menús principales, el menú de módulos y los 2 submenús de atención al cliente y de gestión de préstamos, el menú de módulos se maneja en el main.cpp y los submenús al ser más extensos se manejan por aparte por con los archivos menu.hpp y menu.cpp, de tal forma se tiene un código más ordenado y modulado.
 
@@ -244,3 +244,27 @@ Como públicos se tienen todos los métodos necesarios para realizar las operaci
  #### Tablas creadas
  ![alt text](imagenes/TablasCreadas.png)
 
+ #### Funciones implementadas para este avance
+
+Además de la implementación de la base de datos, también se escribe el código para todas las funciones referentes a la parte de atención al cliente del proyecto.
+- **realizarDeposito**
+- **realizarRetiro**
+- **realizarTransferencia**
+- **realizarPagoServicios**
+- **comprarCDP**
+- **bloquearCuenta**
+- **desbloquearCuenta**
+- **verRegistroTransacciones**
+
+##### Operaciones Bancarias:
+
+**Depositar y Retirar Fondos:**  Funciones que permiten realizar depósitos y retiros en cuentas de clientes, verificando el saldo cuando es necesario. Aún falta por implementar la generación del registro de la transferencia.
+
+**Transferencias entre Cuentas:** Permite transferir fondos entre cuentas de diferentes clientes, verificando que la cuenta de origen tenga fondos suficientes. Necesita un poco más de trabajo ya que llama a las funciones de retiro y depósito, y estas requieren un poco más de trabajo.
+
+**Compra de CDP:** Función para crear certificados de depósito a plazo con tasa de interés y plazo predefinidos. Aún queda por definir los valores finales para los certificados.
+
+**Bloqueo y Desbloqueo de Cuentas:** Funcionalidades para marcar una cuenta como bloqueada o desbloqueada, utilizando un campo adicional en la base de datos. Esta función está lista.
+
+**Consulta de Tipo de Cambio:** Consulta que muestra un tipo de cambio fijo simulado (en este avance). Aún falta por definir el valor a utilizar para el tipo de cambio.
+**Registro de Transacciones:** Visualización completa del historial de transacciones realizadas en el sistema, incluyendo el tipo, monto y fecha de cada transacción. A pesar de que aún las funciones anteriores no generan un reporte, se sabe dónde estará guardada la información, por lo que esta función debería estar lista.
