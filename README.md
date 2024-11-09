@@ -267,4 +267,5 @@ Además de la implementación de la base de datos, también se escribe el códig
 **Bloqueo y Desbloqueo de Cuentas:** Funcionalidades para marcar una cuenta como bloqueada o desbloqueada, utilizando un campo adicional en la base de datos. Esta función está lista.
 
 **Consulta de Tipo de Cambio:** Consulta que muestra un tipo de cambio fijo simulado (en este avance). Aún falta por definir el valor a utilizar para el tipo de cambio.
+
 **Registro de Transacciones:** Visualización completa del historial de transacciones realizadas en el sistema, incluyendo el tipo, monto y fecha de cada transacción. A pesar de que aún las funciones anteriores no generan un reporte, se sabe dónde estará guardada la información, por lo que esta función debería estar lista.
