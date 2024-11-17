@@ -135,6 +135,7 @@ void MenuAtencionAlCliente() {
 
 void MenuGestionPrestamos() {
     int subOpcion;
+    Database db;
     do {
         cout << "\n Menú para le gestión de préstamos" << endl;
         cout << "1. Tipos de préstamos a solicitar" << endl;
@@ -158,7 +159,7 @@ void MenuGestionPrestamos() {
 
         switch (subOpcion) {
             case 1:
-            SubMenuTipoPrestamos();
+            db.consultarTiposPrestamos();
             break;
 
             case 9:
@@ -187,10 +188,30 @@ void SubMenuTipoPrestamos(){
             continue; 
         }
         
-        switch (subOpcion){}
+        switch (subOpcion) {
+            case 1:
+                cout << "\nHas seleccionado el Préstamo personal." << endl;
+                
+                break;
 
+            case 2:
+                cout << "\nHas seleccionado el Préstamo prendario." << endl;
+            
+                break;
 
+            case 3:
+                cout << "\nHas seleccionado el Préstamo hipotecario." << endl;
+                
+                break;
 
+            case 4:
+                cout << "\nRegresando al menú de gestión de préstamos..." << endl;
+                break;
 
-    } while (subOpcion =! 4);
+            default:
+                cout << "\nOpción no válida. Por favor, intente de nuevo." << endl;
+                break;
+        }
+    } while (subOpcion != 4); // Continúa mostrando el menú hasta que el usuario seleccione la opción 4
 }
+
