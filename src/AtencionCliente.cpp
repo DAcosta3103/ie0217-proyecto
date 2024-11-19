@@ -1,4 +1,4 @@
-#include "database.hpp"
+#include "../include/database.hpp"
 #include <sqlite3.h>
 #include <string>
 #include <iostream>
@@ -130,7 +130,7 @@ void Database::realizarPagoServicios(int idCuentaCliente, double monto){
         cout << "Pago de servicios por " << monto << " realizado desde la cuenta del cliente " << idCuentaCliente << " hacia la cuenta de servicios " << idCuentaServicios << endl;
     }
 
-void consultarTipoCambio(){
+void Database::consultarTipoCambio(){
 
         // Se manejará un tipo de cambio fijo, el cual para recordar buenas épocas, será $1 = 500 CRC (sujeto a cambios)
         cout << "El tipo de cambio actual es de 500 CRC por 1 USD." << endl;

@@ -1,7 +1,7 @@
 //  para correrlo en linux g++ -o banco main.cpp menu.cpp database.cpp -sqlite3
 #include <iostream>
-#include "menu.hpp"
-#include "database.hpp"
+#include "../include/menu.hpp"
+#include "../include/database.hpp"
 using namespace std;
 
 int main() {

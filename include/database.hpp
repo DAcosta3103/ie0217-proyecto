@@ -22,6 +22,7 @@ public:
     void realizarRetiro(int IdCuenta,double monto);
     void realizarTransferencia(int idCuentaOrigen, int idCuentaDestino, double monto);
     void realizarPagoServicios(int idCuentaCliente, double monto);
+    void consultarTipoCambio();
     void comprarCDP(int idCliente, double monto);
     void bloquearCuenta(int cuentaId);
     void desbloquearCuenta(int cuentaId);
@@ -38,5 +39,4 @@ public:
 };  
 
 //uníca funcion que queda por fuera de la clase database
-void consultarTipoCambio();
 #endif // DATABASE_HPP

@@ -1,6 +1,6 @@
 #include <iostream>
-#include "menu.hpp"
-#include "database.hpp"
+#include "../include/menu.hpp"
+#include "../include/database.hpp"
 using namespace std;
 
 void MenuAtencionAlCliente() {
@@ -115,7 +115,7 @@ void MenuAtencionAlCliente() {
             //falta implementar
             break;
             case 6:
-            consultarTipoCambio();
+            db.consultarTipoCambio();
             break;
 
             case 7:

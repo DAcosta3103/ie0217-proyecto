@@ -1,5 +1,5 @@
-#include "database.hpp"
-#include "menu.hpp"
+#include "../include/database.hpp"
+#include "../include/menu.hpp"
 #include <sqlite3.h>
 #include <string>
 #include <iostream>
