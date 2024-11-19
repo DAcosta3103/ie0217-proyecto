@@ -141,12 +141,11 @@ void MenuGestionPrestamos() {
         cout << "1. Tipos de préstamos a solicitar" << endl;
         cout << "2. Consultar frecuencia de pagos" << endl;
         cout << "3. Cuotas y desgloce" << endl;
-        cout << "4. Pago de servicios" << endl;
-        cout << "5. Actualización del saldo de préstamo" << endl;
-        cout << "6. Cálculo de intereses" << endl;
-        cout << "7. Métodos de pago" << endl;
-        cout << "8. Ver información de préstamo" << endl;
-        cout << "9. Regresar al menú principal" << endl;
+        cout << "4. Actualización del saldo de préstamo" << endl;
+        cout << "5. Cálculo de intereses" << endl;
+        cout << "6. Métodos de pago" << endl;
+        cout << "7. Ver información de préstamo" << endl;
+        cout << "8. Regresar al menú principal" << endl;
         cout << "Seleccione una opción: ";
         cin >> subOpcion;
 
@@ -166,7 +165,7 @@ void MenuGestionPrestamos() {
                 cout << "Regresando al menú de módulos" << endl;
                 break;            
         }
-    } while (subOpcion != 9);
+    } while (subOpcion != 8);
 }
 
 void SubMenuTipoPrestamos(){

@@ -8,3 +8,4 @@ using namespace std;
 void Database::consultarTiposPrestamos() {
     SubMenuTipoPrestamos(); // el codigo de esto esta en menu.cpp
 }
+
