@@ -9,7 +9,7 @@ endif
 CC = g++
 CFLAGS = -Wall -lsqlite3
 
-TARGET = banco$(EXEC_SUFFIX)
+TARGET = Sistema_Bancario$(EXEC_SUFFIX)
 
 SRC = src/AtencionCliente.cpp src/database.cpp src/GestionPrestamo.cpp src/main.cpp src/menu.cpp
 HEADERS = include/database.hpp include/menu.hpp

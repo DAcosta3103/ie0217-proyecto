@@ -47,17 +47,19 @@ bool Database::ejecutarSQL(const char* sql) {
     );
     )";
 
-    const char* sqlCreateCreditos = R"(
-    CREATE TABLE IF NOT EXISTS Creditos (
-        IdPrestamo INTEGER PRIMARY KEY AUTOINCREMENT,
-        IdCliente INT NOT NULL,
-        Monto DECIMAL (10,2) NOT NULL,
-        Plazo INT NOT NULL,
-        CuotaMensual DECIMAL (10,2) NOT NULL,
-        Tipo TEXT CHECK(Tipo IN ('Hipotecario', 'Personal', 'Prendario')) NOT NULL,
-        FOREIGN KEY(IdCliente) REFERENCES Clientes(IdCliente)
-    );
-    )";
+const char* sqlCreateCreditos = R"(
+CREATE TABLE IF NOT EXISTS Creditos (
+    IdPrestamo INTEGER PRIMARY KEY AUTOINCREMENT,
+    IdCliente INT NOT NULL,
+    Monto DECIMAL (10,2) NOT NULL,
+    Frecuencia TEXT CHECK(Frecuencia IN ('Quincenal', 'Mensual', 'Trimestral', 'Anual')) NOT NULL,
+    Plazo INT NOT NULL,
+    Cuota DECIMAL (10,2) NOT NULL,
+    Tipo TEXT CHECK(Tipo IN ('Hipotecario', 'Personal', 'Prendario')) NOT NULL,
+    Moneda TEXT CHECK(Moneda IN ('Colones', 'Dolares')) NOT NULL, 
+    FOREIGN KEY(IdCliente) REFERENCES Clientes(IdCliente)
+);
+)";
 
     const char* sqlCreateCDP = R"(
     CREATE TABLE IF NOT EXISTS CDP (

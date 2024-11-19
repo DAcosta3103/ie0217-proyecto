@@ -30,7 +30,7 @@ public:
 
     // Métodos para gestión de préstamos
     void consultarTiposPrestamos();
-    void consultarFrecuenciaPagos();
+    void consultarFrecuenciaPagos(int IdPrestamo);
     void mostrarCuotasYDesglose();
     void actualizarSaldoPrestamo(double nuevoSaldo);
     void calcularIntereses(double montoPrestamo);

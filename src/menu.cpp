@@ -134,8 +134,9 @@ void MenuAtencionAlCliente() {
 }
 
 void MenuGestionPrestamos() {
-    int subOpcion;
     Database db;
+    int IdPrestamo;
+    int subOpcion;
     do {
         cout << "\n Menú para le gestión de préstamos" << endl;
         cout << "1. Tipos de préstamos a solicitar" << endl;
@@ -159,6 +160,10 @@ void MenuGestionPrestamos() {
         switch (subOpcion) {
             case 1:
             db.consultarTiposPrestamos();
+            break;
+
+            case 2:
+            db.consultarFrecuenciaPagos(IdPrestamo);
             break;
 
             case 9:
