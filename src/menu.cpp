@@ -190,17 +190,155 @@ void SubMenuTipoPrestamos(){
         switch (subOpcion) {
             case 1:
                 cout << "\nHas seleccionado el Préstamo personal." << endl;
-                
+                do{
+                    cout<<"1. Guía de préstamo personal"<<endl;
+                    cout<<"2. Requisitos para préstamo personal"<<endl;
+                    cout<<"3. Regresar al menú anterior";
+                    cout<< "\nSeleccione una opción: ";
+                    cin >> subOpcion;
+                    
+                    if (cin.fail()) {
+                    cin.clear(); 
+                    cin.ignore(1000, '\n'); 
+                    cout << "Entrada no válida. Por favor, ingrese un número" << endl;
+                    continue; 
+                }
+                        switch (subOpcion) {
+                            case 1:
+                                cout << "\nGuía de préstamo personal" << endl;
+                                cout << "Orientación para el trámite y formalización del cŕedito personal.\n";
+                                cout << "  • Paso 1: Analizar la nacesidad del cliente y las circunstancias del cŕedito\n";
+                                cout << "  • Paso 2: Definir las posibilidades económicas del cliente\n"; 
+                                cout << "  • Paso 3: Enviar la solicitud y adjuntar la documentación requerida\n";
+                                cout << "  • Paso 4: Asignar un ejectivo del banco al cliente para evaluar la solicitud y determinar la aprovación del cŕedito\n";
+                            break;
+
+                            case 2:
+                                cout << "\nRequisitos" << endl;
+                                cout << "Documentación del cliente:\n";
+                                cout << "  • Formulario de solicitud del cŕedito personal firmado por el solicitante\n";
+                                cout << "  • Fotocopia legible del documento de identificación\n";
+                                cout << "  • Constancia salarial o declaración de ingresos\n";
+                                cout << "  • Comprobante de domicilio (recibo de servicios públicos reciente)\n";
+
+                                cout << "\nRequisitos adicionales\n";
+                                cout << "  • Historial crediticio\n";
+                                cout << "  • Documentos adicionales si el trabajador es trabajador independiente\n";
+
+                            break;
+                            case 3:
+                                cout << "\nRegresando al menú anterior." << endl;
+                                break;
+                            default:
+                                cout << "\nOpción no válida. Por favor, intente de nuevo." << endl;
+                            break;
+                            }
+                        } while (subOpcion != 3); 
+ 
                 break;
 
             case 2:
                 cout << "\nHas seleccionado el Préstamo prendario." << endl;
-            
+                do{
+                    cout<<"1. Guía de préstamo prendario"<<endl;
+                    cout<<"2. Requisitos para préstamo prendario"<<endl;
+                    cout<<"3. Regresar al menú anterior";
+                    cout<< "\nSeleccione una opción: ";
+                    cin >> subOpcion;
+                    
+                    if (cin.fail()) {
+                    cin.clear(); 
+                    cin.ignore(1000, '\n'); 
+                    cout << "Entrada no válida. Por favor, ingrese un número" << endl;
+                    continue; 
+                }
+                        switch (subOpcion) {
+                            case 1:
+                                cout << "\nGuía de préstamo prendario" << endl;
+                                cout << "Orientación para el trámite y formalización del cŕedito prendario.\n";
+                                cout << "  • Paso 1: Analizar la nacesidad del cliente y las circunstancias del cŕedito\n";
+                                cout << "  • Paso 2: Definir los bienes muebles a ofrecer como garantía\n";
+                                cout << "  • Paso 3: Valorar el bien mueble y definir el monto máximo del cŕedito\n";
+                                cout << "  • Paso 4: Enviar la solicitud y asignar un ejectivo del banco al cliente para revisar la documentación y llevar a cabo el crédito\n";
+                            break;
+
+                            case 2:
+                                cout << "\nRequisitos" << endl;
+                                cout << "Documentación del cliente:\n";
+                                cout << "  • Formulario del cliente firmado por el deudor y el co-deudor\n";
+                                cout << "  • Solicitud del cŕedito prendario\n";
+                                cout << "  • Fotocopia legible del documento de identificación\n";
+                                cout << "  • Constancia salarial o declaración de ingresos\n";
+
+                                cout << "\nRequisitos de garantía\n";
+                                cout << "  • Factura del bien mueble ofrecido como garantía\n";
+                                cout << "  • Certificación de propiedad del bien\n";
+                                cout << "  • Avalúo técnico del bien\n";
+                                cout << "  • Documentos adicionales según las políticas del banco\n";
+
+                            break;
+                            case 3:
+                                cout << "\nRegresando al menú anterior." << endl;
+                                break;
+                            default:
+                                cout << "\nOpción no válida. Por favor, intente de nuevo." << endl;
+                            break;
+                            }
+                        } while (subOpcion != 3); 
+ 
                 break;
 
             case 3:
                 cout << "\nHas seleccionado el Préstamo hipotecario." << endl;
-                
+                do{
+                    cout<<"\n1. Guía de préstamo hipotecario"<<endl;
+                    cout<<"2. Requisitos para préstamo hipotecario"<<endl;
+                    cout<<"3. Regresar al menú anterior";
+                    cout<< "\nSeleccione una opción: ";
+                    cin >> subOpcion;
+                    
+                    if (cin.fail()) {
+                    cin.clear(); 
+                    cin.ignore(1000, '\n'); 
+                    cout << "Entrada no válida. Por favor, ingrese un número" << endl;
+                    continue; 
+                }
+                        switch (subOpcion) {
+                            case 1:
+                                cout << "\nGuía de préstamo hipoteario" << endl;
+                                cout << "Orientación para el trámite y formalización del cŕedito de vivienda.\n";
+                                cout << "  • Paso 1: Seleccionar un plan acorde al proyecto de vivienda\n";
+                                cout << "  • Paso 2: Definair posibilidades económicas del cliente\n";
+                                cout << "  • Paso 3: Iniciar el trámite del crédito\n";
+                                cout << "  • Paso 4: Enviar la solicitud y asignar un ejectivo del banco al cliente para revisar la documentación y llevar a cabo el crédito\n";
+                            break;
+
+                            case 2:
+                                cout << "\nRequisitos" << endl;
+                                cout << "Documentación del cliente:\n";
+                                cout << "  • Formulario del cliente firmado por el deudor y el co-deudor\n";
+                                cout << "  • Solicitud del cŕedito hipotecario\n";
+                                cout << "  • Fotocopia legible del documento de identificación\n";
+                                cout << "  • Constancia salarial y copia de orden patronal\n";
+
+                                cout << "\nRequisitos de garantía\n";
+                                cout << "  • Copia de plano plano catastro, planos constructivos\n";
+                                cout << "  • Estudio registral\n";
+                                cout << "  • Certificación de impuetos al día\n";
+                                cout << "  • Constancia salarial y copia de orden patronal\n";
+                                cout << "  • Avalúo de la propiedad a hipotecar\n";
+
+                            break;
+
+                            case 3:
+                                cout << "\nRegresando al menú anterior." << endl;
+                            break;
+                            default:
+                                cout << "\nOpción no válida. Por favor, intente de nuevo." << endl;
+                            break;
+                            }
+                        } while (subOpcion != 3); 
+ 
                 break;
 
             case 4:
