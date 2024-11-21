@@ -55,6 +55,7 @@ CREATE TABLE IF NOT EXISTS Creditos (
     Frecuencia TEXT CHECK(Frecuencia IN ('Quincenal', 'Mensual', 'Trimestral', 'Anual')) NOT NULL,
     Plazo INT NOT NULL,
     Cuota DECIMAL (10,2) NOT NULL,
+    TasaInteres DECIMAL(5,2) CHECK(TasaInteres >= 0 AND TasaInteres <= 100) NOT NULL,
     Tipo TEXT CHECK(Tipo IN ('Hipotecario', 'Personal', 'Prendario')) NOT NULL,
     Moneda TEXT CHECK(Moneda IN ('Colones', 'Dolares')) NOT NULL, 
     FOREIGN KEY(IdCliente) REFERENCES Clientes(IdCliente)
@@ -66,7 +67,7 @@ CREATE TABLE IF NOT EXISTS Creditos (
         IdCDP INTEGER PRIMARY KEY AUTOINCREMENT,
         IdCliente INT NOT NULL,
         Monto DECIMAL (10,2) NOT NULL,
-        TazaInteres DECIMAL (10,2) NOT NULL,
+        TasaInteres DECIMAL(5,2) CHECK(TasaInteres >= 0 AND TasaInteres <= 100) NOT NULL,
         Plazo INT NOT NULL,
         FechaInicio DATE NOT NULL,
         FOREIGN KEY(IdCliente) REFERENCES Clientes(IdCliente)

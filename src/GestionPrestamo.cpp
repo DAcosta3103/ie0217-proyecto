@@ -45,3 +45,5 @@ void Database::consultarFrecuenciaPagos(int IdPrestamo) {
 
     sqlite3_finalize(stmt);
 }
+
+void Database::calcularIntereses(double montoPrestamo){}
