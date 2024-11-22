@@ -33,7 +33,7 @@ public:
     void consultarFrecuenciaPagos(int IdPrestamo);
     void mostrarCuotasYDesglose();
     void actualizarSaldoPrestamo(double nuevoSaldo);
-    void calcularIntereses(double montoPrestamo);
+    void calcularIntereses(double IdPrestamo);
     void mostrarMetodosPago();
     void verInformacionPrestamo(int prestamoId);
 };  

@@ -55,6 +55,7 @@ CREATE TABLE IF NOT EXISTS Creditos (
     Frecuencia TEXT CHECK(Frecuencia IN ('Quincenal', 'Mensual', 'Trimestral', 'Anual')) NOT NULL,
     Plazo INT NOT NULL,
     Cuota DECIMAL (10,2) NOT NULL,
+    CuotasPagadas INT DEFAULT 0,
     TasaInteres DECIMAL(5,2) CHECK(TasaInteres >= 0 AND TasaInteres <= 100) NOT NULL,
     Tipo TEXT CHECK(Tipo IN ('Hipotecario', 'Personal', 'Prendario')) NOT NULL,
     Moneda TEXT CHECK(Moneda IN ('Colones', 'Dolares')) NOT NULL, 

@@ -166,6 +166,9 @@ void MenuGestionPrestamos() {
             db.consultarFrecuenciaPagos(IdPrestamo);
             break;
 
+            case 5:
+            db.calcularIntereses(IdPrestamo);
+
             case 9:
                 cout << "Regresando al menú de módulos" << endl;
                 break;            
