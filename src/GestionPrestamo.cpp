@@ -46,4 +46,30 @@ void Database::consultarFrecuenciaPagos(int IdPrestamo) {
     sqlite3_finalize(stmt);
 }
 
-void Database::calcularIntereses(double montoPrestamo){}
+void Database::calcularIntereses(double montoPrestamo){
+    int opcion;
+    int IdPrestamo;
+    do{
+        cout << "\nCalculadora de intereses" << endl;
+        cout << "1. Calcular intereses de un prestamo" << endl;
+        cout << "2. Calcular intereses de un certificado a deposito (CDP)" << endl;
+        cout << "3. Regresar al menu anterior" << endl;
+        cout << "Seleccione una opción: ";
+        cin >> opcion;
+
+        if (cin.fail()) {
+            cin.clear(); 
+            cin.ignore(1000, '\n'); 
+            cout << "Entrada no válida. Por favor, ingrese un número" << endl;
+            continue;
+        } 
+        switch (opcion)
+        {
+
+        default:
+            cout << "Opción no válida. Intente de nuevo" << endl;
+        }
+        
+    } while (opcion != 3); 
+        //return 0;
+}    
