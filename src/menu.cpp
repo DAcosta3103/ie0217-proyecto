@@ -1,6 +1,7 @@
 #include <iostream>
 #include "../include/menu.hpp"
 #include "../include/database.hpp"
+
 using namespace std;
 
 void MenuAtencionAlCliente() {
@@ -137,6 +138,7 @@ void MenuGestionPrestamos() {
     Database db;
     int IdPrestamo;
     int subOpcion;
+    double nuevoSaldo;
     do {
         cout << "\n Menú para le gestión de préstamos" << endl;
         cout << "1. Tipos de préstamos a solicitar" << endl;
@@ -166,10 +168,22 @@ void MenuGestionPrestamos() {
             db.consultarFrecuenciaPagos(IdPrestamo);
             break;
 
+            case 3:
+            db.mostrarCuotasYDesglose();
+
+            case 4:
+            db.actualizarSaldoPrestamo(nuevoSaldo);
+
             case 5:
             db.calcularIntereses(IdPrestamo);
 
-            case 9:
+            case 6:
+            db.mostrarMetodosPago();
+
+            case 7:
+            db.verInformacionPrestamo(IdPrestamo);
+
+            case 8:
                 cout << "Regresando al menú de módulos" << endl;
                 break;            
         }

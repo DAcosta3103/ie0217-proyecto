@@ -53,7 +53,7 @@ void Database::realizarDeposito(int IdCuenta, double monto) {
         sqlite3_finalize(stmt);  
     }
 
-// exactamente la misma logica del realizar deposito, solo qjue en el saldo de la sentencia
+// exactamente la misma logica del realizar deposito, solo que en el saldo de la sentencia
 //se le resta al saldo en lugar de sumar
 void Database::realizarRetiro(int IdCuenta, double monto) {
         const char* sqlUpdate = R"(
@@ -80,7 +80,7 @@ void Database::realizarRetiro(int IdCuenta, double monto) {
         sqlite3_finalize(stmt);  
     }
 
-   // Métodos para atención al cliente
+// Métodos para atención al cliente
 
 
 void Database::realizarTransferencia(int idCuentaOrigen, int idCuentaDestino, double monto) {

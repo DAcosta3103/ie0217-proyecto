@@ -5,6 +5,8 @@
 #include <iostream>
 #include <string.h>
 #include <cmath>
+#include <iomanip>
+
 using namespace std;
 
 void Database::consultarTiposPrestamos() {
@@ -152,4 +154,166 @@ case 1: {
         }
 
     } while (opcion != 3);  // El bucle se repite hasta que la opción sea 3 (salir)
+}
+
+
+void Database::mostrarCuotasYDesglose() {
+    // Consulta SQL para obtener todos los préstamos con sus detalles
+    const char* sqlQuery = R"(
+        SELECT IdPrestamo, IdCliente, Monto, Cuota, CuotasPagadas, Plazo, TasaInteres, Tipo, Moneda
+        FROM Creditos;
+    )";
+
+    sqlite3_stmt* stmt;
+    // Preparar la sentencia SQL
+    if (sqlite3_prepare_v2(db, sqlQuery, -1, &stmt, nullptr) != SQLITE_OK) {
+        cerr << "Error al preparar la consulta de préstamos: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+
+    cout << "\n--- Desglose de Préstamos ---" << endl;
+    // Iterar por cada préstamo en la base de datos
+    while (sqlite3_step(stmt) == SQLITE_ROW) {
+        int idPrestamo = sqlite3_column_int(stmt, 0);
+        int idCliente = sqlite3_column_int(stmt, 1);
+        double monto = sqlite3_column_double(stmt, 2);
+        double cuota = sqlite3_column_double(stmt, 3);
+        int cuotasPagadas = sqlite3_column_int(stmt, 4);
+        int plazo = sqlite3_column_int(stmt, 5);
+        double tasaInteres = sqlite3_column_double(stmt, 6);
+        const char* tipo = (const char*)sqlite3_column_text(stmt, 7);
+        const char* moneda = (const char*)sqlite3_column_text(stmt, 8);
+
+        // Formatear y mostrar detalles de cada préstamo
+        cout << "Préstamo ID: " << idPrestamo << endl;
+        cout << "Cliente ID: " << idCliente << endl;
+        cout << "Tipo: " << tipo << endl;
+        cout << "Monto: " << monto << " " << moneda << endl;
+        cout << "Cuota Mensual: " << cuota << endl;
+        cout << "Cuotas Pagadas: " << cuotasPagadas << "/" << plazo << endl;
+        cout << "Tasa de Interés: " << tasaInteres << "%" << endl;
+        cout << "------------------------" << endl;
+    }
+
+    sqlite3_finalize(stmt);
+}
+
+void Database::actualizarSaldoPrestamo(double nuevoSaldo) {
+    // Verificar que el nuevo saldo sea válido
+    if (nuevoSaldo < 0) {
+        cerr << "Error: El saldo del préstamo no puede ser negativo." << endl;
+        return;
+    }
+
+    // Consulta para actualizar el saldo de un préstamo
+    const char* sqlUpdate = R"(
+        UPDATE Creditos 
+        SET Monto = ? 
+        WHERE IdPrestamo = (
+            SELECT MAX(IdPrestamo) 
+            FROM Creditos
+        );
+    )";
+
+    sqlite3_stmt* stmt;
+    // Preparar la sentencia SQL
+    if (sqlite3_prepare_v2(db, sqlUpdate, -1, &stmt, nullptr) != SQLITE_OK) {
+        cerr << "Error al preparar la actualización del saldo: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+
+    // Vincular el nuevo saldo
+    sqlite3_bind_double(stmt, 1, nuevoSaldo);
+
+    // Ejecutar la actualización
+    if (sqlite3_step(stmt) != SQLITE_DONE) {
+        cerr << "Error al actualizar el saldo del préstamo: " << sqlite3_errmsg(db) << endl;
+    } else {
+        cout << "Saldo del préstamo actualizado exitosamente a " << nuevoSaldo << endl;
+    }
+
+    sqlite3_finalize(stmt);
+}
+
+void Database::mostrarMetodosPago() {
+    // Definir métodos de pago predeterminados
+    const char* metodosPago[] = {
+        "Transferencia Bancaria", 
+        "Pago en Ventanilla", 
+        "Débito Automático", 
+        "Pago en Línea"
+    };
+
+    cout << "\n--- Métodos de Pago Disponibles ---" << endl;
+    // Mostrar cada método de pago
+    for (int i = 0; i < 4; ++i) {
+        cout << i+1 << ". " << metodosPago[i] << endl;
+    }
+}
+
+void Database::verInformacionPrestamo(int prestamoId) {
+    // Consulta SQL para obtener información detallada de un préstamo específico
+    const char* sqlQuery = R"(
+        SELECT 
+            c.IdPrestamo, 
+            c.IdCliente, 
+            cl.Nombre, 
+            c.Monto, 
+            c.Frecuencia, 
+            c.Plazo, 
+            c.Cuota, 
+            c.CuotasPagadas, 
+            c.TasaInteres, 
+            c.Tipo, 
+            c.Moneda
+        FROM Creditos c
+        JOIN Clientes cl ON c.IdCliente = cl.IdCliente
+        WHERE c.IdPrestamo = ?;
+    )";
+
+    sqlite3_stmt* stmt;
+    // Preparar la sentencia SQL
+    if (sqlite3_prepare_v2(db, sqlQuery, -1, &stmt, nullptr) != SQLITE_OK) {
+        cerr << "Error al preparar la consulta de información del préstamo: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+
+    // Vincular el ID de préstamo
+    sqlite3_bind_int(stmt, 1, prestamoId);
+
+    // Verificar si se encontró el préstamo
+    if (sqlite3_step(stmt) == SQLITE_ROW) {
+        // Extraer información del préstamo
+        int idPrestamo = sqlite3_column_int(stmt, 0);
+        int idCliente = sqlite3_column_int(stmt, 1);
+        const char* nombreCliente = (const char*)sqlite3_column_text(stmt, 2);
+        double monto = sqlite3_column_double(stmt, 3);
+        const char* frecuencia = (const char*)sqlite3_column_text(stmt, 4);
+        int plazo = sqlite3_column_int(stmt, 5);
+        double cuota = sqlite3_column_double(stmt, 6);
+        int cuotasPagadas = sqlite3_column_int(stmt, 7);
+        double tasaInteres = sqlite3_column_double(stmt, 8);
+        const char* tipo = (const char*)sqlite3_column_text(stmt, 9);
+        const char* moneda = (const char*)sqlite3_column_text(stmt, 10);
+
+        // Mostrar información detallada del préstamo
+        cout << "\n--- Detalles del Préstamo ---" << endl;
+        cout << "ID Préstamo: " << idPrestamo << endl;
+        cout << "Cliente: " << nombreCliente << " (ID: " << idCliente << ")" << endl;
+        cout << "Tipo de Préstamo: " << tipo << endl;
+        cout << "Monto: " << monto << " " << moneda << endl;
+        cout << "Frecuencia de Pago: " << frecuencia << endl;
+        cout << "Plazo Total: " << plazo << " cuotas" << endl;
+        cout << "Cuotas Pagadas: " << cuotasPagadas << endl;
+        cout << "Cuota Mensual: " << cuota << endl;
+        cout << "Tasa de Interés: " << tasaInteres << "%" << endl;
+
+        // Calcular y mostrar saldo pendiente
+        double saldoPendiente = monto - (cuotasPagadas * cuota);
+        cout << "Saldo Pendiente: " << saldoPendiente << " " << moneda << endl;
+    } else {
+        cout << "No se encontró préstamo con ID " << prestamoId << endl;
+    }
+
+    sqlite3_finalize(stmt);
 }
