@@ -20,7 +20,7 @@ public:
     bool ejecutarSQL(const char *sql);
     void realizarDeposito(int IdCuenta,double monto, int IdCliente);
     void realizarRetiro(int IdCuenta,double monto, int IdCliente);
-    void realizarTransferencia(int idCuentaOrigen, int idCuentaDestino, double monto, int IdCliente);
+    void realizarTransferencia(int idCuentaOrigen, int idCuentaDestino, double monto, int IdCliente, int IdCuenta);
     void realizarPagoServicios(int idCuentaCliente, double monto, int IdCliente);
     void consultarTipoCambio();
     void comprarCDP(int idCliente, double monto, int plazo);

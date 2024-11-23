@@ -125,10 +125,34 @@ void Database::realizarRetiro(int IdCuenta, double monto, int IdCliente) {
 
         sqlite3_finalize(stmt);  
 
-        // ahora para registrar la transaccion
+       // Buscar el IdCliente vinculado a la IdCuenta
+    const char* sqlSelectCliente = R"(
+        SELECT IdCliente FROM Cuentas WHERE IdCuenta = ?;
+    )";
+
+    sqlite3_stmt* stmtSelectCliente;
+    if (sqlite3_prepare_v2(db, sqlSelectCliente, -1, &stmtSelectCliente, nullptr) != SQLITE_OK) {
+        cerr << "Error al preparar la consulta SQL para obtener IdCliente: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+
+    sqlite3_bind_int(stmtSelectCliente, 1, IdCuenta);
+
+    int IdClienteVinculado = -1;  // Variable para almacenar el IdCliente
+    if (sqlite3_step(stmtSelectCliente) == SQLITE_ROW) {
+        IdClienteVinculado = sqlite3_column_int(stmtSelectCliente, 0);
+    } else {
+        cerr << "No se encontró el IdCliente para la cuenta " << IdCuenta << endl;
+        sqlite3_finalize(stmtSelectCliente);
+        return;
+    }
+
+    sqlite3_finalize(stmtSelectCliente);  // Liberamos los recursos del statement
+
+    // ahora para registrar la transaccion
     const char* sqlInsertTransaccion = R"(
         INSERT INTO Transacciones (IdCliente, Tipo, Monto, Fecha)
-        VALUES (?, 'Deposito', ?, date('now'));
+        VALUES (?, 'Retiro', ?, date('now'));
     )";
 
     sqlite3_stmt* stmtTransaccion;
@@ -137,23 +161,23 @@ void Database::realizarRetiro(int IdCuenta, double monto, int IdCliente) {
         return;
     }
 
-    sqlite3_bind_int(stmtTransaccion, 1, IdClienteVinculado);  // Usamos el IdCliente vinculado
-    sqlite3_bind_double(stmtTransaccion, 2, monto);  // Monto de la transacción
+    sqlite3_bind_int(stmtTransaccion, 1, IdClienteVinculado);  
+    sqlite3_bind_double(stmtTransaccion, 2, monto);  
 
-    // Ejecutamos la inserción de la transacción
+  
     if (sqlite3_step(stmtTransaccion) != SQLITE_DONE) {
         cerr << "Error al registrar la transacción en la tabla: " << sqlite3_errmsg(db) << endl;
     } else {
         cout << "Transacción registrada exitosamente en la tabla Transacciones." << endl;
     }
 
-    sqlite3_finalize(stmtTransaccion);
+    sqlite3_finalize(stmtTransaccion);  // Liberamos los recursos del statement
     }
 
 // Métodos para atención al cliente
 
 
-void Database::realizarTransferencia(int idCuentaOrigen, int idCuentaDestino, double monto, int IdCliente) {
+void Database::realizarTransferencia(int idCuentaOrigen, int idCuentaDestino, double monto, int IdCliente, int IdCuenta) {
         
         // Verifica el saldo suficiente en la cuenta origen
         const char* sqlSelect = "SELECT Saldo FROM Cuentas WHERE IdCuenta = ?";
@@ -182,23 +206,73 @@ void Database::realizarTransferencia(int idCuentaOrigen, int idCuentaDestino, do
         }
 
         // Inicia la transferencia si el saldo es suficiente
-        realizarRetiro(idCuentaOrigen, monto);
+        realizarRetiro(idCuentaOrigen, monto,IdCuenta);
         realizarDeposito(idCuentaDestino, monto, IdCliente);
         cout << "Transferencia de " << monto << " realizada de cuenta " << idCuentaOrigen << " a cuenta " << idCuentaDestino << endl;
+
+        //Buscar el IdCliente vinculado a la IdCuenta
+    const char* sqlSelectCliente = R"(
+        SELECT IdCliente FROM Cuentas WHERE IdCuenta = ?;
+    )";
+
+    sqlite3_stmt* stmtSelectCliente;
+    if (sqlite3_prepare_v2(db, sqlSelectCliente, -1, &stmtSelectCliente, nullptr) != SQLITE_OK) {
+        cerr << "Error al preparar la consulta SQL para obtener IdCliente: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+
+    sqlite3_bind_int(stmtSelectCliente, 1, IdCuenta);
+
+    int IdClienteVinculado = -1;  // Variable para almacenar el IdCliente
+    if (sqlite3_step(stmtSelectCliente) == SQLITE_ROW) {
+        IdClienteVinculado = sqlite3_column_int(stmtSelectCliente, 0);
+    } else {
+        cerr << "No se encontró el IdCliente para la cuenta " << IdCuenta << endl;
+        sqlite3_finalize(stmtSelectCliente);
+        return;
+    }
+
+    sqlite3_finalize(stmtSelectCliente);  // Liberamos los recursos del statement
+
+    // ahora para registrar la transaccion
+    const char* sqlInsertTransaccion = R"(
+        INSERT INTO Transacciones (IdCliente, Tipo, Monto, Fecha)
+        VALUES (?, 'Deposito', ?, date('now'));
+    )";
+
+    sqlite3_stmt* stmtTransaccion;
+    if (sqlite3_prepare_v2(db, sqlInsertTransaccion, -1, &stmtTransaccion, nullptr) != SQLITE_OK) {
+        cerr << "Error al preparar la sentencia SQL para insertar la transacción: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+
+    sqlite3_bind_int(stmtTransaccion, 1, IdClienteVinculado);  // Usamos el IdCliente vinculado
+    sqlite3_bind_double(stmtTransaccion, 2, monto);  // Monto de la transacción
+
+    // Ejecutamos la inserción de la transacción
+    if (sqlite3_step(stmtTransaccion) != SQLITE_DONE) {
+        cerr << "Error al registrar la transacción en la tabla: " << sqlite3_errmsg(db) << endl;
+    } else {
+        cout << "Transacción registrada exitosamente en la tabla Transacciones." << endl;
+    }
+
+    sqlite3_finalize(stmtTransaccion);  // Liberamos los recursos del statement
     }   
 
     
     
-void Database::realizarPagoServicios(int idCuentaCliente, double monto, int IdCliente){
+void Database::realizarPagoServicios(int idCuentaCliente, double monto, int IdCliente) {
 
-        // El monto se carga a una cuenta de servicios, propiedad del banco
-        const int idCuentaServicios = 999; // ID ficticio de la cuenta de servicios
+    const int idCuentaServicios = 999;
+    int idCuentaOrigen = idCuentaCliente;  
+    int idCuentaDestino = idCuentaServicios;
 
-        // Se realiza un retiro de la cuenta
-        realizarTransferencia(idCuentaCliente, idCuentaServicios, monto, IdCliente);
+    realizarTransferencia(idCuentaOrigen, idCuentaDestino, monto, IdCliente, idCuentaServicios);
 
-        cout << "\nPago de servicios por " << monto << " realizado desde la cuenta del cliente " << idCuentaCliente << " hacia la cuenta de servicios " << idCuentaServicios << endl;
-    }
+    cout << "\nPago de servicios por " << monto << " realizado desde la cuenta del cliente " 
+         << idCuentaCliente << " hacia la cuenta de servicios " << idCuentaServicios << endl;
+}
+
 
 
 void Database::consultarTipoCambio(){

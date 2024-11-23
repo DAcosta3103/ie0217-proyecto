@@ -54,7 +54,7 @@ void MenuAtencionAlCliente() {
             cout << "Ingrese el monto a retirar: ";
             cin >> monto;
 
-            db.realizarRetiro(IdCuenta, monto);
+            db.realizarRetiro( IdCuenta, monto,  IdCliente);
             break;
 
             case 3:
@@ -65,7 +65,7 @@ void MenuAtencionAlCliente() {
             cout << "Ingrese el monto a transferir: ";
             cin >> monto;
 
-            db.realizarTransferencia(idCuentaOrigen, idCuentaDestino,monto, IdCliente);
+            db.realizarTransferencia(idCuentaOrigen, idCuentaDestino,monto,IdCliente, IdCliente);
             break;
             case 4:
             do {
