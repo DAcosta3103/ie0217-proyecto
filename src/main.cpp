@@ -6,8 +6,8 @@ using namespace std;
 
 int main() {
     //intanciacion de objeto para poder manipular la clase
+   // Database db;
     Database db;
-
     int opcion;
 
     //blucle do while para el menu de modulos

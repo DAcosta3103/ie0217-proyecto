@@ -16,16 +16,15 @@ private:
 public:
     Database();
     ~Database();
-    
+
     bool ejecutarSQL(const char *sql);
-    void realizarDeposito(int IdCuenta,double monto);
-    void realizarRetiro(int IdCuenta,double monto);
-    void realizarTransferencia(int idCuentaOrigen, int idCuentaDestino, double monto);
-    void realizarPagoServicios(int idCuentaCliente, double monto);
+    void realizarDeposito(int IdCuenta,double monto, int IdCliente);
+    void realizarRetiro(int IdCuenta,double monto, int IdCliente);
+    void realizarTransferencia(int idCuentaOrigen, int idCuentaDestino, double monto, int IdCliente);
+    void realizarPagoServicios(int idCuentaCliente, double monto, int IdCliente);
     void consultarTipoCambio();
-    void comprarCDP(int idCliente, double monto);
+    void comprarCDP(int idCliente, double monto, int plazo);
     void bloquearCuenta(int cuentaId);
-    void desbloquearCuenta(int cuentaId);
     void verRegistroTransacciones();
 
     // Métodos para gestión de préstamos

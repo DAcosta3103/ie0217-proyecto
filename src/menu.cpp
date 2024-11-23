@@ -8,11 +8,15 @@ void MenuAtencionAlCliente() {
     Database db;
     int subOpcion;
     int opcionSubmenu;
+    int idCliente;
+    int IdCliente;
     int IdCuenta;
+    int idCuenta;
     int idCuentaDestino;
     int idCuentaOrigen;
     int idCuentaCliente;
     double monto;
+    int plazo;
     do {
         cout << "\n Menú para atención al cliente, elija una opción" << endl;
         cout << "1. Depósitos a la cuenta" << endl;
@@ -41,7 +45,7 @@ void MenuAtencionAlCliente() {
             cout << "Ingrese el monto a depositar: ";
             cin >> monto;
 
-            db.realizarDeposito(IdCuenta, monto);
+            db.realizarDeposito(IdCuenta, monto, IdCliente);
             break;
 
             case 2:
@@ -61,7 +65,7 @@ void MenuAtencionAlCliente() {
             cout << "Ingrese el monto a transferir: ";
             cin >> monto;
 
-            db.realizarTransferencia(idCuentaOrigen, idCuentaDestino,monto);
+            db.realizarTransferencia(idCuentaOrigen, idCuentaDestino,monto, IdCliente);
             break;
             case 4:
             do {
@@ -70,6 +74,7 @@ void MenuAtencionAlCliente() {
                     cout << "2. Marchamo\n";
                     cout << "3. Internet\n";
                     cout << "4. Impuesto municipal\n";
+                    cout << "5. Regresar al menú anterior" << endl;
                     cout << "Seleccione una opción del submenú: ";
                     cin >> opcionSubmenu;
 
@@ -80,7 +85,7 @@ void MenuAtencionAlCliente() {
                         cin >> idCuentaCliente;  
                         cout << "Ingrese el monto a cancelar: ";
                         cin >> monto;
-                        db.realizarPagoServicios(idCuentaCliente,monto);
+                        db.realizarPagoServicios(idCuentaCliente,monto, IdCliente);
                             break;
                            
                         case 2:
@@ -88,7 +93,7 @@ void MenuAtencionAlCliente() {
                         cin >> idCuentaCliente;  
                         cout << "Ingrese el monto a cancelar: ";
                         cin >> monto;
-                        db.realizarPagoServicios(idCuentaCliente,monto);
+                        db.realizarPagoServicios(idCuentaCliente,monto, IdCliente);
                             break;
 
                         case 3:
@@ -96,31 +101,28 @@ void MenuAtencionAlCliente() {
                         cin >> idCuentaCliente;  
                         cout << "Ingrese el monto a cancelar: ";
                         cin >> monto;
-                        db.realizarPagoServicios(idCuentaCliente,monto);
+                        db.realizarPagoServicios(idCuentaCliente,monto, IdCliente);
                             break;
                         case 4:
                         cout << "Ingrese el numero de identificion de la cuenta de origen de los fondos: ";
                         cin >> idCuentaCliente;  
                         cout << "Ingrese el monto a cancelar: ";
                         cin >> monto;
-                        db.realizarPagoServicios(idCuentaCliente,monto);
+                        db.realizarPagoServicios(idCuentaCliente,monto, IdCliente);
                             break;
-
-                        default:
-                            cout << "Ingrese una opcion valida para el pago de servicios" << endl;
                     }
-                } while (opcionSubmenu != 4);
+                } while (opcionSubmenu != 5);
                 break;
             break;
             case 5:
-            //falta implementar
+                db.comprarCDP(idCliente, monto, plazo);
             break;
             case 6:
             db.consultarTipoCambio();
             break;
 
             case 7:
-            //falta implementar
+            db.bloquearCuenta(idCuenta);
             break;
 
             case 8:

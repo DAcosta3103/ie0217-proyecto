@@ -21,41 +21,87 @@ Database::~Database() {
         cout << "Base de datos cerrada correctamente" << endl;
     }
 }
+void Database::realizarDeposito(int IdCuenta, double monto, int IdCliente) {
+    // Sentencia SQL para actualizar el saldo de la cuenta
+    const char* sqlUpdate = R"(
+        UPDATE Cuentas
+        SET Saldo = Saldo + ?
+        WHERE IdCuenta = ?;
+    )";
 
-void Database::realizarDeposito(int IdCuenta, double monto) {
-        //sentencia SQL para actualizar el saldo
-        const char* sqlUpdate = R"(
-            UPDATE Cuentas
-            SET Saldo = Saldo + ?
-            WHERE IdCuenta = ?;
-        )";
-        //stmt (statement) puntero donde se va almacenar la sentencia SQL, db es la variable que abre la base de datos
-        //sqlUpdate la sencuencia, -1 indica la longitud de la cadena SQL, &stmt es el punteero
-        //que almacena la sentencia preparada, el nullptr indica que no se le van a pasar sentencias adicionales
-        sqlite3_stmt* stmt;
-        if (sqlite3_prepare_v2(db, sqlUpdate, -1, &stmt, nullptr) != SQLITE_OK) {
-            cerr << "Error al preparar la sentencia SQL: " << sqlite3_errmsg(db) << endl;
-            return;
-        }
-
-        // se vinculan los valores para los parametros ? de de la sentencia
-        sqlite3_bind_double(stmt, 1, monto); 
-        sqlite3_bind_int(stmt, 2, IdCuenta);
-
-        //esta funcion ejecuta la sentencia, en este caso actualiza la cuenta con el deposito
-        if (sqlite3_step(stmt) != SQLITE_DONE) {
-            cerr << "Error al ejecutar la sentencia SQL: " << sqlite3_errmsg(db) << endl;
-        } else {
-            cout << "Depósito de " << monto << " realizado exitosamente en la cuenta " << IdCuenta << "!" << endl;
-        }
-
-        //libera los recursos del statement, liberando memoria
-        sqlite3_finalize(stmt);  
+    sqlite3_stmt* stmt;
+    if (sqlite3_prepare_v2(db, sqlUpdate, -1, &stmt, nullptr) != SQLITE_OK) {
+        cerr << "Error al preparar la sentencia SQL para actualizar el saldo: " << sqlite3_errmsg(db) << endl;
+        return;
     }
+
+    sqlite3_bind_double(stmt, 1, monto); 
+    sqlite3_bind_int(stmt, 2, IdCuenta);
+
+    // Ejecutamos la sentencia para actualizar el saldo
+    if (sqlite3_step(stmt) != SQLITE_DONE) {
+        cerr << "Error al ejecutar la sentencia SQL: " << sqlite3_errmsg(db) << endl;
+        sqlite3_finalize(stmt);
+        return;
+    } else {
+        cout << "Depósito de " << monto << " realizado exitosamente en la cuenta " << IdCuenta << "!" << endl;
+    }
+
+    sqlite3_finalize(stmt);  // Liberamos los recursos del statement
+
+    // **Paso 1: Buscar el IdCliente vinculado a la IdCuenta**
+    const char* sqlSelectCliente = R"(
+        SELECT IdCliente FROM Cuentas WHERE IdCuenta = ?;
+    )";
+
+    sqlite3_stmt* stmtSelectCliente;
+    if (sqlite3_prepare_v2(db, sqlSelectCliente, -1, &stmtSelectCliente, nullptr) != SQLITE_OK) {
+        cerr << "Error al preparar la consulta SQL para obtener IdCliente: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+
+    sqlite3_bind_int(stmtSelectCliente, 1, IdCuenta);
+
+    int IdClienteVinculado = -1;  // Variable para almacenar el IdCliente
+    if (sqlite3_step(stmtSelectCliente) == SQLITE_ROW) {
+        IdClienteVinculado = sqlite3_column_int(stmtSelectCliente, 0);
+    } else {
+        cerr << "No se encontró el IdCliente para la cuenta " << IdCuenta << endl;
+        sqlite3_finalize(stmtSelectCliente);
+        return;
+    }
+
+    sqlite3_finalize(stmtSelectCliente);  // Liberamos los recursos del statement
+
+    // ahora para registrar la transaccion
+    const char* sqlInsertTransaccion = R"(
+        INSERT INTO Transacciones (IdCliente, Tipo, Monto, Fecha)
+        VALUES (?, 'Deposito', ?, date('now'));
+    )";
+
+    sqlite3_stmt* stmtTransaccion;
+    if (sqlite3_prepare_v2(db, sqlInsertTransaccion, -1, &stmtTransaccion, nullptr) != SQLITE_OK) {
+        cerr << "Error al preparar la sentencia SQL para insertar la transacción: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+
+    sqlite3_bind_int(stmtTransaccion, 1, IdClienteVinculado);  // Usamos el IdCliente vinculado
+    sqlite3_bind_double(stmtTransaccion, 2, monto);  // Monto de la transacción
+
+    // Ejecutamos la inserción de la transacción
+    if (sqlite3_step(stmtTransaccion) != SQLITE_DONE) {
+        cerr << "Error al registrar la transacción en la tabla: " << sqlite3_errmsg(db) << endl;
+    } else {
+        cout << "Transacción registrada exitosamente en la tabla Transacciones." << endl;
+    }
+
+    sqlite3_finalize(stmtTransaccion);  // Liberamos los recursos del statement
+}
+
 
 // exactamente la misma logica del realizar deposito, solo que en el saldo de la sentencia
 //se le resta al saldo en lugar de sumar
-void Database::realizarRetiro(int IdCuenta, double monto) {
+void Database::realizarRetiro(int IdCuenta, double monto, int IdCliente) {
         const char* sqlUpdate = R"(
             UPDATE Cuentas
             SET Saldo = Saldo - ?
@@ -78,12 +124,36 @@ void Database::realizarRetiro(int IdCuenta, double monto) {
         }
 
         sqlite3_finalize(stmt);  
+
+        // ahora para registrar la transaccion
+    const char* sqlInsertTransaccion = R"(
+        INSERT INTO Transacciones (IdCliente, Tipo, Monto, Fecha)
+        VALUES (?, 'Deposito', ?, date('now'));
+    )";
+
+    sqlite3_stmt* stmtTransaccion;
+    if (sqlite3_prepare_v2(db, sqlInsertTransaccion, -1, &stmtTransaccion, nullptr) != SQLITE_OK) {
+        cerr << "Error al preparar la sentencia SQL para insertar la transacción: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+
+    sqlite3_bind_int(stmtTransaccion, 1, IdClienteVinculado);  // Usamos el IdCliente vinculado
+    sqlite3_bind_double(stmtTransaccion, 2, monto);  // Monto de la transacción
+
+    // Ejecutamos la inserción de la transacción
+    if (sqlite3_step(stmtTransaccion) != SQLITE_DONE) {
+        cerr << "Error al registrar la transacción en la tabla: " << sqlite3_errmsg(db) << endl;
+    } else {
+        cout << "Transacción registrada exitosamente en la tabla Transacciones." << endl;
+    }
+
+    sqlite3_finalize(stmtTransaccion);
     }
 
 // Métodos para atención al cliente
 
 
-void Database::realizarTransferencia(int idCuentaOrigen, int idCuentaDestino, double monto) {
+void Database::realizarTransferencia(int idCuentaOrigen, int idCuentaDestino, double monto, int IdCliente) {
         
         // Verifica el saldo suficiente en la cuenta origen
         const char* sqlSelect = "SELECT Saldo FROM Cuentas WHERE IdCuenta = ?";
@@ -113,22 +183,23 @@ void Database::realizarTransferencia(int idCuentaOrigen, int idCuentaDestino, do
 
         // Inicia la transferencia si el saldo es suficiente
         realizarRetiro(idCuentaOrigen, monto);
-        realizarDeposito(idCuentaDestino, monto);
+        realizarDeposito(idCuentaDestino, monto, IdCliente);
         cout << "Transferencia de " << monto << " realizada de cuenta " << idCuentaOrigen << " a cuenta " << idCuentaDestino << endl;
     }   
 
     
     
-void Database::realizarPagoServicios(int idCuentaCliente, double monto){
+void Database::realizarPagoServicios(int idCuentaCliente, double monto, int IdCliente){
 
         // El monto se carga a una cuenta de servicios, propiedad del banco
         const int idCuentaServicios = 999; // ID ficticio de la cuenta de servicios
 
         // Se realiza un retiro de la cuenta
-        realizarTransferencia(idCuentaCliente, idCuentaServicios, monto);
+        realizarTransferencia(idCuentaCliente, idCuentaServicios, monto, IdCliente);
 
-        cout << "Pago de servicios por " << monto << " realizado desde la cuenta del cliente " << idCuentaCliente << " hacia la cuenta de servicios " << idCuentaServicios << endl;
+        cout << "\nPago de servicios por " << monto << " realizado desde la cuenta del cliente " << idCuentaCliente << " hacia la cuenta de servicios " << idCuentaServicios << endl;
     }
+
 
 void Database::consultarTipoCambio(){
 
@@ -137,105 +208,126 @@ void Database::consultarTipoCambio(){
     }
 
 
-void Database::comprarCDP(int idCliente, double monto) {
+void Database::comprarCDP(int idCliente, double monto, int plazo) {
 
-        // Se setean valores predeterminados para el CDP
-        const char* sqlInsertCDP = R"(
-            INSERT INTO CDP (IdCliente, Monto, TazaInteres, Plazo, FechaInicio)
-            VALUES (?, ?, 5.0, 12, date('now'));
-        )";
+    cout << "Ingrese el ID del cliente: ";
+    cin >> idCliente;
 
-        sqlite3_stmt* stmt;
-        if (sqlite3_prepare_v2(db, sqlInsertCDP, -1, &stmt, nullptr) != SQLITE_OK) {
-            cerr << "Error al preparar la sentencia SQL para comprar CDP: " << sqlite3_errmsg(db) << endl;
-            return;
-        }
+    cout << "Ingrese el monto a invertir: ";
+    cin >> monto;
 
-        // Enlace de parámetros
-        sqlite3_bind_int(stmt, 1, idCliente);
-        sqlite3_bind_double(stmt, 2, monto);
+    cout << "Ingrese el plazo en meses: ";
+    cin >> plazo;
 
-        // Se maneja la lógica de compra
-        /*
-        Por implementar: Verificación de si el cliente tiene suficiente dinero en su cuenta
-        */
-        if (sqlite3_step(stmt) != SQLITE_DONE) {
-            cerr << "Error al ejecutar la compra de CDP: " << sqlite3_errmsg(db) << endl;
-        } else {
-            cout << "CDP comprado con éxito para el cliente " << idCliente << " por el monto de " << monto << endl;
-        }
-        sqlite3_finalize(stmt);
+   
+    const char* sqlInsertCDP = R"(
+        INSERT INTO CDP (IdCliente, Monto, TasaInteres, Plazo, FechaInicio)
+        VALUES (?, ?, 5.0, ?, date('now'));
+    )";
+
+    sqlite3_stmt* stmt;
+    if (sqlite3_prepare_v2(db, sqlInsertCDP, -1, &stmt, nullptr) != SQLITE_OK) {
+        cerr << "Error al preparar la sentencia SQL para comprar CDP: " << sqlite3_errmsg(db) << endl;
+        return;
     }
 
+    // Enlace de parámetros
+    sqlite3_bind_int(stmt, 1, idCliente);
+    sqlite3_bind_double(stmt, 2, monto);
+    sqlite3_bind_int(stmt, 3, plazo);
 
-void Database:: bloquearCuenta(int idCuenta) {
-        
-        const char* sqlUpdate = "UPDATE Cuentas SET Bloqueada = 1 WHERE IdCuenta = ?;"; // Se pone en 1 el indicador en la tabla SQL sobre el estado de bloqueo de la cuenta
-        sqlite3_stmt* stmt;
-        if (sqlite3_prepare_v2(db, sqlUpdate, -1, &stmt, nullptr) != SQLITE_OK) {
-            cerr << "Error al preparar la sentencia SQL para bloquear cuenta: " << sqlite3_errmsg(db) << endl;
-            return;
-        }
+    // Se maneja la lógica de compra
+    /*
+    Por implementar: Verificación de si el cliente tiene suficiente dinero en su cuenta
+    */
+    if (sqlite3_step(stmt) != SQLITE_DONE) {
+        cerr << "Error al ejecutar la compra de CDP: " << sqlite3_errmsg(db) << endl;
+    } else {
+        cout << "CDP comprado con éxito para el cliente " << idCliente << " por el monto de " << monto << " con un plazo de " << plazo << " meses." << endl;
+    }
+    sqlite3_finalize(stmt);
+}
 
-        sqlite3_bind_int(stmt, 1, idCuenta);
+void Database::bloquearCuenta(int idCuenta) {
+    cout << "Ingrese el ID de la cuenta que desea bloquear o desbloquear: ";
+    cin >> idCuenta;
 
-        // Se maneja la lógica del bloqueo de la cuenta
-        if (sqlite3_step(stmt) != SQLITE_DONE) {
-            cerr << "Error al bloquear la cuenta " << idCuenta << ": " << sqlite3_errmsg(db) << endl;
-        } else {
-            cout << "Cuenta " << idCuenta << " bloqueada exitosamente." << endl;
-        }
-        sqlite3_finalize(stmt);
+    // Primero, verificamos el estado actual de la cuenta
+    const char* sqlCheckStatus = "SELECT Bloqueada FROM Cuentas WHERE IdCuenta = ?;";
+    sqlite3_stmt* stmtCheck;
+    if (sqlite3_prepare_v2(db, sqlCheckStatus, -1, &stmtCheck, nullptr) != SQLITE_OK) {
+        cerr << "Error al preparar la sentencia SQL para verificar el estado de la cuenta: " << sqlite3_errmsg(db) << endl;
+        return;
     }
 
-void Database::desbloquearCuenta(int idCuenta) {
-        
-        const char* sqlUpdate = "UPDATE Cuentas SET Bloqueada = 0 WHERE IdCuenta = ?;"; // Se pone en 0 el indicador en la tabla SQL sobre el estado de bloqueo de la cuenta
+    sqlite3_bind_int(stmtCheck, 1, idCuenta);
 
-        sqlite3_stmt* stmt;
-        if (sqlite3_prepare_v2(db, sqlUpdate, -1, &stmt, nullptr) != SQLITE_OK) {
-            cerr << "Error al preparar la sentencia SQL para desbloquear cuenta: " << sqlite3_errmsg(db) << endl;
-            return;
-        }
-
-        sqlite3_bind_int(stmt, 1, idCuenta);
-
-        // Se manejan los casos de éxito y error
-        if (sqlite3_step(stmt) != SQLITE_DONE) {
-            cerr << "Error al desbloquear la cuenta " << idCuenta << ": " << sqlite3_errmsg(db) << endl;
-        } else {
-            cout << "Cuenta " << idCuenta << " desbloqueada exitosamente" << endl;
-        }
-        sqlite3_finalize(stmt);
-        }
-
-void Database::verRegistroTransacciones(){
-
-        // Se seleccionan todos los campos de la tabla Transacciones
-        const char* sqlSelect = "SELECT * FROM Transacciones;";
-
-        sqlite3_stmt* stmt;
-        if (sqlite3_prepare_v2(db, sqlSelect, -1, &stmt, nullptr) != SQLITE_OK) {
-            cerr << "Error al preparar la consulta para ver el registro de transacciones: " << sqlite3_errmsg(db) << endl;
-            return;
-        }
-
-
-        cout << "Registro de Transacciones:" << endl;
-        cout << "----------------------------------------" << endl; // Línea para facilitar la revisión de la tabla en terminal
-        // En este bucle, cada columna de la fila actual será extraída, esto para cada fila encontrada
-        while (sqlite3_step(stmt) == SQLITE_ROW) {
-            int idTransaccion = sqlite3_column_int(stmt, 0);
-            int idCliente = sqlite3_column_int(stmt, 1);
-            const unsigned char* tipo = sqlite3_column_text(stmt, 2);
-            double monto = sqlite3_column_double(stmt, 3);
-            const unsigned char* fecha = sqlite3_column_text(stmt, 4);
-
-            cout << "ID Transacción: " << idTransaccion << " | Cliente: " << idCliente
-                 << " | Tipo: " << tipo << " | Monto: " << monto << " | Fecha: " << fecha << endl;
-        }
-        cout << "----------------------------------------" << endl; // Línea para facilitar la revisión de la tabla en terminal
-
-        sqlite3_finalize(stmt);
-
+    int bloqueada = -1;
+    if (sqlite3_step(stmtCheck) == SQLITE_ROW) {
+        bloqueada = sqlite3_column_int(stmtCheck, 0);  // Obtener el estado de la cuenta
     }
+
+    sqlite3_finalize(stmtCheck);
+
+    // Verificamos si encontramos la cuenta
+    if (bloqueada == -1) {
+        cerr << "Cuenta no encontrada con el ID: " << idCuenta << endl;
+        return;
+    }
+
+    // Definimos la lógica para bloquear o desbloquear la cuenta
+    const char* sqlUpdate = nullptr;
+    if (bloqueada == 1) {
+        // Si la cuenta está bloqueada, la desbloqueamos (Bloqueada = 0)
+        sqlUpdate = "UPDATE Cuentas SET Bloqueada = 0 WHERE IdCuenta = ?;";
+        cout << "Cuenta con ID " << idCuenta<<" desbloqueada" << endl;
+    } else {
+        // Si la cuenta no está bloqueada, la bloqueamos (Bloqueada = 1)
+        sqlUpdate = "UPDATE Cuentas SET Bloqueada = 1 WHERE IdCuenta = ?;";
+        cout << "Cuenta con ID " << idCuenta<<" bloqueada" << endl;
+    }
+
+    sqlite3_stmt* stmtUpdate;
+    if (sqlite3_prepare_v2(db, sqlUpdate, -1, &stmtUpdate, nullptr) != SQLITE_OK) {
+        cerr << "Error al preparar la sentencia SQL para actualizar el estado de la cuenta: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+
+    sqlite3_bind_int(stmtUpdate, 1, idCuenta);
+
+    // Ejecutamos la actualización
+    if (sqlite3_step(stmtUpdate) != SQLITE_DONE) {
+        cerr << "Error al actualizar la cuenta " << idCuenta << ": " << sqlite3_errmsg(db) << endl;
+    }
+    sqlite3_finalize(stmtUpdate);
+}
+
+
+void Database::verRegistroTransacciones() {
+    
+    const char* sqlSelect = "SELECT IdTransaccion, IdCliente, Tipo, Monto, Fecha FROM Transacciones;";
+
+    sqlite3_stmt* stmt;
+    if (sqlite3_prepare_v2(db, sqlSelect, -1, &stmt, nullptr) != SQLITE_OK) {
+        cerr << "Error al preparar la consulta para ver el registro de transacciones: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+
+    cout << "Registro de Transacciones:" << endl;
+    cout << "----------------------------------------" << endl;
+
+    // En este bucle, cada columna de la fila actual será extraída, esto para cada fila encontrada
+    while (sqlite3_step(stmt) == SQLITE_ROW) {
+        int idTransaccion = sqlite3_column_int(stmt, 0);
+        int idCliente = sqlite3_column_int(stmt, 1);
+        const unsigned char* tipo = sqlite3_column_text(stmt, 2);
+        int monto = sqlite3_column_int(stmt, 3);  
+        const char* fecha = (const char*) sqlite3_column_text(stmt, 4);  
+
+        cout << "ID Transacción: " << idTransaccion << " | Cliente: " << idCliente
+             << " | Tipo: " << tipo << " | Monto: " << monto << " | Fecha: " << fecha << endl;
+    }
+    cout << "----------------------------------------" << endl;
+
+    sqlite3_finalize(stmt);
+}

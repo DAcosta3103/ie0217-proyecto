@@ -80,6 +80,8 @@ CREATE TABLE IF NOT EXISTS Creditos (
         IdTransaccion INTEGER PRIMARY KEY AUTOINCREMENT,
         IdCliente INT NOT NULL,
         Tipo TEXT CHECK(Tipo IN ('Deposito', 'Retiro', 'Transferencia','Abono')) NOT NULL,
+        Monto REAL NOT NULL,
+        Fecha TEXT NOT NULL DEFAULT (date('now')),
         FOREIGN KEY(IdCliente) REFERENCES Clientes(IdCliente)
     );
     )";
