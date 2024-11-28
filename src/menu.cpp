@@ -145,7 +145,6 @@ void MenuAtencionAlCliente() {
             case 7:
             cout << "Ingrese el ID de la cuenta que desea bloquear o desbloquear: ";
             cin >> idCuenta;
-
             db.bloquearCuenta(idCuenta);
             break;
 
