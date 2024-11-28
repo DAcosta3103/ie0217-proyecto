@@ -285,15 +285,7 @@ void Database::consultarTipoCambio(){
 void Database::comprarCDP(int idCliente, double monto, int plazo) {
 
     double interes;
-
-    cout << "Ingrese el ID del cliente: ";
-    cin >> idCliente;
-
-    cout << "Ingrese el monto a invertir: ";
-    cin >> monto;
-
-    cout << "Ingrese el plazo en meses: ";
-    cin >> plazo;
+    
 
     interes = (monto*plazo*0.01)/365;
 
