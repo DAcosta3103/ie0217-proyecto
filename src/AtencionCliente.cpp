@@ -285,7 +285,7 @@ void Database::consultarTipoCambio(){
 void Database::comprarCDP(int idCliente, double monto, int plazo) {
 
     double interes;
-    
+
 
     interes = (monto*plazo*0.01)/365;
 
@@ -320,8 +320,6 @@ void Database::comprarCDP(int idCliente, double monto, int plazo) {
 }
 
 void Database::bloquearCuenta(int idCuenta) {
-    cout << "Ingrese el ID de la cuenta que desea bloquear o desbloquear: ";
-    cin >> idCuenta;
 
     // Primero, verificamos el estado actual de la cuenta
     const char* sqlCheckStatus = "SELECT Bloqueada FROM Cuentas WHERE IdCuenta = ?;";
