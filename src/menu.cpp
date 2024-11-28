@@ -195,18 +195,22 @@ void MenuGestionPrestamos() {
 
             case 3:
             db.mostrarCuotasYDesglose();
-
+            break;
             case 4:
             db.actualizarSaldoPrestamo(nuevoSaldo);
+            break;
 
             case 5:
             db.calcularIntereses(IdPrestamo);
+            break;
 
             case 6:
             db.mostrarMetodosPago();
+            break;
 
             case 7:
             db.verInformacionPrestamo(IdPrestamo);
+            break;
 
             case 8:
                 cout << "Regresando al menú de módulos" << endl;

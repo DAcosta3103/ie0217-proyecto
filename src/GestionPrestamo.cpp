@@ -261,6 +261,12 @@ void Database::mostrarMetodosPago() {
 }
 
 void Database::verInformacionPrestamo(int prestamoId) {
+    //int prestamoId;
+
+    // Pedir al usuario el ID del préstamo
+    cout << "Ingrese el ID del préstamo que desea consultar: ";
+    cin >> prestamoId;
+
     // Consulta SQL para obtener información detallada de un préstamo específico
     const char* sqlQuery = R"(
         SELECT 
@@ -281,13 +287,14 @@ void Database::verInformacionPrestamo(int prestamoId) {
     )";
 
     sqlite3_stmt* stmt;
+
     // Preparar la sentencia SQL
     if (sqlite3_prepare_v2(db, sqlQuery, -1, &stmt, nullptr) != SQLITE_OK) {
         cerr << "Error al preparar la consulta de información del préstamo: " << sqlite3_errmsg(db) << endl;
         return;
     }
 
-    // Vincular el ID de préstamo
+    // Vincular el ID de préstamo ingresado por el usuario
     sqlite3_bind_int(stmt, 1, prestamoId);
 
     // Verificar si se encontró el préstamo
@@ -321,8 +328,10 @@ void Database::verInformacionPrestamo(int prestamoId) {
         double saldoPendiente = monto - (cuotasPagadas * cuota);
         cout << "Saldo Pendiente: " << saldoPendiente << " " << moneda << endl;
     } else {
+        // Mostrar mensaje si no se encuentra el préstamo
         cout << "No se encontró préstamo con ID " << prestamoId << endl;
     }
 
+    // Liberar recursos de la consulta preparada
     sqlite3_finalize(stmt);
 }
