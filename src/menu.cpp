@@ -125,12 +125,12 @@ void MenuAtencionAlCliente() {
                 cout << "Ingrese su número de identificación: ";
                 cin >> idCliente;
                 cout << "Ingrese el monto que quiere depositar al banco: ";
-                cin << monto;
+                cin >> monto;
                 cout << "Favor tener en cuenta que los plazos que manejamos en el banco son de mínimo 6 meses, y se manejan en bloques de medio año (1 año, 2 años y medio, etc.)" << endl;                
                 
                 do {
                     cout << "Ingrese, en número de meses, el plazo que desea: ";
-                    cin << plazo;
+                    cin >> plazo;
                     if (plazo % 6 != 0) {
                         cout << "El número ingresado no está en bloques de medio año (no es múltiplo de 6). Por favor intente de nuevo." << endl;
                     }
@@ -161,9 +161,9 @@ void MenuAtencionAlCliente() {
 
 void MenuGestionPrestamos() {
     Database db;
-    int IdPrestamo;
+    int IdPrestamo = 0;
     int subOpcion;
-    double nuevoSaldo;
+    double nuevoSaldo = 0;
     do {
         cout << "\n Menú para le gestión de préstamos" << endl;
         cout << "1. Tipos de préstamos a solicitar" << endl;
