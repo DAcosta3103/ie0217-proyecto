@@ -284,6 +284,8 @@ void Database::consultarTipoCambio(){
 
 void Database::comprarCDP(int idCliente, double monto, int plazo) {
 
+    double interes;
+
     cout << "Ingrese el ID del cliente: ";
     cin >> idCliente;
 
@@ -293,10 +295,12 @@ void Database::comprarCDP(int idCliente, double monto, int plazo) {
     cout << "Ingrese el plazo en meses: ";
     cin >> plazo;
 
-   
+    interes = (monto*plazo*0.01)/365;
+
+    // se maneja una tasa de interés de 1%
     const char* sqlInsertCDP = R"(
         INSERT INTO CDP (IdCliente, Monto, TasaInteres, Plazo, FechaInicio)
-        VALUES (?, ?, 5.0, ?, date('now'));
+        VALUES (?, ?, 1.0, ?, date('now'));    
     )";
 
     sqlite3_stmt* stmt;
@@ -318,6 +322,7 @@ void Database::comprarCDP(int idCliente, double monto, int plazo) {
         cerr << "Error al ejecutar la compra de CDP: " << sqlite3_errmsg(db) << endl;
     } else {
         cout << "CDP comprado con éxito para el cliente " << idCliente << " por el monto de " << monto << " con un plazo de " << plazo << " meses." << endl;
+        cout << "El interés que generará será de " << interes << "colones" << endl;
     }
     sqlite3_finalize(stmt);
 }

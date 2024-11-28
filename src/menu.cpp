@@ -40,10 +40,12 @@ void MenuAtencionAlCliente() {
 
         switch (subOpcion) {
             case 1:
-            cout << "Ingrese el numero de identificion de la cuenta a la que quiere hacer el deposito: ";
+            cout << "Ingrese el numero de identificion de  cuenta a la que quiere hacer el deposito: ";
             cin >> IdCuenta;
             cout << "Ingrese el monto a depositar: ";
             cin >> monto;
+            cout << "Ingrese el ID del cliente vinculado a la cuenta: ";
+            cin >> IdCliente;
 
             db.realizarDeposito(IdCuenta, monto, IdCliente);
             break;
@@ -53,8 +55,10 @@ void MenuAtencionAlCliente() {
             cin >> IdCuenta;
             cout << "Ingrese el monto a retirar: ";
             cin >> monto;
+            cout << "Ingrese su número de identificación: ";
+            cin >> IdCliente;
 
-            db.realizarRetiro( IdCuenta, monto,  IdCliente);
+            db.realizarRetiro(IdCuenta, monto,  IdCliente);
             break;
 
             case 3:
@@ -65,7 +69,7 @@ void MenuAtencionAlCliente() {
             cout << "Ingrese el monto a transferir: ";
             cin >> monto;
 
-            db.realizarTransferencia(idCuentaOrigen, idCuentaDestino,monto,IdCliente, IdCliente);
+            db.realizarTransferencia(idCuentaOrigen, idCuentaDestino, monto, IdCliente, IdCliente);
             break;
             case 4:
             do {
@@ -108,6 +112,8 @@ void MenuAtencionAlCliente() {
                         cin >> idCuentaCliente;  
                         cout << "Ingrese el monto a cancelar: ";
                         cin >> monto;
+                        cout << "Ingrese el ID del cliente: ";
+                        cin >> IdCliente;
                         db.realizarPagoServicios(idCuentaCliente,monto, IdCliente);
                             break;
                     }
@@ -115,6 +121,21 @@ void MenuAtencionAlCliente() {
                 break;
             break;
             case 5:
+                cout << "Favor tener en cuenta que la tasa de interés que maneja el banco es de 1%" << endl;
+                cout << "Ingrese su número de identificación: ";
+                cin >> idCliente;
+                cout << "Ingrese el monto que quiere depositar al banco: ";
+                cin << monto;
+                cout << "Favor tener en cuenta que los plazos que manejamos en el banco son de mínimo 6 meses, y se manejan en bloques de medio año (1 año, 2 años y medio, etc.)" << endl;                
+                
+                do {
+                    cout << "Ingrese, en número de meses, el plazo que desea: ";
+                    cin << plazo;
+                    if (plazo % 6 != 0) {
+                        cout << "El número ingresado no está en bloques de medio año (no es múltiplo de 6). Por favor intente de nuevo." << endl;
+                    }
+                } while (plazo % 6 != 0);
+
                 db.comprarCDP(idCliente, monto, plazo);
             break;
             case 6:
@@ -122,6 +143,7 @@ void MenuAtencionAlCliente() {
             break;
 
             case 7:
+            
             db.bloquearCuenta(idCuenta);
             break;
 
