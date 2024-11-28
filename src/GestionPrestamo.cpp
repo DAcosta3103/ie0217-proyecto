@@ -71,7 +71,6 @@ void Database::calcularIntereses(double IdPrestamo) {
 
         switch (opcion) {
 case 1: {
-    int IdPrestamo;
     cout << "Ingrese el ID del préstamo para consultar: ";
     cin >> IdPrestamo;
 
@@ -141,7 +140,20 @@ case 1: {
 
             case 2:
                 // Lógica para calcular los intereses de un certificado a depósito
-                cout << "Opción 2 seleccionada. Lógica para CDP aquí." << endl;
+                double monto;
+                int plazo;
+                double interesCDP;
+
+                cout << "Favor tener en cuenta que el banco maneja una tasa de interés del 1%." << endl;
+                cout << "Ingrese el monto que desea depositar: ";
+                cin >> monto;
+                cout << "ingrese el plazo, en meses, que durará el depósito: ";
+                cin >> plazo;
+
+                interesCDP = (monto*plazo*0.01)/365;
+
+                cout << "El interés generado por un CDP con los parámetros especificados es de " << interesCDP << "colones" << endl;
+                
                 break;
 
             case 3:
