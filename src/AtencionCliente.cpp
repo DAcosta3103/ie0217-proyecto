@@ -12,7 +12,7 @@ if (sqlite3_open("banco.db", &db) == SQLITE_OK) {
 } else {
     cerr << "Error al abrir la base de datos: " << sqlite3_errmsg(db) << endl;
     return false;
-}
+}   
 }
 
 Database::~Database() {
@@ -21,6 +21,7 @@ Database::~Database() {
         cout << "Base de datos cerrada correctamente" << endl;
     }
 }
+
 void Database::realizarDeposito(int IdCuenta, double monto, int IdCliente) {
     // Sentencia SQL para actualizar el saldo de la cuenta
     const char* sqlUpdate = R"(
@@ -278,7 +279,7 @@ void Database::realizarPagoServicios(int idCuentaCliente, double monto, int IdCl
 void Database::consultarTipoCambio(){
 
         // Se manejará un tipo de cambio fijo, el cual para recordar buenas épocas, será $1 = 500 CRC (sujeto a cambios)
-        cout << "El tipo de cambio actual es de 500 CRC por 1 USD." << endl;
+        cout << "El tipo de cambio actual es de 510 CRC por 1 USD." << endl;
     }
 
 

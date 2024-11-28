@@ -269,3 +269,43 @@ Además de la implementación de la base de datos, también se escribe el códig
 **Consulta de Tipo de Cambio:** Consulta que muestra un tipo de cambio fijo simulado (en este avance). Aún falta por definir el valor a utilizar para el tipo de cambio.
 
 **Registro de Transacciones:** Visualización completa del historial de transacciones realizadas en el sistema, incluyendo el tipo, monto y fecha de cada transacción. A pesar de que aún las funciones anteriores no generan un reporte, se sabe dónde estará guardada la información, por lo que esta función debería estar lista.
+
+## Bitáora de la etapa final
+
+Para este avance se implementó el resto del código, todas las funcionalidades del programa se implementaron como métodos dentro de la clase Database(), sin importar si estos interactúan con la base de datos como tal, se hizo de esta manera ya que los métodos que no trabajan con la base de datos son pocos, y por orden se implementaron junto a los que si dentro de esta clase.
+
+El código se organizó y se dividió en 2 carpetas principales, /include donde se incluyen los archivos de encabezado, donde se declaran las funciones para el menú y la declaración de la class de la cual gira todo el código. En la carpeta /src se incluyen todos los archivos de implementación (.cpp). De esta forma tenemos un código mas ordenado y organizado, lo cual lo hace más cómodo para trabajarlo y darle mantenimiento.
+
+* src/Database.cpp: este archivo se establece el constructor de Database, el cual llama a la función para conectarse a la base de datos banco.db, si la conexión es exitosa, ejecuta las sentencias SQL para crear las tablas. Estas sentencias preparadas son establecidas en este mismo archivo como punteros que contienen la cadena de caracteres con la sentencia. Por lo que este archivo inicializa la conexión con la base de datos y crea las tablas.
+
+* src/ menú.cpp: en este archivo se implementean los menús declarados en menu.hpp, el menú de atención al cliente, el menú de gestión de préstamo y el submenú de préstamos que se despliega en la primera opción del menú de gestión de préstamo. Estos menús funcionan con un bucle do-while y manejan entradas invalidas con un bucle if-continue y con cin.fail(), permitiendo solo ingresar enteros.
+
+* src/ AtencionCliente.cpp: Se implementan los métodos correspondientes al menú  de atención al cliente, los cuales en su mayoría interactúan con la base de datos, todas esta funciónes se apoyan de la API de sqlite3.
+Se establece la funcion conectarDB(),tambien el destructor de la clase Database(), el cual cierra la conexión.
+
+Los métodos realizarDeposito(), realizarRetiro(), realizarTranferencia(),comprarCDP(), y bloquearCuenta() funcionan con sentencias SQl, con spaceHolders(?), es decir son sentencias SQl incompletas que esperan datos, en este caso a que el usuario los ingrese, de tal forma con apoyo de la API de sqlite3, se prepara la sentencia con los datos ingresados y se ejecutan las consultas, de esta forma interactuando con la base de datos.
+
+El método realizarTransferencia() invoca a los métodos de retiro y de deposito, de tal forma el saldo que se suma en la cuenta destino se resta en la de origen.
+De manera similar el método de realizarPagoServicios(), pimero con un bulce do-while, permite elegir entre distintos tipos de servicios a pagar, este invoca a realizarTransferencia() para hacer el pago entre la cuenta de origen y la cuenta de servicios.
+
+Para el método consultarTipoCambio(), simplemente imprime la linea de código con la información respectiva.
+
+Los métodos de depósito, retiro y transferencia, de igual manera con sentencias SQl y spaceholders registran las transacciones en la tabla correspondiente.
+
+El método de verRegistroTransacciones(), con una sentencia preparada extrae la información de la tabla Transacciones y la imprime en pantalla.
+
+* src/ GestionPrestamos.cpp: esta es el encargado de los métodos del menú de gestión de préstamos.
+El método consultarTiposPrestamos(), invoca a la función SubMenuTipoPrestamos(), la cual despliega un menú para que el usuario navegue entre los distintos tipos de préstamos y muestra la información ateniente.
+
+Método consultarFrecuenciaPagos(), consulta sobre el ID del préstamo el cual se quiere consultar y por medio de consulta SQL extra la información necesaria y la muestra en pantalla.
+
+Método calcularIntereses(), primero despliega un menú para elegir entre el calculo de intereses para prestamos y de CDP, de igual manera extrae con consultas SQL la informacion necesaria de las tablas y hace los calculos, los cuales los muestra en pantalla al usuario.
+
+Método mostrarCuotasYDesglose(), siguiendo la misma lógica, extrae la información de las tablas con consultas SQL y las muestra en pantalla.
+
+Método mostrarMetodosPago(), simplemente muestra una salida con esta información con cout
+
+Y el método, verInformacionPrestamo(), de igual manera con sentencia SQL preparada, hace la consulta para extraer la informacion y la muestra en pantalla.
+
+* src/ main.cpp: este archivo simplemente despliega el menú principal, inicia el flujo de todo el código
+
