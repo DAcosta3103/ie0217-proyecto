@@ -227,7 +227,7 @@ void MenuGestionPrestamos() {
                 cout << "Regresando al menú de módulos" << endl;
                 break;            
         }
-    } while (subOpcion != 8);
+    } while (subOpcion != 9);
 }
 
 /**

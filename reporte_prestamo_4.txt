@@ -1,0 +1,27 @@
+===== REPORTE DETALLADO DE PRÉSTAMO =====
+ID Préstamo: 4
+Cliente: Federico Pérez
+Monto Inicial: 300000 Dolares
+Tasa de Interés: 5%
+Plazo Total: 20 cuotas
+Frecuencia de Pago: Quincenal
+Cuota: 15000 Dolares
+
+=== TABLA DE AMORTIZACIÓN ===
+Cuota #   Capital        Intereses      Saldo Restante 
+-------------------------------------------------------
+1         14375.00       625.00         285625.00      
+2         14404.95       595.05         271220.05      
+3         14434.96       565.04         256785.09      
+4         14465.03       534.97         242320.06      
+5         14495.17       504.83         227824.90      
+6         14525.36       474.64         213299.53      
+7         14555.63       444.37         198743.91      
+8         14585.95       414.05         184157.96      
+9         14616.34       383.66         169541.62      
+10        14646.79       353.21         154894.83      
+
+=== RESUMEN ===
+Cuotas Pagadas: 10 de 20
+Total Pagado en Capital: 145105.17 Dolares
+Total Pagado en Intereses: 4894.83 Dolares

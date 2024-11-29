@@ -233,41 +233,82 @@ void Database::mostrarCuotasYDesglose() {
  * @param nuevoSaldo Monto a abonar del préstamo
  */
 void Database::actualizarSaldoPrestamo(double nuevoSaldo) {
-    /// Verificar que el nuevo saldo sea válido
-    if (nuevoSaldo < 0) {
-        cerr << "Error: El saldo del préstamo no puede ser negativo." << endl;
+    int idPrestamo;
+    double montoAbonar;
+
+    // Solicitar datos al usuario
+    std::cout << "Ingrese el número de préstamo: ";
+    std::cin >> idPrestamo;
+    std::cout << "Ingrese el monto que desea abonar: ";
+    std::cin >> montoAbonar;
+
+    if (montoAbonar <= 0) {
+        std::cerr << "Error: El monto a abonar debe ser mayor que 0" << std::endl;
         return;
     }
-
-    /// Consulta para actualizar el saldo de un préstamo
-    const char* sqlUpdate = R"(
-        UPDATE Creditos 
-        SET Monto = ? 
-        WHERE IdPrestamo = (
-            SELECT MAX(IdPrestamo) 
-            FROM Creditos
-        );
-    )";
 
     sqlite3_stmt* stmt;
-    /// Preparar la sentencia SQL
-    if (sqlite3_prepare_v2(db, sqlUpdate, -1, &stmt, nullptr) != SQLITE_OK) {
-        cerr << "Error al preparar la actualización del saldo: " << sqlite3_errmsg(db) << endl;
+    int idCliente = -1;
+
+    // Obtener el `IdCliente` asociado al préstamo y actualizar `CuotasPagadas`
+    const char* sqlUpdateCuotas = R"(
+        UPDATE Creditos 
+        SET CuotasPagadas = CuotasPagadas + 1
+        WHERE IdPrestamo = ? 
+        RETURNING IdCliente;
+    )";
+
+    // Preparar la consulta SQL
+    if (sqlite3_prepare_v2(db, sqlUpdateCuotas, -1, &stmt, nullptr) != SQLITE_OK) {
+        std::cerr << "Error al preparar la actualización de cuotas: " << sqlite3_errmsg(db) << std::endl;
         return;
     }
 
-    /// Vincular el nuevo saldo
-    sqlite3_bind_double(stmt, 1, nuevoSaldo);
+    // Vincular el `IdPrestamo` proporcionado por el usuario
+    sqlite3_bind_int(stmt, 1, idPrestamo);
 
-    /// Ejecutar la actualización
-    if (sqlite3_step(stmt) != SQLITE_DONE) {
-        cerr << "Error al actualizar el saldo del préstamo: " << sqlite3_errmsg(db) << endl;
+    // Ejecutar la consulta y obtener el `IdCliente`
+    if (sqlite3_step(stmt) == SQLITE_ROW) {
+        idCliente = sqlite3_column_int(stmt, 0);
     } else {
-        cout << "Saldo del préstamo actualizado exitosamente a " << nuevoSaldo << endl;
+        std::cerr << "Error: No se pudo actualizar las cuotas o no se encontró el préstamo" << std::endl;
+        sqlite3_finalize(stmt);
+        return;
+    }
+    sqlite3_finalize(stmt);
+
+    if (idCliente == -1) {
+        std::cerr << "Error: No se pudo obtener el IdCliente asociado al préstamo" << std::endl;
+        return;
     }
 
+    // Registrar la transacción en la tabla `Transacciones`
+    const char* sqlInsertTransaccion = R"(
+        INSERT INTO Transacciones (IdCliente, Tipo, Monto)
+        VALUES (?, 'Abono', ?);
+    )";
+
+    if (sqlite3_prepare_v2(db, sqlInsertTransaccion, -1, &stmt, nullptr) != SQLITE_OK) {
+        std::cerr << "Error al preparar la inserción de la transacción: " << sqlite3_errmsg(db) << std::endl;
+        return;
+    }
+
+    
+    sqlite3_bind_int(stmt, 1, idCliente);
+    sqlite3_bind_double(stmt, 2, montoAbonar); 
+
+    // Ejecutar la consulta
+    if (sqlite3_step(stmt) != SQLITE_DONE) {
+        std::cerr << "Error al registrar la transacción: " << sqlite3_errmsg(db) << std::endl;
+    } else {
+        std::cout << "Transacción registrada exitosamente como abono de " << montoAbonar << " " << std::endl;
+    }
     sqlite3_finalize(stmt);
+
+    
+    std::cout << "Saldo del préstamo actualizado correctamente" << std::endl;
 }
+
 
 /**
  * @brief Función para mostrar los métodos de pago para préstamos
@@ -377,6 +418,9 @@ void Database::verInformacionPrestamo(int prestamoId) {
  */
 void Database::generarReportePrestamo(int prestamoId) {
     /// Consulta SQL para obtener detalles completos del préstamo con información del cliente
+
+    cout << "Ingrese el ID del préstamo que desea consultar: ";
+    cin >> prestamoId;
     const char* sqlQuery = R"(
         SELECT 
             c.IdPrestamo,     
