@@ -5,14 +5,15 @@
 #include <string>
 #include <iostream>
 using namespace std;
-//definicion de la clae database y sus metodos para manipular la base de datos
+
+/// Definicion de la clae database y sus metodos para manipular la base de datos
 
 /**
  * @brief Clase para la base de datos
  */
 class Database {
 private:
-//puntero que representa la base de datos y metodos privados para conectar y desconectar
+///Ppuntero que representa la base de datos y metodos privados para conectar y desconectar
     sqlite3* db;
     /** 
     * @brief Funcion para conectar la base de datos
@@ -118,7 +119,7 @@ public:
      */
     void verRegistroTransacciones();
 
-    // -------------------Métodos para gestión de préstamos -----------------
+    /// -------------------Métodos para gestión de préstamos -----------------
 
     /**
      * @brief Función para consultar los tipos de préstamos disponibles en el banco
@@ -176,4 +177,4 @@ public:
 };  
 
 
-#endif // DATABASE_HPP
+#endif /// DATABASE_HPP
