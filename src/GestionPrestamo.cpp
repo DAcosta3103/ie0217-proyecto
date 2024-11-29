@@ -6,6 +6,7 @@
 #include <string.h>
 #include <cmath>
 #include <iomanip>
+#include <fstream>
 
 using namespace std;
 
@@ -333,5 +334,142 @@ void Database::verInformacionPrestamo(int prestamoId) {
     }
 
     // Liberar recursos de la consulta preparada
+    sqlite3_finalize(stmt);
+}
+
+// Función para generar reportes
+void Database::generarReportePrestamo(int prestamoId) {
+    // Consulta SQL para obtener detalles completos del préstamo con información del cliente
+    const char* sqlQuery = R"(
+        SELECT 
+            c.IdPrestamo,     
+            cl.Nombre,        
+            c.Monto,             
+            c.TasaInteres,    
+            c.Plazo,             
+            c.Cuota,             
+            c.CuotasPagadas,     
+            c.Frecuencia,     
+            c.Moneda          
+        FROM Creditos c
+        JOIN Clientes cl ON c.IdCliente = cl.IdCliente
+        WHERE c.IdPrestamo = ?;
+    )";
+
+    sqlite3_stmt* stmt;
+
+    // Preparar la sentencia SQL
+    if (sqlite3_prepare_v2(db, sqlQuery, -1, &stmt, nullptr) != SQLITE_OK) {
+        cerr << "Error al preparar la consulta de reporte de préstamo: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+
+    // Vincular el ID de préstamo a la consulta
+    sqlite3_bind_int(stmt, 1, prestamoId);
+
+    // Verificar si se encontró el préstamo
+    if (sqlite3_step(stmt) == SQLITE_ROW) {
+        // Extraer información del préstamo
+        int idPrestamo = sqlite3_column_int(stmt, 0);
+        const char* nombreCliente = (const char*)sqlite3_column_text(stmt, 1);
+        double montoInicial = sqlite3_column_double(stmt, 2);
+        double tasaInteres = sqlite3_column_double(stmt, 3);
+        int plazoTotal = sqlite3_column_int(stmt, 4);
+        double cuotaMensual = sqlite3_column_double(stmt, 5);
+        int cuotasPagadas = sqlite3_column_int(stmt, 6);
+        
+        // Convertir frecuencia a string para comparación segura
+        std::string frecuencia((const char*)sqlite3_column_text(stmt, 7));
+        const char* moneda = (const char*)sqlite3_column_text(stmt, 8);
+
+        // Generar nombre de archivo de reporte único
+        std::string nombreArchivo = "reporte_prestamo_" + std::to_string(idPrestamo) + ".txt";
+        
+        // Abrir archivo de reporte
+        ofstream reporteArchivo(nombreArchivo);
+        
+        // Verificar si se pudo crear el archivo
+        if (!reporteArchivo.is_open()) {
+            cerr << "Error al crear el archivo de reporte." << endl;
+            sqlite3_finalize(stmt);
+            return;
+        }
+
+        // Calcular factor de periodicidad según la frecuencia de pago
+        double factorPeriodicidad = (frecuencia == "Mensual" ? 12.0 : 
+                                     frecuencia == "Trimestral" ? 4.0 : 
+                                     frecuencia == "Anual" ? 1.0 : 24.0);
+
+        // Calcular tasa de interés por periodo
+        double tasaPeriodo = (tasaInteres / 100.0) / factorPeriodicidad;
+
+        // Encabezado del reporte
+        reporteArchivo << "===== REPORTE DETALLADO DE PRÉSTAMO =====" << endl;
+        reporteArchivo << "ID Préstamo: " << idPrestamo << endl;
+        reporteArchivo << "Cliente: " << nombreCliente << endl;
+        reporteArchivo << "Monto Inicial: " << montoInicial << " " << moneda << endl;
+        reporteArchivo << "Tasa de Interés: " << tasaInteres << "%" << endl;
+        reporteArchivo << "Plazo Total: " << plazoTotal << " cuotas" << endl;
+        reporteArchivo << "Frecuencia de Pago: " << frecuencia << endl;
+        reporteArchivo << "Cuota: " << cuotaMensual << " " << moneda << endl;
+        reporteArchivo << endl;
+
+        // Tabla de amortización detallada
+        reporteArchivo << "=== TABLA DE AMORTIZACIÓN ===" << endl;
+        reporteArchivo << left 
+                       << setw(10) << "Cuota #" 
+                       << setw(15) << "Capital" 
+                       << setw(15) << "Intereses" 
+                       << setw(15) << "Saldo Restante" 
+                       << endl;
+        reporteArchivo << string(55, '-') << endl;
+
+        // Variables para cálculo de amortización
+        double saldoRestante = montoInicial;
+        double totalCapital = 0.0;
+        double totalIntereses = 0.0;
+
+        // Generar tabla de amortización
+        for (int i = 1; i <= cuotasPagadas; ++i) {
+            // Calcular intereses de la cuota actual
+            double interes = saldoRestante * tasaPeriodo;
+            
+            // Calcular abono a capital
+            double capital = cuotaMensual - interes;
+            
+            // Actualizar saldo restante
+            saldoRestante -= capital;
+            
+            // Acumular totales
+            totalCapital += capital;
+            totalIntereses += interes;
+
+            // Escribir línea en el reporte
+            reporteArchivo << left 
+                           << setw(10) << i 
+                           << setw(15) << fixed << setprecision(2) << capital 
+                           << setw(15) << interes 
+                           << setw(15) << max(0.0, saldoRestante)  // Evitar saldos negativos 
+                           << endl;
+        }
+
+        // Resumen final
+        reporteArchivo << endl;
+        reporteArchivo << "=== RESUMEN ===" << endl;
+        reporteArchivo << "Cuotas Pagadas: " << cuotasPagadas << " de " << plazoTotal << endl;
+        reporteArchivo << "Total Pagado en Capital: " << fixed << setprecision(2) << totalCapital << " " << moneda << endl;
+        reporteArchivo << "Total Pagado en Intereses: " << fixed << setprecision(2) << totalIntereses << " " << moneda << endl;
+        
+        // Cerrar archivo
+        reporteArchivo.close();
+        
+        // Confirmar generación de reporte
+        cout << "Reporte generado exitosamente en " << nombreArchivo << endl;
+    } else {
+        // Mensaje si no se encuentra el préstamo
+        cout << "No se encontró préstamo con ID " << prestamoId << endl;
+    }
+
+    // Liberar recursos de la consulta
     sqlite3_finalize(stmt);
 }

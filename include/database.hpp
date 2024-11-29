@@ -35,6 +35,7 @@ public:
     void calcularIntereses(double IdPrestamo);
     void mostrarMetodosPago();
     void verInformacionPrestamo(int prestamoId);
+    void generarReportePrestamo(int prestamoId);
 };  
 
 //uníca funcion que queda por fuera de la clase database

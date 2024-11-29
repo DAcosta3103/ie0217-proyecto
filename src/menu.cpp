@@ -121,12 +121,12 @@ void MenuAtencionAlCliente() {
                 break;
             break;
             case 5:
-                cout << "Favor tener en cuenta que la tasa de interés que maneja el banco es de 1%" << endl;
+                cout << "\nFavor tener en cuenta que la tasa de interés que maneja el banco es de 1%" << endl;
                 cout << "Ingrese su número de identificación: ";
                 cin >> idCliente;
                 cout << "Ingrese el monto que quiere depositar al banco: ";
                 cin >> monto;
-                cout << "Favor tener en cuenta que los plazos que manejamos en el banco son de mínimo 6 meses, y se manejan en bloques de medio año (1 año, 2 años y medio, etc.)" << endl;                
+                cout << "\nFavor tener en cuenta que los plazos que manejamos en el banco son de mínimo 6 meses, y se manejan en bloques de medio año (1 año, 2 años y medio, etc.)" << endl;                
                 
                 do {
                     cout << "Ingrese, en número de meses, el plazo que desea: ";
@@ -173,7 +173,8 @@ void MenuGestionPrestamos() {
         cout << "5. Cálculo de intereses" << endl;
         cout << "6. Métodos de pago" << endl;
         cout << "7. Ver información de préstamo" << endl;
-        cout << "8. Regresar al menú principal" << endl;
+        cout << "8. Generar reporte de préstamos" << endl;
+        cout << "9. Regresar al menú principal" << endl;
         cout << "Seleccione una opción: ";
         cin >> subOpcion;
 
@@ -213,6 +214,8 @@ void MenuGestionPrestamos() {
             break;
 
             case 8:
+            db.generarReportePrestamo(IdPrestamo);
+            case 9:
                 cout << "Regresando al menú de módulos" << endl;
                 break;            
         }
