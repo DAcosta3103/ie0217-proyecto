@@ -379,11 +379,11 @@ void Database::generarReportePrestamo(int prestamoId) {
         int cuotasPagadas = sqlite3_column_int(stmt, 6);
         
         // Convertir frecuencia a string para comparación segura
-        std::string frecuencia((const char*)sqlite3_column_text(stmt, 7));
+        string frecuencia((const char*)sqlite3_column_text(stmt, 7));
         const char* moneda = (const char*)sqlite3_column_text(stmt, 8);
 
         // Generar nombre de archivo de reporte único
-        std::string nombreArchivo = "reporte_prestamo_" + std::to_string(idPrestamo) + ".txt";
+        string nombreArchivo = "reporte_prestamo_" + to_string(idPrestamo) + ".txt";
         
         // Abrir archivo de reporte
         ofstream reporteArchivo(nombreArchivo);
