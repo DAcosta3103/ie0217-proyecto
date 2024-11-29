@@ -274,6 +274,10 @@ Además de la implementación de la base de datos, también se escribe el códig
 
 Para este avance se implementó el resto del código, todas las funcionalidades del programa se implementaron como métodos dentro de la clase Database(), sin importar si estos interactúan con la base de datos como tal, se hizo de esta manera ya que los métodos que no trabajan con la base de datos son pocos, y por orden se implementaron junto a los que si dentro de esta clase.
 
+Para la implementación del código en este avance se modificaron ligeramente las tablas, para la tabla créditos se la añadio apartados para almacenar la frecuencia de pagos, el numero de cuotas pagadas y el tipo de moneda en la cual se gestiona el crédito, para la tabla de Transacciones se le añadió el monto de la Transaccion y  la fecha, por último a la tabla de cuenta se la añadió un apartado binario (0-1) para el estado de la cuenta entre bloqueada o desbloqueada.
+
+También se decidió eliminar el método desbloquearCuenta(), ya que esta funcionalidad la absorbió el método bloquearCuenta(), el cual se encargar de tanto hacer el bloqueo o el desbloqueo, dependiendo del estado de la cuenta en cuestión al momento de llamar al método.
+
 El código se organizó y se dividió en 2 carpetas principales, /include donde se incluyen los archivos de encabezado, donde se declaran las funciones para el menú y la declaración de la class de la cual gira todo el código. En la carpeta /src se incluyen todos los archivos de implementación (.cpp). De esta forma tenemos un código mas ordenado y organizado, lo cual lo hace más cómodo para trabajarlo y darle mantenimiento.
 
 * src/Database.cpp: este archivo se establece el constructor de Database, el cual llama a la función para conectarse a la base de datos banco.db, si la conexión es exitosa, ejecuta las sentencias SQL para crear las tablas. Estas sentencias preparadas son establecidas en este mismo archivo como punteros que contienen la cadena de caracteres con la sentencia. Por lo que este archivo inicializa la conexión con la base de datos y crea las tablas.
