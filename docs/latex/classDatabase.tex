@@ -1,0 +1,518 @@
+\hypertarget{classDatabase}{}\doxysection{Database Class Reference}
+\label{classDatabase}\index{Database@{Database}}
+
+
+Definicion de la clae database y sus metodos para manipular la base de datos.  
+
+
+
+
+{\ttfamily \#include $<$database.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classDatabase_a4703c80e6969d33565ea340f768fdadf}{Database}} ()
+\begin{DoxyCompactList}\small\item\em Construtor para la clase \mbox{\hyperlink{classDatabase}{Database}}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classDatabase_a84d399a2ad58d69daab9b05330e1316d}{$\sim$\+Database}} ()
+\begin{DoxyCompactList}\small\item\em Destructor para la clase \mbox{\hyperlink{classDatabase}{Database}}. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classDatabase_a8be233ac0b3dd9a257908439e94c392b}{ejecutar\+SQL}} (const char $\ast$sql)
+\begin{DoxyCompactList}\small\item\em Funcion para ejecutar las sentencias SQL en el script. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classDatabase_a6ddf41a8c49fff037852cd585ef1794f}{realizar\+Deposito}} (int Id\+Cuenta, double monto, int Id\+Cliente)
+\begin{DoxyCompactList}\small\item\em Funcion para realizar depositos a una cuenta. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classDatabase_a2f862823bc9f39761c7ad0653059ca7e}{realizar\+Retiro}} (int Id\+Cuenta, double monto, int Id\+Cliente)
+\begin{DoxyCompactList}\small\item\em Funcion para realizar retiros desde una cuenta. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classDatabase_a1733ffff0b1cbf18527a268a894ba63d}{realizar\+Transferencia}} (int id\+Cuenta\+Origen, int id\+Cuenta\+Destino, double monto, int Id\+Cliente, int Id\+Cuenta)
+\begin{DoxyCompactList}\small\item\em Funcion para realizar transferencias entre cuentas. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classDatabase_a6aa5d9a7c9a6a5b7d6d6ec29e70496ab}{realizar\+Pago\+Servicios}} (int id\+Cuenta\+Cliente, double monto, int Id\+Cliente)
+\begin{DoxyCompactList}\small\item\em Funcion para pagar distintos servicios básicos. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classDatabase_a2a9656ac6d171bd52f06257b6e52405b}{consultar\+Tipo\+Cambio}} ()
+\begin{DoxyCompactList}\small\item\em Funcion para consultar el tipo de cambio. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classDatabase_a791396f8461f88d2b0f407a3bc325a59}{comprar\+CDP}} (int id\+Cliente, double monto, int plazo)
+\begin{DoxyCompactList}\small\item\em Funcion para comprar Certificados de Depósito a Plazo (CDPs) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classDatabase_a92eb0082b222cf54ee8b996d44e368b1}{bloquear\+Cuenta}} (int cuenta\+Id)
+\begin{DoxyCompactList}\small\item\em Funcion para bloquear una cuenta. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classDatabase_a777ec95312e090a79f3302b411c342d2}{ver\+Registro\+Transacciones}} ()
+\begin{DoxyCompactList}\small\item\em Función para ver el registro de transacciones realizadas. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classDatabase_aed047a4af4234b6c9b0c8ed4367ca4af}{consultar\+Tipos\+Prestamos}} ()
+\begin{DoxyCompactList}\small\item\em -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/---Métodos para gestión de préstamos -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/--- \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classDatabase_ac3dc7508b6bc1bcf5e6a0713d9c9d07f}{consultar\+Frecuencia\+Pagos}} (int Id\+Prestamo)
+\begin{DoxyCompactList}\small\item\em Función para consultar la frecuencia de pagos de un préstamo en específico. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classDatabase_a6f097b04e490fa83a92510f99a9dd491}{mostrar\+Cuotas\+YDesglose}} ()
+\begin{DoxyCompactList}\small\item\em Función para mostrar las cuentas y desglose. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classDatabase_a57a86d0ed1718448d59db5c0ec6ebc3c}{actualizar\+Saldo\+Prestamo}} (double nuevo\+Saldo)
+\begin{DoxyCompactList}\small\item\em Función para realizar abonos a un préstamo. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classDatabase_a3b046a4dd48fc0c0d0aed1c7febd2a6e}{calcular\+Intereses}} (double Id\+Prestamo)
+\begin{DoxyCompactList}\small\item\em Función para calcular los intereses. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classDatabase_a61315e98fa927404a878e2a7637080e1}{mostrar\+Metodos\+Pago}} ()
+\begin{DoxyCompactList}\small\item\em Función para mostrar los métodos de pago para préstamos. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classDatabase_a46143a8f8c858926862828f880fa17dc}{ver\+Informacion\+Prestamo}} (int prestamo\+Id)
+\begin{DoxyCompactList}\small\item\em Función para ver la información referente a un préstamo en específico. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classDatabase_ac99ec95daa6bc7bc668ccf81a3fdacc3}{generar\+Reporte\+Prestamo}} (int prestamo\+Id)
+\begin{DoxyCompactList}\small\item\em Función para generar un reporte de un préstamo en específico. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Definicion de la clae database y sus metodos para manipular la base de datos. 
+
+Clase para la base de datos 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classDatabase_a4703c80e6969d33565ea340f768fdadf}\label{classDatabase_a4703c80e6969d33565ea340f768fdadf}} 
+\index{Database@{Database}!Database@{Database}}
+\index{Database@{Database}!Database@{Database}}
+\doxysubsubsection{\texorpdfstring{Database()}{Database()}}
+{\footnotesize\ttfamily Database\+::\+Database (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Construtor para la clase \mbox{\hyperlink{classDatabase}{Database}}. 
+
+pasa el puntero con la sentencia SQL a sqlite3\+\_\+exec para ejecutarlo y asi crear la tabla ejecuta la funcion y verifica si fue exitosa\mbox{\Hypertarget{classDatabase_a84d399a2ad58d69daab9b05330e1316d}\label{classDatabase_a84d399a2ad58d69daab9b05330e1316d}} 
+\index{Database@{Database}!````~Database@{$\sim$Database}}
+\index{````~Database@{$\sim$Database}!Database@{Database}}
+\doxysubsubsection{\texorpdfstring{$\sim$Database()}{~Database()}}
+{\footnotesize\ttfamily Database\+::$\sim$\+Database (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Destructor para la clase \mbox{\hyperlink{classDatabase}{Database}}. 
+
+Cerrar la base de datos
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classDatabase_a57a86d0ed1718448d59db5c0ec6ebc3c}\label{classDatabase_a57a86d0ed1718448d59db5c0ec6ebc3c}} 
+\index{Database@{Database}!actualizarSaldoPrestamo@{actualizarSaldoPrestamo}}
+\index{actualizarSaldoPrestamo@{actualizarSaldoPrestamo}!Database@{Database}}
+\doxysubsubsection{\texorpdfstring{actualizarSaldoPrestamo()}{actualizarSaldoPrestamo()}}
+{\footnotesize\ttfamily void Database\+::actualizar\+Saldo\+Prestamo (\begin{DoxyParamCaption}\item[{double}]{nuevo\+Saldo }\end{DoxyParamCaption})}
+
+
+
+Función para realizar abonos a un préstamo. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em nuevo\+Saldo} & Monto a abonar del préstamo \\
+\hline
+\end{DoxyParams}
+Verificar que el nuevo saldo sea válido
+
+Consulta para actualizar el saldo de un préstamo
+
+Preparar la sentencia SQL
+
+Vincular el nuevo saldo
+
+Ejecutar la actualización\mbox{\Hypertarget{classDatabase_a92eb0082b222cf54ee8b996d44e368b1}\label{classDatabase_a92eb0082b222cf54ee8b996d44e368b1}} 
+\index{Database@{Database}!bloquearCuenta@{bloquearCuenta}}
+\index{bloquearCuenta@{bloquearCuenta}!Database@{Database}}
+\doxysubsubsection{\texorpdfstring{bloquearCuenta()}{bloquearCuenta()}}
+{\footnotesize\ttfamily void Database\+::bloquear\+Cuenta (\begin{DoxyParamCaption}\item[{int}]{id\+Cuenta }\end{DoxyParamCaption})}
+
+
+
+Funcion para bloquear una cuenta. 
+
+En caso de sospecha de fraude, es posible bloquear la cuenta por razones de seguridad
+
+
+\begin{DoxyParams}{Parameters}
+{\em cuenta\+Id} & Número de identificación de la cuenta \\
+\hline
+\end{DoxyParams}
+Primero, verificamos el estado actual de la cuenta
+
+Obtener el estado de la cuenta
+
+Verificamos si encontramos la cuenta
+
+Definimos la lógica para bloquear o desbloquear la cuenta
+
+Si la cuenta está bloqueada, la desbloqueamos (Bloqueada = 0)
+
+Si la cuenta no está bloqueada, la bloqueamos (Bloqueada = 1)
+
+Ejecutamos la actualización\mbox{\Hypertarget{classDatabase_a3b046a4dd48fc0c0d0aed1c7febd2a6e}\label{classDatabase_a3b046a4dd48fc0c0d0aed1c7febd2a6e}} 
+\index{Database@{Database}!calcularIntereses@{calcularIntereses}}
+\index{calcularIntereses@{calcularIntereses}!Database@{Database}}
+\doxysubsubsection{\texorpdfstring{calcularIntereses()}{calcularIntereses()}}
+{\footnotesize\ttfamily void Database\+::calcular\+Intereses (\begin{DoxyParamCaption}\item[{double}]{Id\+Prestamo }\end{DoxyParamCaption})}
+
+
+
+Función para calcular los intereses. 
+
+Los intereses calculados pueden referirse a un tipo de préstamo en específico, o bien a un CDP 
+\begin{DoxyParams}{Parameters}
+{\em Id\+Prestamo} & \\
+\hline
+\end{DoxyParams}
+Verificar si la entrada es válida
+
+Limpiar el error
+
+Ignorar la entrada incorrecta
+
+Lógica para calcular los intereses de un certificado a depósito
+
+El bucle se repite hasta que la opción sea 3 (salir)\mbox{\Hypertarget{classDatabase_a791396f8461f88d2b0f407a3bc325a59}\label{classDatabase_a791396f8461f88d2b0f407a3bc325a59}} 
+\index{Database@{Database}!comprarCDP@{comprarCDP}}
+\index{comprarCDP@{comprarCDP}!Database@{Database}}
+\doxysubsubsection{\texorpdfstring{comprarCDP()}{comprarCDP()}}
+{\footnotesize\ttfamily void Database\+::comprar\+CDP (\begin{DoxyParamCaption}\item[{int}]{id\+Cliente,  }\item[{double}]{monto,  }\item[{int}]{plazo }\end{DoxyParamCaption})}
+
+
+
+Funcion para comprar Certificados de Depósito a Plazo (CDPs) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id\+Cliente} & Número de identificación del cliente \\
+\hline
+{\em monto} & Monto a depositar \\
+\hline
+{\em plazo} & Plazo, en meses, del depósito \\
+\hline
+\end{DoxyParams}
+se maneja una tasa de interés de 1\%
+
+Enlace de parámetros
+
+Se maneja la lógica de compra\mbox{\Hypertarget{classDatabase_ac3dc7508b6bc1bcf5e6a0713d9c9d07f}\label{classDatabase_ac3dc7508b6bc1bcf5e6a0713d9c9d07f}} 
+\index{Database@{Database}!consultarFrecuenciaPagos@{consultarFrecuenciaPagos}}
+\index{consultarFrecuenciaPagos@{consultarFrecuenciaPagos}!Database@{Database}}
+\doxysubsubsection{\texorpdfstring{consultarFrecuenciaPagos()}{consultarFrecuenciaPagos()}}
+{\footnotesize\ttfamily void Database\+::consultar\+Frecuencia\+Pagos (\begin{DoxyParamCaption}\item[{int}]{Id\+Prestamo }\end{DoxyParamCaption})}
+
+
+
+Función para consultar la frecuencia de pagos de un préstamo en específico. 
+
+Función para mostrar las cuentas y desglose.
+
+
+\begin{DoxyParams}{Parameters}
+{\em Id\+Prestamo} & Número de identificación del préstamo a consultar\\
+\hline
+\end{DoxyParams}
+Se muestran los detalles de cada préstamo \mbox{\Hypertarget{classDatabase_a2a9656ac6d171bd52f06257b6e52405b}\label{classDatabase_a2a9656ac6d171bd52f06257b6e52405b}} 
+\index{Database@{Database}!consultarTipoCambio@{consultarTipoCambio}}
+\index{consultarTipoCambio@{consultarTipoCambio}!Database@{Database}}
+\doxysubsubsection{\texorpdfstring{consultarTipoCambio()}{consultarTipoCambio()}}
+{\footnotesize\ttfamily void Database\+::consultar\+Tipo\+Cambio (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Funcion para consultar el tipo de cambio. 
+
+Brinda la conversión de dólares a colones Se manejará un tipo de cambio fijo, el cual para recordar buenas épocas, será \$1 = 500 CRC (sujeto a cambios)\mbox{\Hypertarget{classDatabase_aed047a4af4234b6c9b0c8ed4367ca4af}\label{classDatabase_aed047a4af4234b6c9b0c8ed4367ca4af}} 
+\index{Database@{Database}!consultarTiposPrestamos@{consultarTiposPrestamos}}
+\index{consultarTiposPrestamos@{consultarTiposPrestamos}!Database@{Database}}
+\doxysubsubsection{\texorpdfstring{consultarTiposPrestamos()}{consultarTiposPrestamos()}}
+{\footnotesize\ttfamily void Database\+::consultar\+Tipos\+Prestamos (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/---Métodos para gestión de préstamos -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/--- 
+
+Función para consultar los tipos de préstamos disponibles en el banco.
+
+Función para consultar los tipos de préstamos disponibles en el banco el codigo de esto esta en menu.\+cpp\mbox{\Hypertarget{classDatabase_a8be233ac0b3dd9a257908439e94c392b}\label{classDatabase_a8be233ac0b3dd9a257908439e94c392b}} 
+\index{Database@{Database}!ejecutarSQL@{ejecutarSQL}}
+\index{ejecutarSQL@{ejecutarSQL}!Database@{Database}}
+\doxysubsubsection{\texorpdfstring{ejecutarSQL()}{ejecutarSQL()}}
+{\footnotesize\ttfamily bool Database\+::ejecutar\+SQL (\begin{DoxyParamCaption}\item[{const char $\ast$}]{sql }\end{DoxyParamCaption})}
+
+
+
+Funcion para ejecutar las sentencias SQL en el script. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sql} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true 
+
+false 
+\end{DoxyReturn}
+varible para mensaje de error, el cual es generado por sqlite3\+\_\+exec
+
+nullptr para funciones callback aqui no son necesarias sql es la cadena de texto pasado por error\+Messafge es generado por sqlite3\+\_\+exec
+
+manejo de error\mbox{\Hypertarget{classDatabase_ac99ec95daa6bc7bc668ccf81a3fdacc3}\label{classDatabase_ac99ec95daa6bc7bc668ccf81a3fdacc3}} 
+\index{Database@{Database}!generarReportePrestamo@{generarReportePrestamo}}
+\index{generarReportePrestamo@{generarReportePrestamo}!Database@{Database}}
+\doxysubsubsection{\texorpdfstring{generarReportePrestamo()}{generarReportePrestamo()}}
+{\footnotesize\ttfamily void Database\+::generar\+Reporte\+Prestamo (\begin{DoxyParamCaption}\item[{int}]{prestamo\+Id }\end{DoxyParamCaption})}
+
+
+
+Función para generar un reporte de un préstamo en específico. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em prestamo\+Id} & Número de identificación del préstamo a consultar \\
+\hline
+\end{DoxyParams}
+Consulta SQL para obtener detalles completos del préstamo con información del cliente
+
+Preparar la sentencia SQL
+
+Vincular el ID de préstamo a la consulta
+
+Verificar si se encontró el préstamo
+
+Extraer información del préstamo
+
+Convertir frecuencia a string para comparación segura
+
+Generar nombre de archivo de reporte único
+
+Abrir archivo de reporte
+
+Verificar si se pudo crear el archivo
+
+Calcular factor de periodicidad según la frecuencia de pago
+
+Calcular tasa de interés por periodo
+
+Encabezado del reporte
+
+Tabla de amortización detallada
+
+Variables para cálculo de amortización
+
+Generar tabla de amortización
+
+Calcular intereses de la cuota actual
+
+Calcular abono a capital
+
+Actualizar saldo restante
+
+Acumular totales
+
+Escribir línea en el reporte
+
+Evitar saldos negativos
+
+Resumen final
+
+Cerrar archivo
+
+Confirmar generación de reporte
+
+Mensaje si no se encuentra el préstamo
+
+Liberar recursos de la consulta\mbox{\Hypertarget{classDatabase_a6f097b04e490fa83a92510f99a9dd491}\label{classDatabase_a6f097b04e490fa83a92510f99a9dd491}} 
+\index{Database@{Database}!mostrarCuotasYDesglose@{mostrarCuotasYDesglose}}
+\index{mostrarCuotasYDesglose@{mostrarCuotasYDesglose}!Database@{Database}}
+\doxysubsubsection{\texorpdfstring{mostrarCuotasYDesglose()}{mostrarCuotasYDesglose()}}
+{\footnotesize\ttfamily void Database\+::mostrar\+Cuotas\+YDesglose (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Función para mostrar las cuentas y desglose. 
+
+Se muestran los detalles de cada préstamo Consulta SQL para obtener todos los préstamos con sus detalles
+
+Preparar la sentencia SQL
+
+Iterar por cada préstamo en la base de datos
+
+Formatear y mostrar detalles de cada préstamo\mbox{\Hypertarget{classDatabase_a61315e98fa927404a878e2a7637080e1}\label{classDatabase_a61315e98fa927404a878e2a7637080e1}} 
+\index{Database@{Database}!mostrarMetodosPago@{mostrarMetodosPago}}
+\index{mostrarMetodosPago@{mostrarMetodosPago}!Database@{Database}}
+\doxysubsubsection{\texorpdfstring{mostrarMetodosPago()}{mostrarMetodosPago()}}
+{\footnotesize\ttfamily void Database\+::mostrar\+Metodos\+Pago (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Función para mostrar los métodos de pago para préstamos. 
+
+Definir métodos de pago predeterminados
+
+Mostrar cada método de pago\mbox{\Hypertarget{classDatabase_a6ddf41a8c49fff037852cd585ef1794f}\label{classDatabase_a6ddf41a8c49fff037852cd585ef1794f}} 
+\index{Database@{Database}!realizarDeposito@{realizarDeposito}}
+\index{realizarDeposito@{realizarDeposito}!Database@{Database}}
+\doxysubsubsection{\texorpdfstring{realizarDeposito()}{realizarDeposito()}}
+{\footnotesize\ttfamily void Database\+::realizar\+Deposito (\begin{DoxyParamCaption}\item[{int}]{Id\+Cuenta,  }\item[{double}]{monto,  }\item[{int}]{Id\+Cliente }\end{DoxyParamCaption})}
+
+
+
+Funcion para realizar depositos a una cuenta. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Id\+Cuenta} & Número de identificacion de la cuenta \\
+\hline
+{\em monto} & Monto a depositar \\
+\hline
+{\em Id\+Cliente} & Número de identificación del cliente \\
+\hline
+\end{DoxyParams}
+Sentencia SQL para actualizar el saldo de la cuenta
+
+Ejecutamos la sentencia para actualizar el saldo
+
+Liberamos los recursos del statement
+
+{\bfseries{Paso 1\+: Buscar el Id\+Cliente vinculado a la Id\+Cuenta}}
+
+Variable para almacenar el Id\+Cliente
+
+Liberamos los recursos del statement
+
+ahora para registrar la transaccion
+
+Usamos el Id\+Cliente vinculado
+
+Monto de la transacción
+
+Ejecutamos la inserción de la transacción
+
+Liberamos los recursos del statement\mbox{\Hypertarget{classDatabase_a6aa5d9a7c9a6a5b7d6d6ec29e70496ab}\label{classDatabase_a6aa5d9a7c9a6a5b7d6d6ec29e70496ab}} 
+\index{Database@{Database}!realizarPagoServicios@{realizarPagoServicios}}
+\index{realizarPagoServicios@{realizarPagoServicios}!Database@{Database}}
+\doxysubsubsection{\texorpdfstring{realizarPagoServicios()}{realizarPagoServicios()}}
+{\footnotesize\ttfamily void Database\+::realizar\+Pago\+Servicios (\begin{DoxyParamCaption}\item[{int}]{id\+Cuenta\+Cliente,  }\item[{double}]{monto,  }\item[{int}]{Id\+Cliente }\end{DoxyParamCaption})}
+
+
+
+Funcion para pagar distintos servicios básicos. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id\+Cuenta\+Cliente} & Número de identificación de la cuenta del cliente \\
+\hline
+{\em monto} & Monto a pagar \\
+\hline
+{\em Id\+Cliente} & Número de identificación del cliente \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classDatabase_a2f862823bc9f39761c7ad0653059ca7e}\label{classDatabase_a2f862823bc9f39761c7ad0653059ca7e}} 
+\index{Database@{Database}!realizarRetiro@{realizarRetiro}}
+\index{realizarRetiro@{realizarRetiro}!Database@{Database}}
+\doxysubsubsection{\texorpdfstring{realizarRetiro()}{realizarRetiro()}}
+{\footnotesize\ttfamily void Database\+::realizar\+Retiro (\begin{DoxyParamCaption}\item[{int}]{Id\+Cuenta,  }\item[{double}]{monto,  }\item[{int}]{Id\+Cliente }\end{DoxyParamCaption})}
+
+
+
+Funcion para realizar retiros desde una cuenta. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Id\+Cuenta} & Número de identificacion de la cuenta \\
+\hline
+{\em monto} & Monto a depositar \\
+\hline
+{\em Id\+Cliente} & Número de identificación del cliente \\
+\hline
+\end{DoxyParams}
+Buscar el Id\+Cliente vinculado a la Id\+Cuenta
+
+Variable para almacenar el Id\+Cliente
+
+Liberamos los recursos del statement
+
+ahora para registrar la transaccion
+
+Liberamos los recursos del statement\mbox{\Hypertarget{classDatabase_a1733ffff0b1cbf18527a268a894ba63d}\label{classDatabase_a1733ffff0b1cbf18527a268a894ba63d}} 
+\index{Database@{Database}!realizarTransferencia@{realizarTransferencia}}
+\index{realizarTransferencia@{realizarTransferencia}!Database@{Database}}
+\doxysubsubsection{\texorpdfstring{realizarTransferencia()}{realizarTransferencia()}}
+{\footnotesize\ttfamily void Database\+::realizar\+Transferencia (\begin{DoxyParamCaption}\item[{int}]{id\+Cuenta\+Origen,  }\item[{int}]{id\+Cuenta\+Destino,  }\item[{double}]{monto,  }\item[{int}]{Id\+Cliente,  }\item[{int}]{Id\+Cuenta }\end{DoxyParamCaption})}
+
+
+
+Funcion para realizar transferencias entre cuentas. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id\+Cuenta\+Origen} & Número de identificación de la cuenta de origen \\
+\hline
+{\em id\+Cuenta\+Destino} & Número de identificación de la cuenta a recibir el dinero \\
+\hline
+{\em Id\+Cuenta} & Número de identificacion de la cuenta \\
+\hline
+{\em monto} & Monto a depositar \\
+\hline
+{\em Id\+Cliente} & Número de identificación del cliente \\
+\hline
+\end{DoxyParams}
+Verifica el saldo suficiente en la cuenta origen
+
+Verifica si hay saldo suficiente
+
+Inicia la transferencia si el saldo es suficiente
+
+Buscar el Id\+Cliente vinculado a la Id\+Cuenta
+
+Variable para almacenar el Id\+Cliente
+
+Liberamos los recursos del statement
+
+ahora para registrar la transaccion
+
+Usamos el Id\+Cliente vinculado
+
+Monto de la transacción
+
+Ejecutamos la inserción de la transacción
+
+Liberamos los recursos del statement\mbox{\Hypertarget{classDatabase_a46143a8f8c858926862828f880fa17dc}\label{classDatabase_a46143a8f8c858926862828f880fa17dc}} 
+\index{Database@{Database}!verInformacionPrestamo@{verInformacionPrestamo}}
+\index{verInformacionPrestamo@{verInformacionPrestamo}!Database@{Database}}
+\doxysubsubsection{\texorpdfstring{verInformacionPrestamo()}{verInformacionPrestamo()}}
+{\footnotesize\ttfamily void Database\+::ver\+Informacion\+Prestamo (\begin{DoxyParamCaption}\item[{int}]{prestamo\+Id }\end{DoxyParamCaption})}
+
+
+
+Función para ver la información referente a un préstamo en específico. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em prestamo\+Id} & Número de identificación del préstamo a consultar \\
+\hline
+\end{DoxyParams}
+int prestamo\+Id;
+
+Pedir al usuario el ID del préstamo
+
+Consulta SQL para obtener información detallada de un préstamo específico
+
+Preparar la sentencia SQL
+
+Vincular el ID de préstamo ingresado por el usuario
+
+Verificar si se encontró el préstamo
+
+Extraer información del préstamo
+
+Mostrar información detallada del préstamo
+
+Calcular y mostrar saldo pendiente
+
+Mostrar mensaje si no se encuentra el préstamo
+
+Liberar recursos de la consulta preparada\mbox{\Hypertarget{classDatabase_a777ec95312e090a79f3302b411c342d2}\label{classDatabase_a777ec95312e090a79f3302b411c342d2}} 
+\index{Database@{Database}!verRegistroTransacciones@{verRegistroTransacciones}}
+\index{verRegistroTransacciones@{verRegistroTransacciones}!Database@{Database}}
+\doxysubsubsection{\texorpdfstring{verRegistroTransacciones()}{verRegistroTransacciones()}}
+{\footnotesize\ttfamily void Database\+::ver\+Registro\+Transacciones (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Función para ver el registro de transacciones realizadas. 
+
+En este bucle, cada columna de la fila actual será extraída, esto para cada fila encontrada
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/database.\+hpp\item 
+src/Atencion\+Cliente.\+cpp\item 
+src/database.\+cpp\item 
+src/Gestion\+Prestamo.\+cpp\end{DoxyCompactItemize}
