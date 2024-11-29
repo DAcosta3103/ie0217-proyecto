@@ -6,6 +6,13 @@ using namespace std;
 
 
 //funcion para ejecutar las sentencias
+/**
+ * @brief Funcion para ejecutar las sentencias SQL en el script
+ * 
+ * @param sql 
+ * @return true 
+ * @return false 
+ */
 bool Database::ejecutarSQL(const char* sql) {
      //varible para mensaje de error, el cual es generado por sqlite3_exec
     char* errorMessage = nullptr;
@@ -87,7 +94,10 @@ CREATE TABLE IF NOT EXISTS Creditos (
     )";
 
 
-
+/**
+ * @brief Construtor para la clase Database
+ * 
+ */
 Database::Database() {
     if (!conectarDB("banco.db")) {
         cerr << "Error al conectar a la base de datos" << endl;
@@ -117,9 +127,14 @@ Database::Database() {
         cerr << "Error al crear la tabla Transacciones" << endl;
     }
 }
+
+/**
+ * @brief Función para cerrar la base de datos
+ * 
+ */
 void Database::cerrarDB() {
     if (db) {
         sqlite3_close(db);  
         db = nullptr;  
-}
+    }
 }

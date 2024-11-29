@@ -5,6 +5,11 @@
 using namespace std;
 
 
+/** 
+* @brief Funcion para conectar la base de datos
+* @param nombreDB Nombre para la base de datos
+* @return True si esta conectada
+*/ 
 bool Database::conectarDB(const string& nombreDB) {
 if (sqlite3_open("banco.db", &db) == SQLITE_OK) {
     cout << "Conectado a la base de datos correctamente" << endl;
@@ -15,6 +20,10 @@ if (sqlite3_open("banco.db", &db) == SQLITE_OK) {
 }   
 }
 
+/**
+ * @brief Destructor para la clase Database
+ * 
+ */
 Database::~Database() {
     if (db) {
         sqlite3_close(db);  // Cerrar la base de datos
@@ -22,6 +31,13 @@ Database::~Database() {
     }
 }
 
+/**
+ * @brief Funcion para realizar depositos a una cuenta
+ * 
+ * @param IdCuenta Número de identificacion de la cuenta 
+ * @param monto Monto a depositar
+ * @param IdCliente Número de identificación del cliente
+ */
 void Database::realizarDeposito(int IdCuenta, double monto, int IdCliente) {
     // Sentencia SQL para actualizar el saldo de la cuenta
     const char* sqlUpdate = R"(
@@ -100,8 +116,13 @@ void Database::realizarDeposito(int IdCuenta, double monto, int IdCliente) {
 }
 
 
-// exactamente la misma logica del realizar deposito, solo que en el saldo de la sentencia
-//se le resta al saldo en lugar de sumar
+/**
+ * @brief Funcion para realizar retiros desde una cuenta
+ * 
+ * @param IdCuenta Número de identificacion de la cuenta 
+ * @param monto Monto a depositar
+ * @param IdCliente Número de identificación del cliente
+ */
 void Database::realizarRetiro(int IdCuenta, double monto, int IdCliente) {
         const char* sqlUpdate = R"(
             UPDATE Cuentas
@@ -175,9 +196,17 @@ void Database::realizarRetiro(int IdCuenta, double monto, int IdCliente) {
     sqlite3_finalize(stmtTransaccion);  // Liberamos los recursos del statement
     }
 
-// Métodos para atención al cliente
 
 
+/**
+* @brief Funcion para realizar transferencias entre cuentas
+* 
+* @param idCuentaOrigen Número de identificación de la cuenta de origen
+* @param idCuentaDestino Número de identificación de la cuenta a recibir el dinero
+* @param IdCuenta Número de identificacion de la cuenta
+* @param monto Monto a depositar
+* @param IdCliente Número de identificación del cliente
+*/
 void Database::realizarTransferencia(int idCuentaOrigen, int idCuentaDestino, double monto, int IdCliente, int IdCuenta) {
         
         // Verifica el saldo suficiente en la cuenta origen
@@ -260,8 +289,13 @@ void Database::realizarTransferencia(int idCuentaOrigen, int idCuentaDestino, do
     sqlite3_finalize(stmtTransaccion);  // Liberamos los recursos del statement
     }   
 
-    
-    
+/**
+ * @brief Funcion para pagar distintos servicios básicos
+ * 
+ * @param idCuentaCliente Número de identificación de la cuenta del cliente
+ * @param monto Monto a pagar
+ * @param IdCliente Número de identificación del cliente
+ */
 void Database::realizarPagoServicios(int idCuentaCliente, double monto, int IdCliente) {
 
     const int idCuentaServicios = 999;
@@ -274,15 +308,24 @@ void Database::realizarPagoServicios(int idCuentaCliente, double monto, int IdCl
          << idCuentaCliente << " hacia la cuenta de servicios " << idCuentaServicios << endl;
 }
 
-
-
+/**
+ * @brief Funcion para consultar el tipo de cambio
+ * 
+ * Brinda la conversión de dólares a colones
+ */
 void Database::consultarTipoCambio(){
 
         // Se manejará un tipo de cambio fijo, el cual para recordar buenas épocas, será $1 = 500 CRC (sujeto a cambios)
         cout << "El tipo de cambio actual es de 510 CRC por 1 USD." << endl;
     }
 
-
+/**
+ * @brief Funcion para comprar Certificados de Depósito a Plazo (CDPs)
+ * 
+ * @param idCliente Número de identificación del cliente
+ * @param monto Monto a depositar
+ * @param plazo Plazo, en meses, del depósito
+ */
 void Database::comprarCDP(int idCliente, double monto, int plazo) {
 
     double interes;
@@ -320,6 +363,13 @@ void Database::comprarCDP(int idCliente, double monto, int plazo) {
     sqlite3_finalize(stmt);
 }
 
+/**
+ * @brief Funcion para bloquear una cuenta
+ * 
+ * En caso de sospecha de fraude, es posible bloquear la cuenta por razones de seguridad
+ * 
+ * @param cuentaId Número de identificación de la cuenta
+ */
 void Database::bloquearCuenta(int idCuenta) {
 
     // Primero, verificamos el estado actual de la cuenta
@@ -372,7 +422,10 @@ void Database::bloquearCuenta(int idCuenta) {
     sqlite3_finalize(stmtUpdate);
 }
 
-
+/**
+ * @brief Función para ver el registro de transacciones realizadas
+ * 
+ */
 void Database::verRegistroTransacciones() {
     
     const char* sqlSelect = "SELECT IdTransaccion, IdCliente, Tipo, Monto, Fecha FROM Transacciones;";

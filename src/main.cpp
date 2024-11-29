@@ -4,6 +4,11 @@
 #include "../include/database.hpp"
 using namespace std;
 
+/**
+ * @brief Funcion main para el sistema
+ * 
+ * @return 0
+ */
 int main() {
     //intanciacion de objeto para poder manipular la clase
    // Database db;

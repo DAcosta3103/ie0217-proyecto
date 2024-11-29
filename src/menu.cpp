@@ -4,6 +4,10 @@
 
 using namespace std;
 
+/**
+ * @brief Función para desplegar el menú referente a la atención a clientes
+ * 
+ */
 void MenuAtencionAlCliente() {
     Database db;
     int subOpcion;
@@ -159,6 +163,10 @@ void MenuAtencionAlCliente() {
     } while (subOpcion != 9); 
 }
 
+/**
+ * @brief Función para desplegar el menú referente a la gestión de préstamos
+ * 
+ */
 void MenuGestionPrestamos() {
     Database db;
     int IdPrestamo = 0;
@@ -222,6 +230,10 @@ void MenuGestionPrestamos() {
     } while (subOpcion != 8);
 }
 
+/**
+ * @brief Función para desplegar el submenú referente a los tipos de préstamos
+ * 
+ */
 void SubMenuTipoPrestamos(){
     int subOpcion;
 

@@ -10,11 +10,19 @@
 
 using namespace std;
 
+/**
+ * @brief Función para consultar los tipos de préstamos disponibles en el banco
+ */
 void Database::consultarTiposPrestamos() {
     SubMenuTipoPrestamos(); // el codigo de esto esta en menu.cpp
 }
 
 
+/**
+ * @brief Función para mostrar las cuentas y desglose 
+ * 
+ * Se muestran los detalles de cada préstamo
+ */
 void Database::consultarFrecuenciaPagos(int IdPrestamo) {
     if (IdPrestamo <= 0) {
         cout << "\nConsultar frecuencia de pagos" << endl;
@@ -51,6 +59,12 @@ void Database::consultarFrecuenciaPagos(int IdPrestamo) {
     sqlite3_finalize(stmt);
 }
 
+/**
+ * @brief Función para calcular los intereses
+ * 
+ * Los intereses calculados pueden referirse a un tipo de préstamo en específico, o bien a un CDP
+ * @param IdPrestamo 
+ */
 void Database::calcularIntereses(double IdPrestamo) {
     int opcion;
     
@@ -167,6 +181,11 @@ void Database::calcularIntereses(double IdPrestamo) {
 }
 
 
+/**
+ * @brief Función para mostrar las cuentas y desglose 
+ * 
+ * Se muestran los detalles de cada préstamo
+ */
 void Database::mostrarCuotasYDesglose() {
     // Consulta SQL para obtener todos los préstamos con sus detalles
     const char* sqlQuery = R"(
@@ -208,6 +227,11 @@ void Database::mostrarCuotasYDesglose() {
     sqlite3_finalize(stmt);
 }
 
+/**
+ * @brief Función para realizar abonos a un préstamo
+ * 
+ * @param nuevoSaldo Monto a abonar del préstamo
+ */
 void Database::actualizarSaldoPrestamo(double nuevoSaldo) {
     // Verificar que el nuevo saldo sea válido
     if (nuevoSaldo < 0) {
@@ -245,6 +269,10 @@ void Database::actualizarSaldoPrestamo(double nuevoSaldo) {
     sqlite3_finalize(stmt);
 }
 
+/**
+ * @brief Función para mostrar los métodos de pago para préstamos
+ * 
+ */
 void Database::mostrarMetodosPago() {
     // Definir métodos de pago predeterminados
     const char* metodosPago[] = {
@@ -261,6 +289,11 @@ void Database::mostrarMetodosPago() {
     }
 }
 
+/**
+ * @brief Función para ver la información referente a un préstamo en específico
+ * 
+ * @param prestamoId Número de identificación del préstamo a consultar
+ */
 void Database::verInformacionPrestamo(int prestamoId) {
     //int prestamoId;
 
@@ -337,7 +370,11 @@ void Database::verInformacionPrestamo(int prestamoId) {
     sqlite3_finalize(stmt);
 }
 
-// Función para generar reportes
+/**
+ * @brief Función para generar un reporte de un préstamo en específico
+ * 
+ * @param prestamoId Número de identificación del préstamo a consultar
+ */
 void Database::generarReportePrestamo(int prestamoId) {
     // Consulta SQL para obtener detalles completos del préstamo con información del cliente
     const char* sqlQuery = R"(
